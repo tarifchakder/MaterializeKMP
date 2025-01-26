@@ -59,7 +59,7 @@ fun App() {
     var isDynamicColor = remember { mutableStateOf(true) }
     var isAmoled = remember { mutableStateOf(false) }
     var isInvertColor = remember { mutableStateOf(false) }
-    val uriHandler = LocalUriHandler.current
+    var uriHandler = LocalUriHandler.current
 
     DynamicTheme(
         baseColor = Color.Magenta,
