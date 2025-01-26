@@ -1,5 +1,6 @@
 package com.tarif.dynamictheme.ktx
 
+import androidx.annotation.FloatRange
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -37,27 +38,3 @@ fun Color.calculateSurfaceColor(): Int {
 
     return TonalPalette.fromHueAndChroma(hue, (chroma / 12.0).coerceAtMost(4.0)).tone(90)
 }
-
-inline val Green: Color
-    @Composable get() = Color(0xFFBADB94).harmonizeWithPrimary(0.2f)
-
-inline val Blue: Color
-    @Composable get() = Color(0xFF0088CC).harmonizeWithPrimary(0.2f)
-
-inline val Black: Color
-    @Composable get() = Color(0xFF142329).harmonizeWithPrimary(0.2f)
-
-inline val White: Color
-    @Composable get() = Color(0xFFFFFFFF).harmonizeWithPrimary(0.05f)
-
-inline val BitcoinColor: Color
-    @Composable get() = Color(0xFFF7931A).harmonizeWithPrimary(0.2f)
-
-inline val USDTColor: Color
-    @Composable get() = Color(0xFF50AF95).harmonizeWithPrimary(0.2f)
-
-inline val TONSpaceColor: Color
-    @Composable get() = Color(0xFF232328).harmonizeWithPrimary(0.2f)
-
-inline val TONColor: Color
-    @Composable get() = Color(0xFF0098EA).harmonizeWithPrimary(0.2f)
