@@ -1,4 +1,4 @@
-package com.feraxhp.sample
+package com.tarif.sample.icon
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathFillType.Companion.NonZero
@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-public val Github: ImageVector
+val Github: ImageVector
     get() {
         if (_github != null) {
             return _github!!
