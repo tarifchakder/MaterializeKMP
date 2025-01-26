@@ -1,4 +1,4 @@
-package com.tarif.sample
+package com.tarif.sample.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -35,12 +35,10 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tarif.sample.SegmentedButtonsDefaults.ITEM_ANIMATION_MILLIS
-import com.tarif.sample.SegmentedButtonsDefaults.minimumHeight
-import com.tarif.sample.SegmentedButtonsDefaults.outlineThickness
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import com.tarif.sample.component.SegmentedButtonsDefaults.ITEM_ANIMATION_MILLIS
+import com.tarif.sample.component.SegmentedButtonsDefaults.minimumHeight
+import com.tarif.sample.component.SegmentedButtonsDefaults.outlineThickness
 
-@Preview
 /**
  * Segmented buttons implemented similar to M3 spec. Use for simple choices between two to five items.
  * Each button contains a label and an icon.
