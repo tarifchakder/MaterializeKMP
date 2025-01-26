@@ -22,8 +22,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import com.tarif.materialcolor.hct.Hct
-import com.tarif.materialcolor.palettes.TonalPalette
+import com.tarif.kmp.materialcolor.hct.Hct
+import com.tarif.kmp.materialcolor.palettes.TonalPalette
 
 /**
  * Composable representing ColorTuple object

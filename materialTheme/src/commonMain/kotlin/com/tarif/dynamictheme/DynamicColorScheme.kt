@@ -90,8 +90,7 @@ fun getColorScheme(
         .invertColors(isInvertColors && !isDynamicColor)
         .run {
             copy(
-                outlineVariant = onSecondaryContainer
-                    .copy(alpha = 0.2f)
+                outlineVariant = onSecondaryContainer.copy(alpha = 0.2f)
                     .compositeOver(surfaceColorAtElevation(6.dp))
             )
         }

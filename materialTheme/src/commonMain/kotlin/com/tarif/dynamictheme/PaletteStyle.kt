@@ -3,9 +3,8 @@ package com.tarif.dynamictheme
 /**
  * The style of the palette to generate.
  *
- * Mapped to [Variant] in the Material Design guidelines.
  */
-public enum class PaletteStyle {
+enum class PaletteStyle {
 
     /**
      * A calm theme, sedated colors that aren't particularly chromatic.

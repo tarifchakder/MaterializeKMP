@@ -257,11 +257,13 @@ fun Color.toDynamicScheme(
 /**
  * This function animates colors when current color scheme changes.
  *
+ * @param[isAnimateColorScheme] Whether to animate the color scheme or not.
  * @param animationSpec Animation that will be applied when theming option changes.
  * @return [ColorScheme] with animated colors.
  */
 @Composable
 fun ColorScheme.animateAllColors(
+    isAnimateColorScheme: Boolean,
     animationSpec: AnimationSpec<Color>
 ): ColorScheme {
 
@@ -273,35 +275,69 @@ fun ColorScheme.animateAllColors(
     @Composable
     fun Color.animateColor() = animateColorAsState(this, animationSpec, label = "Animate colorScheme").value
 
-    return this.copy(
-        primary = primary.animateColor(),
-        onPrimary = onPrimary.animateColor(),
-        primaryContainer = primaryContainer.animateColor(),
-        onPrimaryContainer = onPrimaryContainer.animateColor(),
-        inversePrimary = inversePrimary.animateColor(),
-        secondary = secondary.animateColor(),
-        onSecondary = onSecondary.animateColor(),
-        secondaryContainer = secondaryContainer.animateColor(),
-        onSecondaryContainer = onSecondaryContainer.animateColor(),
-        tertiary = tertiary.animateColor(),
-        onTertiary = onTertiary.animateColor(),
-        tertiaryContainer = tertiaryContainer.animateColor(),
-        onTertiaryContainer = onTertiaryContainer.animateColor(),
-        background = background.animateColor(),
-        onBackground = onBackground.animateColor(),
-        surface = surface.animateColor(),
-        onSurface = onSurface.animateColor(),
-        surfaceVariant = surfaceVariant.animateColor(),
-        onSurfaceVariant = onSurfaceVariant.animateColor(),
-        surfaceTint = surfaceTint.animateColor(),
-        inverseSurface = inverseSurface.animateColor(),
-        inverseOnSurface = inverseOnSurface.animateColor(),
-        error = error.animateColor(),
-        onError = onError.animateColor(),
-        errorContainer = errorContainer.animateColor(),
-        onErrorContainer = onErrorContainer.animateColor(),
-        outline = outline.animateColor(),
-        outlineVariant = outlineVariant.animateColor(),
-        scrim = scrim.animateColor()
-    )
+    return if (isAnimateColorScheme) {
+        this.copy(
+            primary = primary.animateColor(),
+            onPrimary = onPrimary.animateColor(),
+            primaryContainer = primaryContainer.animateColor(),
+            onPrimaryContainer = onPrimaryContainer.animateColor(),
+            inversePrimary = inversePrimary.animateColor(),
+            secondary = secondary.animateColor(),
+            onSecondary = onSecondary.animateColor(),
+            secondaryContainer = secondaryContainer.animateColor(),
+            onSecondaryContainer = onSecondaryContainer.animateColor(),
+            tertiary = tertiary.animateColor(),
+            onTertiary = onTertiary.animateColor(),
+            tertiaryContainer = tertiaryContainer.animateColor(),
+            onTertiaryContainer = onTertiaryContainer.animateColor(),
+            background = background.animateColor(),
+            onBackground = onBackground.animateColor(),
+            surface = surface.animateColor(),
+            onSurface = onSurface.animateColor(),
+            surfaceVariant = surfaceVariant.animateColor(),
+            onSurfaceVariant = onSurfaceVariant.animateColor(),
+            surfaceTint = surfaceTint.animateColor(),
+            inverseSurface = inverseSurface.animateColor(),
+            inverseOnSurface = inverseOnSurface.animateColor(),
+            error = error.animateColor(),
+            onError = onError.animateColor(),
+            errorContainer = errorContainer.animateColor(),
+            onErrorContainer = onErrorContainer.animateColor(),
+            outline = outline.animateColor(),
+            outlineVariant = outlineVariant.animateColor(),
+            scrim = scrim.animateColor()
+        )
+    } else {
+        this.copy(
+            primary = primary,
+            onPrimary = onPrimary,
+            primaryContainer = primaryContainer,
+            onPrimaryContainer = onPrimaryContainer,
+            inversePrimary = inversePrimary,
+            secondary = secondary,
+            onSecondary = onSecondary,
+            secondaryContainer = secondaryContainer,
+            onSecondaryContainer = onSecondaryContainer,
+            tertiary = tertiary,
+            onTertiary = onTertiary,
+            tertiaryContainer = tertiaryContainer,
+            onTertiaryContainer = onTertiaryContainer,
+            background = background,
+            onBackground = onBackground,
+            surface = surface,
+            onSurface = onSurface,
+            surfaceVariant = surfaceVariant,
+            onSurfaceVariant = onSurfaceVariant,
+            surfaceTint = surfaceTint,
+            inverseSurface = inverseSurface,
+            inverseOnSurface = inverseOnSurface,
+            error = error,
+            onError = onError,
+            errorContainer = errorContainer,
+            onErrorContainer = onErrorContainer,
+            outline = outline,
+            outlineVariant = outlineVariant,
+            scrim = scrim
+        )
+    }
 }
