@@ -1,4 +1,4 @@
-package com.tarif.dynamictheme.ktx
+package com.tarif.dynamictheme.extension
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.AnimationSpec
@@ -6,8 +6,8 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.tarif.dynamictheme.ColorTuple
 import com.tarif.dynamictheme.PaletteStyle
-import com.tarif.dynamictheme.colortuple.ColorTuple
 import com.tarif.kmp.materialcolor.dynamiccolor.MaterialDynamicColors
 import com.tarif.kmp.materialcolor.hct.Hct
 import com.tarif.kmp.materialcolor.palettes.TonalPalette

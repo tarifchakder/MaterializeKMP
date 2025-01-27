@@ -1,4 +1,4 @@
-package com.tarif.dynamictheme.ktx
+package com.tarif.dynamictheme.extension
 
 import androidx.annotation.FloatRange
 import androidx.compose.material3.MaterialTheme

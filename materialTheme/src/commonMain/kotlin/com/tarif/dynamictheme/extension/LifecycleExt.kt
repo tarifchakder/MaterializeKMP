@@ -1,4 +1,4 @@
-package com.tarif.dynamictheme.ktx
+package com.tarif.dynamictheme.extension
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

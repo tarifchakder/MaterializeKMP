@@ -1,4 +1,4 @@
-package com.tarif.dynamictheme.ktx
+package com.tarif.dynamictheme.extension
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb

@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.tarif.dynamictheme.ktx.observeAsState
+import com.tarif.dynamictheme.extension.observeAsState
 
 @Composable
 actual fun getColorScheme(isDarkTheme: Boolean): ColorScheme? {

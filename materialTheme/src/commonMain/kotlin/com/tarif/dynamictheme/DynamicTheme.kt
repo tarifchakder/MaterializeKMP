@@ -10,10 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
-import com.tarif.dynamictheme.colortuple.ColorTuple
-import com.tarif.dynamictheme.colortuple.rememberColorTuple
-import com.tarif.dynamictheme.ktx.animateAllColors
+import com.tarif.dynamictheme.extension.animateAllColors
 import com.tarif.dynamictheme.provider.LocalDynamicThemeState
+import com.tarif.dynamictheme.remember.rememberColorScheme
+import com.tarif.dynamictheme.remember.rememberColorTuple
+import com.tarif.dynamictheme.remember.rememberThemeState
 
 
 /**
@@ -22,7 +23,7 @@ import com.tarif.dynamictheme.provider.LocalDynamicThemeState
  * You can access the current base color via [LocalDynamicThemeState].
  * remember [base color == primary color] follow class [ColorTuple]
  *
- * @see rememberDynamicColorScheme
+ * @see rememberColorScheme
  * @see PaletteStyle
  * @param[baseColor] The base color to use for generating the color scheme.
  * @param[isDarkTheme] Whether to use a dark theme or not.
@@ -56,9 +57,9 @@ fun DynamicTheme(
         isDarkTheme = isDarkTheme
     )
 
-    val themeState = rememberDynamicThemeState(initialColorTuple = defaultColorTuple)
+    val themeState = rememberThemeState(initialColorTuple = defaultColorTuple)
 
-    val scheme = rememberDynamicColorScheme(
+    val scheme = rememberColorScheme(
         isDarkTheme = isDarkTheme,
         isDynamicColor = isDynamicColor ,
         isAmoled = isAmoled,
@@ -94,7 +95,7 @@ fun DynamicTheme(
  *
  * You can access the current base color via [LocalDynamicThemeState].
  *
- * @see rememberDynamicColorScheme
+ * @see rememberColorScheme
  * @see PaletteStyle
  * @param[colorTuple] The data class containing some basic color required for generating material color
  * @param[isDarkTheme] Whether to use a dark theme or not.
@@ -128,9 +129,9 @@ fun DynamicTheme(
         isDarkTheme = isDarkTheme
     )
 
-    val themeState = rememberDynamicThemeState(initialColorTuple = defaultColorTuple )
+    val themeState = rememberThemeState(initialColorTuple = defaultColorTuple )
 
-    val scheme = rememberDynamicColorScheme(
+    val scheme = rememberColorScheme(
         isDarkTheme = isDarkTheme,
         isDynamicColor = isDynamicColor ,
         isAmoled = isAmoled,
