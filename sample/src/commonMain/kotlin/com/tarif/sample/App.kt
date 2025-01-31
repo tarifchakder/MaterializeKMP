@@ -32,6 +32,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -40,7 +41,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import com.tarif.dynamictheme.DynamicTheme
+import com.tarif.dynamictheme.colorpicker.ColorPicker
+import com.tarif.dynamictheme.colorpicker.ColorPickerDialog
+import com.tarif.dynamictheme.colorpicker.ColorPickerType
 import com.tarif.sample.component.SegmentedButtonColors
 import com.tarif.sample.component.SegmentedButtonItem
 import com.tarif.sample.component.SegmentedButtons
@@ -89,6 +94,7 @@ fun App() {
 
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun TopbarCardView(
     modifier: Modifier = Modifier,
@@ -165,6 +171,25 @@ private fun TopbarCardView(
             }
         }
     }
+
+    ColorPicker(
+        modifier = Modifier,
+        type = ColorPickerType.Circle(),
+        onPickedColor = {
+            //color = it
+        }
+    )
+    ColorPickerDialog(
+        show = isDynamicColor.value,
+        type = ColorPickerType.Circle(),
+        properties = DialogProperties(),
+        onDismissRequest = {
+            isDynamicColor.value = false
+        },
+        onPickedColor = {
+            //color = it
+        },
+    )
 }
 
 @Composable

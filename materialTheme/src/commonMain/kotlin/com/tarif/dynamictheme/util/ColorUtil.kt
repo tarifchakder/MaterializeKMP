@@ -5,7 +5,7 @@ import androidx.annotation.FloatRange
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 
-internal object Helper {
+internal object ColorUtil {
 
     /**
      * Blend between two ARGB colors using the given ratio.
