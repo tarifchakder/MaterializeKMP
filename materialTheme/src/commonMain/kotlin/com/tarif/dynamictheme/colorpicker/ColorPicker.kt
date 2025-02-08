@@ -35,11 +35,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.tarif.dynamictheme.colorpicker.data.ColorPickerType
+import com.tarif.dynamictheme.colorpicker.model.ColorPickerType
 import com.tarif.dynamictheme.colorpicker.pickers.CircleColorPicker
+import com.tarif.dynamictheme.colorpicker.pickers.ClassicColorPicker
 import com.tarif.dynamictheme.extension.toHex
 import com.tarif.dynamictheme.extension.transparentBackground
-import io.github.mohammedalaamorsi.colorpicker.pickers.ClassicColorPicker
 import io.github.mohammedalaamorsi.colorpicker.pickers.RingColorPicker
 import io.github.mohammedalaamorsi.colorpicker.pickers.SimpleRingColorPicker
 
@@ -59,6 +59,7 @@ fun ColorPicker(
             is ColorPickerType.Classic -> ClassicColorPicker(
                 showAlphaBar = type.showAlphaBar,
                 initialColor = type.initialColor,
+                size = type.colorPickerSize,
                 onPickedColor = onPickedColor,
             )
 
@@ -67,6 +68,7 @@ fun ColorPicker(
                 showBrightnessBar = type.showBrightnessBar,
                 lightCenter = type.lightCenter,
                 initialColor = type.initialColor,
+                colorPickerSize = type.colorPickerSize,
                 onPickedColor = onPickedColor,
 
                 )

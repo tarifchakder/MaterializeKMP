@@ -1,4 +1,4 @@
-package com.tarif.dynamictheme.colorpicker.data
+package com.tarif.dynamictheme.colorpicker.model
 
 import androidx.compose.ui.graphics.Color
 

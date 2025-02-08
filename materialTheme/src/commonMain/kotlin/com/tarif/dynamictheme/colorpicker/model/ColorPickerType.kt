@@ -1,4 +1,4 @@
-package com.tarif.dynamictheme.colorpicker.data
+package com.tarif.dynamictheme.colorpicker.model
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -10,7 +10,8 @@ sealed class ColorPickerType {
      */
     class Classic(
         val showAlphaBar: Boolean = true,
-        val initialColor: Color = Color.Red
+        val initialColor: Color = Color.Red,
+        val colorPickerSize: Dp = 200.dp
     ) : ColorPickerType()
 
     /**
@@ -22,7 +23,8 @@ sealed class ColorPickerType {
         val showBrightnessBar: Boolean = true,
         val showAlphaBar: Boolean = true,
         val lightCenter: Boolean = true,
-        val initialColor: Color = Color.Red
+        val initialColor: Color = Color.Red,
+        val colorPickerSize: Dp = 200.dp
     ) : ColorPickerType()
 
     /**
@@ -40,7 +42,8 @@ sealed class ColorPickerType {
         val showDarknessBar: Boolean = true,
         val showAlphaBar: Boolean = true,
         val showColorPreview: Boolean = true,
-        val initialColor: Color = Color.Red
+        val initialColor: Color = Color.Green,
+        size: Dp = 200.dp
     ) : ColorPickerType()
 
     /**
@@ -52,6 +55,7 @@ sealed class ColorPickerType {
         val colorWidth: Dp = 20.dp,
         val tracksCount: Int = 5,
         val sectorsCount: Int = 24,
-        val initialColor: Color = Color.Red
+        val initialColor: Color = Color.Green,
+        size: Dp = 200.dp
     ) : ColorPickerType()
 }

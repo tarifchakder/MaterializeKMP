@@ -1,6 +1,6 @@
 package com.tarif.dynamictheme.util
 
-import com.tarif.dynamictheme.colorpicker.data.ColorRange
+import com.tarif.dynamictheme.colorpicker.model.ColorRange
 
 
 internal object ColorPickerHelper {

@@ -1,7 +1,8 @@
-package io.github.mohammedalaamorsi.colorpicker.pickers
+package com.tarif.dynamictheme.colorpicker.pickers
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -25,11 +26,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.tarif.dynamictheme.colorpicker.data.ColorRange
-import com.tarif.dynamictheme.colorpicker.data.Colors.gradientColors
-import com.tarif.dynamictheme.colorpicker.pickers.ColorSlider
+import com.tarif.dynamictheme.colorpicker.component.AlphaBar
+import com.tarif.dynamictheme.colorpicker.model.ColorRange
+import com.tarif.dynamictheme.colorpicker.model.Colors.gradientColors
 import com.tarif.dynamictheme.extension.blue
 import com.tarif.dynamictheme.extension.calculateRangeProgress
 import com.tarif.dynamictheme.extension.darken
@@ -37,7 +39,6 @@ import com.tarif.dynamictheme.extension.drawColorSelector
 import com.tarif.dynamictheme.extension.green
 import com.tarif.dynamictheme.extension.lighten
 import com.tarif.dynamictheme.extension.red
-import io.github.mohammedalaamorsi.colorpicker.helper.ColorPickerHelper.calculateInitialPickerLocation
 import kotlin.math.roundToInt
 
 @ExperimentalComposeUiApi
@@ -46,36 +47,19 @@ internal fun ClassicColorPicker(
     modifier: Modifier = Modifier,
     showAlphaBar: Boolean,
     initialColor: Color = Color.Red,
+    size: Dp = 200.dp,
     onPickedColor: (Color) -> Unit
 ) {
-    var pickerLocation by remember {
-        mutableStateOf(Offset.Zero)
-    }
-    var colorPickerSize by remember {
-        mutableStateOf(IntSize(1, 1))
-    }
-    var alpha by remember {
-        mutableStateOf(initialColor.alpha)
-    }
-    var rangeColor by remember {
-        mutableStateOf(initialColor)
-    }
-    var color by remember {
-        mutableStateOf(initialColor)
-    }
-    LaunchedEffect(colorPickerSize, initialColor) {
-        if (colorPickerSize.width > 1 && colorPickerSize.height > 1) {
-            pickerLocation = calculateInitialPickerLocation(
-                initialColor,
-                colorPickerSize,
-                rangeColor
-            )
-        }
-    }
+    var pickerLocation by remember { mutableStateOf(Offset.Zero) }
+    var colorPickerSize by remember { mutableStateOf(IntSize(1, 1)) }
+    val alpha = remember { mutableStateOf(initialColor.alpha) }
+    var rangeColor by remember { mutableStateOf(initialColor) }
+    var color by remember { mutableStateOf(initialColor) }
+
     LaunchedEffect(rangeColor, pickerLocation, colorPickerSize, alpha) {
         val xProgress = (1f - (pickerLocation.x / colorPickerSize.width)).coerceIn(0f, 1f)
         val yProgress = (pickerLocation.y / colorPickerSize.height).coerceIn(0f, 1f)
-        if(xProgress.isNaN().not()&&yProgress.isNaN().not()){
+        if (xProgress.isNaN().not() && yProgress.isNaN().not()) {
             color = Color(
                 rangeColor
                     .red()
@@ -89,26 +73,35 @@ internal fun ClassicColorPicker(
                     .blue()
                     .lighten(xProgress)
                     .darken(yProgress),
-                alpha = (255 * alpha).roundToInt()
+                alpha = (255 * alpha.value).roundToInt()
             )
         }
     }
+
     LaunchedEffect(color) {
         onPickedColor(color)
     }
+
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
         Box(
             modifier = modifier
                 .onSizeChanged {
                     colorPickerSize = it
-                }.pointerInput(Unit) {
-                    detectDragGestures { change, _ ->
-                        val x = change.position.x.coerceIn(0f, colorPickerSize.width.toFloat())
-                        val y = change.position.y.coerceIn(0f, colorPickerSize.height.toFloat())
+                }
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        val x = it.x.coerceIn(0f, colorPickerSize.width.toFloat())
+                        val y = it.y.coerceIn(0f, colorPickerSize.height.toFloat())
                         pickerLocation = Offset(x, y)
                     }
                 }
-                .size(200.dp)
+                .pointerInput(Unit) {
+                    detectTransformGestures { centroid, _, _, _ ->
+                        val x = centroid.x.coerceIn(0f, colorPickerSize.width.toFloat())
+                        val y = centroid.y.coerceIn(0f, colorPickerSize.height.toFloat())
+                        pickerLocation = Offset(x, y)
+                    }
+                }.size(size)
         ) {
             Canvas(
                 modifier = Modifier
@@ -119,11 +112,17 @@ internal fun ClassicColorPicker(
                 drawRect(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))
             }
             Canvas(modifier = Modifier.fillMaxSize()) {
-                this.drawColorSelector(color.copy(alpha = 1f), pickerLocation)
+                this.drawColorSelector(color, pickerLocation)
             }
+
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        ColorSlider(colors = gradientColors, initialColor = initialColor) {
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        ColorSlider(
+            colors = gradientColors,
+            initialColor = initialColor
+        ) {
             val (rangeProgress, range) = calculateRangeProgress(it.toDouble())
             val red: Int
             val green: Int
@@ -167,13 +166,9 @@ internal fun ClassicColorPicker(
             }
             rangeColor = Color(red, green, blue)
         }
-        if (showAlphaBar) {
-            Spacer(modifier = Modifier.height(16.dp))
-            ColorSlider(colors = listOf(Color.Transparent, rangeColor),initialColor=initialColor) {
-                alpha = it
-            }
-        }
-    }
 
+        AlphaBar(showAlphaBar, rangeColor, initialColor, alpha)
+
+    }
 
 }

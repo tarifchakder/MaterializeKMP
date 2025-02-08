@@ -1,4 +1,4 @@
-package com.tarif.dynamictheme.colorpicker.data
+package com.tarif.dynamictheme.colorpicker.model
 
 enum class ColorRange {
     RedToYellow,

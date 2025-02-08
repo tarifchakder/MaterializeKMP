@@ -23,22 +23,24 @@ import androidx.compose.ui.graphics.RadialGradientShader
 import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tarif.dynamictheme.colorpicker.data.ColorRange
-import com.tarif.dynamictheme.colorpicker.data.Colors.gradientColors
+import com.tarif.dynamictheme.colorpicker.component.AlphaBar
 import com.tarif.dynamictheme.colorpicker.helper.BoundedPointStrategy
 import com.tarif.dynamictheme.colorpicker.helper.MathHelper
 import com.tarif.dynamictheme.colorpicker.helper.MathHelper.getBoundedPointWithInRadius
 import com.tarif.dynamictheme.colorpicker.helper.MathHelper.getLength
+import com.tarif.dynamictheme.colorpicker.model.ColorRange
+import com.tarif.dynamictheme.colorpicker.model.Colors.gradientColors
 import com.tarif.dynamictheme.extension.blue
 import com.tarif.dynamictheme.extension.calculateRangeProgress
+import com.tarif.dynamictheme.extension.colorPickerCenterColor
 import com.tarif.dynamictheme.extension.colorToHSV
-import com.tarif.dynamictheme.extension.darken
 import com.tarif.dynamictheme.extension.drawColorSelector
 import com.tarif.dynamictheme.extension.green
-import com.tarif.dynamictheme.extension.lighten
+import com.tarif.dynamictheme.extension.moveColorTo
 import com.tarif.dynamictheme.extension.red
-import kotlin.math.PI
+import com.tarif.dynamictheme.extension.toDegrees
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.roundToInt
@@ -47,6 +49,7 @@ import kotlin.math.sin
 @Composable
 internal fun CircleColorPicker(
     modifier: Modifier = Modifier,
+    colorPickerSize: Dp = 200.dp,
     showAlphaBar: Boolean,
     showBrightnessBar: Boolean,
     lightCenter: Boolean,
@@ -55,11 +58,9 @@ internal fun CircleColorPicker(
 ) {
     var radius by remember { mutableStateOf(0f) }
     var pickerLocation by remember { mutableStateOf(Offset(radius, radius)) }
-
     var pickerColor by remember { mutableStateOf(initialColor) }
     var brightness by remember { mutableStateOf(1f) }
-    var alpha by remember { mutableStateOf(initialColor.alpha) }
-
+    val alpha = remember { mutableStateOf(initialColor.alpha) }
 
     LaunchedEffect(initialColor) {
             val hsv = colorToHSV(initialColor)
@@ -67,8 +68,8 @@ internal fun CircleColorPicker(
             val saturation = hsv[1]
             brightness = hsv[2]
 
-            val x = radius + cos(angle) * saturation * radius
-            val y = radius + sin(angle) * saturation * radius
+            val x = radius + cos(angle) * saturation
+            val y = radius + sin(angle) * saturation
             pickerLocation = Offset(x.toFloat(), y.toFloat())
             pickerColor = initialColor
     }
@@ -79,14 +80,14 @@ internal fun CircleColorPicker(
                     pickerColor.red().moveColorTo(!lightCenter, brightness),
                     pickerColor.green().moveColorTo(!lightCenter, brightness),
                     pickerColor.blue().moveColorTo(!lightCenter, brightness),
-                    (255 * alpha).roundToInt()
+                    (255 * alpha.value).roundToInt()
                 )
             )
     }
 
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
         Canvas(modifier = modifier
-            .size(200.dp)
+            .size(colorPickerSize)
             .onSizeChanged {
                 radius = it.width / 2f
             }
@@ -99,6 +100,7 @@ internal fun CircleColorPicker(
                     val radiusProgress = 1 - (length / radius).coerceIn(0f, 1f)
                     val angleProgress = angle / 360f
                     val (rangeProgress, range) = calculateRangeProgress(angleProgress)
+
                     pickerColor = when (range) {
                         ColorRange.RedToYellow -> {
                             Color(
@@ -157,19 +159,15 @@ internal fun CircleColorPicker(
                     )
                 }
             }) {
-            drawCircle(
-                Brush.sweepGradient(gradientColors)
-            )
+            drawCircle(Brush.sweepGradient(gradientColors))
+
             drawCircle(
                 ShaderBrush(
                     RadialGradientShader(
                         Offset(size.width / 2f, size.height / 2f),
                         colors = listOf(
-                            if (lightCenter) {
-                                Color.White
-                            } else {
-                                Color.Black
-                            }, Color.Transparent
+                            colorPickerCenterColor(lightCenter),
+                            Color.Transparent
                         ),
                         radius = size.width / 2f
                     )
@@ -177,45 +175,20 @@ internal fun CircleColorPicker(
             )
             drawColorSelector(pickerColor, pickerLocation)
         }
+
         if (showBrightnessBar) {
             Spacer(modifier = Modifier.height(16.dp))
             ColorSlider(
                 colors = listOf(
-                    if (lightCenter) {
-                        Color.Black
-                    } else {
-                        Color.White
-                    }, pickerColor
+                    colorPickerCenterColor(lightCenter),
+                    pickerColor
                 ),
                 initialColor = pickerColor
             ) {
                 brightness = 1 - it
             }
         }
-        if (showAlphaBar) {
-            Spacer(modifier = Modifier.height(16.dp))
-            ColorSlider(colors = listOf(Color.Transparent, pickerColor),initialColor = pickerColor) {
-                alpha = it
-            }
-        }
-    }
-}
 
-private fun toDegrees(radians: Double) = radians * 180.0 / PI
-
-
-private fun Int.moveColorTo(toWhite: Boolean, progress: Float): Int {
-    return if (toWhite) {
-        lighten(progress)
-    } else {
-        darken(progress)
-    }
-}
-
-private fun Double.moveColorTo(toWhite: Boolean, progress: Float): Double {
-    return if (toWhite) {
-        lighten(progress)
-    } else {
-        darken(progress)
+        AlphaBar(showAlphaBar, pickerColor, initialColor, alpha)
     }
 }

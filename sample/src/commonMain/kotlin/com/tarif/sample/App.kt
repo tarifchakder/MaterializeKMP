@@ -45,7 +45,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.tarif.dynamictheme.DynamicTheme
 import com.tarif.dynamictheme.colorpicker.ColorPicker
 import com.tarif.dynamictheme.colorpicker.ColorPickerDialog
-import com.tarif.dynamictheme.colorpicker.ColorPickerType
+import com.tarif.dynamictheme.colorpicker.model.ColorPickerType
 import com.tarif.sample.component.SegmentedButtonColors
 import com.tarif.sample.component.SegmentedButtonItem
 import com.tarif.sample.component.SegmentedButtons
@@ -61,7 +61,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun App() {
     var themeMode = remember { mutableStateOf(ThemeMode.SYSTEM) }
-    var isDynamicColor = remember { mutableStateOf(true) }
+    var isDynamicColor = remember { mutableStateOf(false) }
     var isAmoled = remember { mutableStateOf(false) }
     var isInvertColor = remember { mutableStateOf(false) }
     var uriHandler = LocalUriHandler.current
@@ -145,7 +145,7 @@ private fun TopbarCardView(
                     checked = isDynamicColor.value,
                     label = "Dynamic color",
                     onCheckedChange = {
-                        isDynamicColor.value = !isDynamicColor.value
+                       // isDynamicColor.value = !isDynamicColor.value
                     }
                 )
                 LabelledCheckBox(
@@ -174,14 +174,15 @@ private fun TopbarCardView(
 
     ColorPicker(
         modifier = Modifier,
-        type = ColorPickerType.Circle(),
+        type = ColorPickerType.Classic(),
         onPickedColor = {
             //color = it
         }
     )
+
     ColorPickerDialog(
         show = isDynamicColor.value,
-        type = ColorPickerType.Circle(),
+        type = ColorPickerType.Classic(),
         properties = DialogProperties(),
         onDismissRequest = {
             isDynamicColor.value = false

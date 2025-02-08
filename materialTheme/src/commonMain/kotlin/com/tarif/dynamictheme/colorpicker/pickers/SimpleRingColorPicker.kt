@@ -26,7 +26,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.tarif.dynamictheme.colorpicker.data.ColorRange
+import com.tarif.dynamictheme.colorpicker.model.ColorRange
 import com.tarif.dynamictheme.extension.calculateRangeProgress
 import com.tarif.dynamictheme.extension.colorToHSV
 import com.tarif.dynamictheme.extension.darken
