@@ -42,20 +42,7 @@ sealed class ColorPickerType {
         val showDarknessBar: Boolean = true,
         val showAlphaBar: Boolean = true,
         val showColorPreview: Boolean = true,
-        val initialColor: Color = Color.Green,
-        size: Dp = 200.dp
-    ) : ColorPickerType()
-
-    /**
-     * @param colorWidth Arc width of all colors.
-     * @param tracksCount Amount of the tracks.
-     * @param sectorsCount Amount of the sectors for each track.
-     */
-    class SimpleRing(
-        val colorWidth: Dp = 20.dp,
-        val tracksCount: Int = 5,
-        val sectorsCount: Int = 24,
-        val initialColor: Color = Color.Green,
-        size: Dp = 200.dp
+        val initialColor: Color = Color.Red,
+        val colorPickerSize: Dp = 200.dp
     ) : ColorPickerType()
 }

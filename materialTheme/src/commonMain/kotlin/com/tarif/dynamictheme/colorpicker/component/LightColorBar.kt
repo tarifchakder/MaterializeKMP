@@ -10,16 +10,19 @@ import androidx.compose.ui.unit.dp
 import com.tarif.dynamictheme.colorpicker.pickers.ColorSlider
 
 @Composable
-internal fun AlphaBar(
-    showAlphaBar: Boolean,
-    rangeColor: Color,
+internal fun LightColorBar(
+    showLightColorBar: Boolean,
+    selectedColor: Color,
     initialColor: Color,
-    alpha: MutableState<Float>
+    lightness: MutableState<Float>
 ) {
-    if (showAlphaBar) {
+    if (showLightColorBar) {
         Spacer(modifier = Modifier.height(16.dp))
-        ColorSlider(colors = listOf(Color.Transparent, rangeColor), initialColor = initialColor) {
-            alpha.value = it
+        ColorSlider(
+            colors = listOf(Color.White, selectedColor),
+            initialColor=initialColor
+        ) {
+            lightness.value = 1 - it
         }
     }
 }

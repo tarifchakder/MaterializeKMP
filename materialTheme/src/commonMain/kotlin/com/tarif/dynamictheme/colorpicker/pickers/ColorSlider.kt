@@ -2,6 +2,7 @@ package com.tarif.dynamictheme.colorpicker.pickers
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,6 +43,12 @@ internal fun ColorSlider(
             .height(22.dp)
             .onSizeChanged {
                 slideBarSize = it
+            }
+            .pointerInput(Unit){
+                detectTapGestures {
+                    val xPosition = it.x.coerceIn(0f, slideBarSize.width.toFloat())
+                    progress = (xPosition / slideBarSize.width).coerceIn(0f, 1.5f)
+                }
             }
             .pointerInput(Unit) {
                 detectDragGestures { change, _ ->

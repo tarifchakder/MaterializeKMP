@@ -2,7 +2,7 @@ package com.tarif.dynamictheme.colorpicker.pickers
 
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
@@ -25,7 +25,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tarif.dynamictheme.colorpicker.component.AlphaBar
+import com.tarif.dynamictheme.colorpicker.component.AlphaColorBar
 import com.tarif.dynamictheme.colorpicker.helper.BoundedPointStrategy
 import com.tarif.dynamictheme.colorpicker.helper.MathHelper
 import com.tarif.dynamictheme.colorpicker.helper.MathHelper.getBoundedPointWithInRadius
@@ -92,9 +92,9 @@ internal fun CircleColorPicker(
                 radius = it.width / 2f
             }
             .pointerInput(Unit) {
-                detectDragGestures { change, _ ->
-                    val x = change.position.x
-                    val y = change.position.y
+                detectTapGestures {
+                    val x = it.x
+                    val y = it.y
                     val angle = (toDegrees(atan2(y - radius, x - radius).toDouble()) + 360) % 360
                     val length = getLength(x, y, radius)
                     val radiusProgress = 1 - (length / radius).coerceIn(0f, 1f)
@@ -158,7 +158,8 @@ internal fun CircleColorPicker(
                         BoundedPointStrategy.Inside
                     )
                 }
-            }) {
+            }
+        ) {
             drawCircle(Brush.sweepGradient(gradientColors))
 
             drawCircle(
@@ -189,6 +190,7 @@ internal fun CircleColorPicker(
             }
         }
 
-        AlphaBar(showAlphaBar, pickerColor, initialColor, alpha)
+        AlphaColorBar(showAlphaBar, pickerColor, initialColor, alpha)
     }
+
 }

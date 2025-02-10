@@ -41,10 +41,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.DialogProperties
 import com.tarif.dynamictheme.DynamicTheme
 import com.tarif.dynamictheme.colorpicker.ColorPicker
-import com.tarif.dynamictheme.colorpicker.ColorPickerDialog
 import com.tarif.dynamictheme.colorpicker.model.ColorPickerType
 import com.tarif.sample.component.SegmentedButtonColors
 import com.tarif.sample.component.SegmentedButtonItem
@@ -174,22 +172,10 @@ private fun TopbarCardView(
 
     ColorPicker(
         modifier = Modifier,
-        type = ColorPickerType.Classic(),
+        type = ColorPickerType.Ring(),
         onPickedColor = {
             //color = it
         }
-    )
-
-    ColorPickerDialog(
-        show = isDynamicColor.value,
-        type = ColorPickerType.Classic(),
-        properties = DialogProperties(),
-        onDismissRequest = {
-            isDynamicColor.value = false
-        },
-        onPickedColor = {
-            //color = it
-        },
     )
 }
 

@@ -29,7 +29,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.tarif.dynamictheme.colorpicker.component.AlphaBar
+import com.tarif.dynamictheme.colorpicker.component.AlphaColorBar
 import com.tarif.dynamictheme.colorpicker.model.ColorRange
 import com.tarif.dynamictheme.colorpicker.model.Colors.gradientColors
 import com.tarif.dynamictheme.extension.blue
@@ -167,7 +167,7 @@ internal fun ClassicColorPicker(
             rangeColor = Color(red, green, blue)
         }
 
-        AlphaBar(showAlphaBar, rangeColor, initialColor, alpha)
+        AlphaColorBar(showAlphaBar, rangeColor, initialColor, alpha)
 
     }
 

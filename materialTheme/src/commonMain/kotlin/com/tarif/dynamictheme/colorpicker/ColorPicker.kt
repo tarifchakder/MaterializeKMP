@@ -38,10 +38,9 @@ import androidx.compose.ui.window.DialogProperties
 import com.tarif.dynamictheme.colorpicker.model.ColorPickerType
 import com.tarif.dynamictheme.colorpicker.pickers.CircleColorPicker
 import com.tarif.dynamictheme.colorpicker.pickers.ClassicColorPicker
+import com.tarif.dynamictheme.colorpicker.pickers.RingColorPicker
 import com.tarif.dynamictheme.extension.toHex
 import com.tarif.dynamictheme.extension.transparentBackground
-import io.github.mohammedalaamorsi.colorpicker.pickers.RingColorPicker
-import io.github.mohammedalaamorsi.colorpicker.pickers.SimpleRingColorPicker
 
 /**
  * @param type Color picker type example [ColorPickerType.Circle].
@@ -74,20 +73,13 @@ fun ColorPicker(
                 )
 
             is ColorPickerType.Ring -> RingColorPicker(
+                size = type.colorPickerSize,
                 ringWidth = type.ringWidth,
                 previewRadius = type.previewRadius,
                 showLightColorBar = type.showLightnessBar,
                 showDarkColorBar = type.showDarknessBar,
                 showAlphaBar = type.showAlphaBar,
                 showColorPreview = type.showColorPreview,
-                initialColor = type.initialColor,
-                onPickedColor = onPickedColor
-            )
-
-            is ColorPickerType.SimpleRing -> SimpleRingColorPicker(
-                colorWidth = type.colorWidth,
-                tracksCount = type.tracksCount,
-                sectorsCount = type.sectorsCount,
                 initialColor = type.initialColor,
                 onPickedColor = onPickedColor
             )
