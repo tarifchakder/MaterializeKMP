@@ -1,9 +1,5 @@
-background: linear-gradient(160deg, #82f369 0%, #91cfff 33%, #ffaacc 66%, #a27ccf 100%);
-color: transparent;
--webkit-background-clip: text;
-background-clip: text;
--webkit-text-fill-color: transparent;
-text-fill-color: transparent;
+<img width="500px" src="screenshot/kmp_theme_banner.png" alt="logo"/>
+<br />
 
 This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop.
 
