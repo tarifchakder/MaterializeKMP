@@ -108,7 +108,7 @@ internal fun RingColorPicker(
         onPickedColor(color)
     }
 
-    fun calculateGesture(x: Float, y: Float) {
+    fun onGestureEvent(x: Float, y: Float) {
         val angle = ((atan2(y - radius, x - radius) * 180.0 / PI) + 360) % 360
         val length = getLength(x, y, radius)
         val progress = angle / 360f
@@ -140,12 +140,12 @@ internal fun RingColorPicker(
             }
             .pointerInput(Unit) {
                 detectTapGestures {
-                    calculateGesture(it.x, it.y)
+                    onGestureEvent(it.x, it.y)
                 }
             }
             .pointerInput(Unit) {
                 detectDragGestures { change, _ ->
-                    calculateGesture(change.position.x, change.position.y)
+                    onGestureEvent(change.position.x, change.position.y)
                 }
             }
         ) {

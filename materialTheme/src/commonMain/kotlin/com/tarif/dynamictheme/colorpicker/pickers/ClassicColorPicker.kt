@@ -45,20 +45,20 @@ import kotlin.math.roundToInt
 @Composable
 internal fun ClassicColorPicker(
     modifier: Modifier = Modifier,
+    colorPickerSize: Dp,
     showAlphaBar: Boolean,
-    initialColor: Color = Color.Red,
-    size: Dp = 200.dp,
+    initialColor: Color,
     onPickedColor: (Color) -> Unit
 ) {
-    var pickerLocation by remember { mutableStateOf(Offset.Zero) }
-    var colorPickerSize by remember { mutableStateOf(IntSize(1, 1)) }
+    var pickerLocation by remember { mutableStateOf(Offset((colorPickerSize.value / 2),colorPickerSize.value / 2)) }
+    var mSize by remember { mutableStateOf(IntSize(1, 1)) }
     val alpha = remember { mutableStateOf(initialColor.alpha) }
     var rangeColor by remember { mutableStateOf(initialColor) }
     var color by remember { mutableStateOf(initialColor) }
 
-    LaunchedEffect(rangeColor, pickerLocation, colorPickerSize, alpha) {
-        val xProgress = (1f - (pickerLocation.x / colorPickerSize.width)).coerceIn(0f, 1f)
-        val yProgress = (pickerLocation.y / colorPickerSize.height).coerceIn(0f, 1f)
+    LaunchedEffect(rangeColor, pickerLocation, mSize, alpha) {
+        val xProgress = (1f - (pickerLocation.x / mSize.width)).coerceIn(0f, 1f)
+        val yProgress = (pickerLocation.y / mSize.height).coerceIn(0f, 1f)
         if (xProgress.isNaN().not() && yProgress.isNaN().not()) {
             color = Color(
                 rangeColor
@@ -82,31 +82,27 @@ internal fun ClassicColorPicker(
         onPickedColor(color)
     }
 
+    fun onGestureEvent(x: Float, y: Float) {
+        pickerLocation = Offset(x.coerceIn(0f, mSize.width.toFloat()), y.coerceIn(0f, mSize.height.toFloat()))
+    }
+
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
         Box(
             modifier = modifier
-                .onSizeChanged {
-                    colorPickerSize = it
-                }
+                .onSizeChanged { mSize = it }
                 .pointerInput(Unit) {
                     detectTapGestures {
-                        val x = it.x.coerceIn(0f, colorPickerSize.width.toFloat())
-                        val y = it.y.coerceIn(0f, colorPickerSize.height.toFloat())
-                        pickerLocation = Offset(x, y)
+                        onGestureEvent(it.x, it.y)
                     }
                 }
                 .pointerInput(Unit) {
                     detectTransformGestures { centroid, _, _, _ ->
-                        val x = centroid.x.coerceIn(0f, colorPickerSize.width.toFloat())
-                        val y = centroid.y.coerceIn(0f, colorPickerSize.height.toFloat())
-                        pickerLocation = Offset(x, y)
+                        onGestureEvent(centroid.x, centroid.y)
                     }
-                }.size(size)
+                }.size(colorPickerSize)
         ) {
             Canvas(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(RoundedCornerShape(8.dp))
+                modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(8.dp))
             ) {
                 drawRect(Brush.horizontalGradient(listOf(Color.White, rangeColor)))
                 drawRect(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))

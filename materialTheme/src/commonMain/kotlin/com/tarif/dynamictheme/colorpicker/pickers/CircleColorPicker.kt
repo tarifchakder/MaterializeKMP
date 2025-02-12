@@ -2,6 +2,7 @@ package com.tarif.dynamictheme.colorpicker.pickers
 
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -49,7 +50,7 @@ import kotlin.math.sin
 @Composable
 internal fun CircleColorPicker(
     modifier: Modifier = Modifier,
-    colorPickerSize: Dp = 200.dp,
+    colorPickerSize: Dp,
     showAlphaBar: Boolean,
     showBrightnessBar: Boolean,
     lightCenter: Boolean,
@@ -57,7 +58,7 @@ internal fun CircleColorPicker(
     onPickedColor: (Color) -> Unit
 ) {
     var radius by remember { mutableStateOf(0f) }
-    var pickerLocation by remember { mutableStateOf(Offset(radius, radius)) }
+    var pickerLocation by remember { mutableStateOf(Offset.Unspecified) }
     var pickerColor by remember { mutableStateOf(initialColor) }
     var brightness by remember { mutableStateOf(1f) }
     val alpha = remember { mutableStateOf(initialColor.alpha) }
@@ -85,6 +86,77 @@ internal fun CircleColorPicker(
             )
     }
 
+    fun onGestureEvent(x: Float, y: Float) {
+        val angle = (toDegrees(atan2(y - radius, x - radius).toDouble()) + 360) % 360
+        val length = getLength(x, y, radius)
+        val radiusProgress = 1 - (length / radius).coerceIn(0f, 1f)
+        val angleProgress = angle / 360f
+        val (rangeProgress, range) = calculateRangeProgress(angleProgress)
+
+        pickerColor = when (range) {
+            ColorRange.RedToYellow -> {
+                Color(
+                    red = 255.moveColorTo(lightCenter, radiusProgress),
+                    green = (255f * rangeProgress).moveColorTo(lightCenter, radiusProgress)
+                        .roundToInt(),
+                    blue = 0.moveColorTo(lightCenter, radiusProgress),
+                )
+            }
+
+            ColorRange.YellowToGreen -> {
+                Color(
+                    red = (255 * (1 - rangeProgress)).moveColorTo(lightCenter, radiusProgress)
+                        .roundToInt(),
+                    green = 255.moveColorTo(lightCenter, radiusProgress),
+                    blue = 0.moveColorTo(lightCenter, radiusProgress),
+                )
+            }
+
+            ColorRange.GreenToCyan -> {
+                Color(
+                    red = 0.moveColorTo(lightCenter, radiusProgress),
+                    green = 255.moveColorTo(lightCenter, radiusProgress),
+                    blue = (255 * rangeProgress).moveColorTo(lightCenter, radiusProgress)
+                        .roundToInt(),
+                )
+            }
+
+            ColorRange.CyanToBlue -> {
+                Color(
+                    red = 0.moveColorTo(lightCenter, radiusProgress),
+                    green = (255 * (1 - rangeProgress)).moveColorTo(lightCenter, radiusProgress)
+                        .roundToInt(),
+                    blue = 255.moveColorTo(lightCenter, radiusProgress),
+                )
+            }
+
+            ColorRange.BlueToPurple -> {
+                Color(
+                    red = (255 * rangeProgress).moveColorTo(lightCenter, radiusProgress)
+                        .roundToInt(),
+                    green = 0.moveColorTo(lightCenter, radiusProgress),
+                    blue = 255.moveColorTo(lightCenter, radiusProgress),
+                )
+            }
+
+            ColorRange.PurpleToRed -> {
+                Color(
+                    red = 255.moveColorTo(lightCenter, radiusProgress),
+                    green = 0.moveColorTo(lightCenter, radiusProgress),
+                    blue = (255 * (1 - rangeProgress)).moveColorTo(lightCenter, radiusProgress)
+                        .roundToInt(),
+                )
+            }
+        }
+        pickerLocation = getBoundedPointWithInRadius(
+            x,
+            y,
+            length,
+            radius,
+            BoundedPointStrategy.Inside
+        )
+    }
+
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
         Canvas(modifier = modifier
             .size(colorPickerSize)
@@ -93,70 +165,12 @@ internal fun CircleColorPicker(
             }
             .pointerInput(Unit) {
                 detectTapGestures {
-                    val x = it.x
-                    val y = it.y
-                    val angle = (toDegrees(atan2(y - radius, x - radius).toDouble()) + 360) % 360
-                    val length = getLength(x, y, radius)
-                    val radiusProgress = 1 - (length / radius).coerceIn(0f, 1f)
-                    val angleProgress = angle / 360f
-                    val (rangeProgress, range) = calculateRangeProgress(angleProgress)
-
-                    pickerColor = when (range) {
-                        ColorRange.RedToYellow -> {
-                            Color(
-                                red = 255.moveColorTo(lightCenter, radiusProgress),
-                                green = (255f * rangeProgress).moveColorTo(lightCenter, radiusProgress).roundToInt(),
-                                blue = 0.moveColorTo(lightCenter, radiusProgress),
-                            )
-                        }
-
-                        ColorRange.YellowToGreen -> {
-                            Color(
-                                red = (255 * (1 - rangeProgress)).moveColorTo(lightCenter, radiusProgress).roundToInt(),
-                                green = 255.moveColorTo(lightCenter, radiusProgress),
-                                blue = 0.moveColorTo(lightCenter, radiusProgress),
-                            )
-                        }
-
-                        ColorRange.GreenToCyan -> {
-                            Color(
-                                red = 0.moveColorTo(lightCenter, radiusProgress),
-                                green = 255.moveColorTo(lightCenter, radiusProgress),
-                                blue = (255 * rangeProgress).moveColorTo(lightCenter, radiusProgress).roundToInt(),
-                            )
-                        }
-
-                        ColorRange.CyanToBlue -> {
-                            Color(
-                                red = 0.moveColorTo(lightCenter, radiusProgress),
-                                green = (255 * (1 - rangeProgress)).moveColorTo(lightCenter, radiusProgress).roundToInt(),
-                                blue = 255.moveColorTo(lightCenter, radiusProgress),
-                            )
-                        }
-
-                        ColorRange.BlueToPurple -> {
-                            Color(
-                                red = (255 * rangeProgress).moveColorTo(lightCenter, radiusProgress).roundToInt(),
-                                green = 0.moveColorTo(lightCenter, radiusProgress),
-                                blue = 255.moveColorTo(lightCenter, radiusProgress),
-                            )
-                        }
-
-                        ColorRange.PurpleToRed -> {
-                            Color(
-                                red = 255.moveColorTo(lightCenter, radiusProgress),
-                                green = 0.moveColorTo(lightCenter, radiusProgress),
-                                blue = (255 * (1 - rangeProgress)).moveColorTo(lightCenter, radiusProgress).roundToInt(),
-                            )
-                        }
-                    }
-                    pickerLocation = getBoundedPointWithInRadius(
-                        x,
-                        y,
-                        length,
-                        radius,
-                        BoundedPointStrategy.Inside
-                    )
+                    onGestureEvent(it.x, it.y)
+                }
+            }
+            .pointerInput(Unit){
+                detectDragGestures { change, _ ->
+                    onGestureEvent(change.position.x, change.position.y)
                 }
             }
         ) {
@@ -166,10 +180,7 @@ internal fun CircleColorPicker(
                 ShaderBrush(
                     RadialGradientShader(
                         Offset(size.width / 2f, size.height / 2f),
-                        colors = listOf(
-                            colorPickerCenterColor(lightCenter),
-                            Color.Transparent
-                        ),
+                        colors = listOf(colorPickerCenterColor(lightCenter), Color.Transparent),
                         radius = size.width / 2f
                     )
                 )
@@ -180,10 +191,7 @@ internal fun CircleColorPicker(
         if (showBrightnessBar) {
             Spacer(modifier = Modifier.height(16.dp))
             ColorSlider(
-                colors = listOf(
-                    colorPickerCenterColor(lightCenter),
-                    pickerColor
-                ),
+                colors = listOf(colorPickerCenterColor(lightCenter), pickerColor),
                 initialColor = pickerColor
             ) {
                 brightness = 1 - it

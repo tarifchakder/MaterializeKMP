@@ -6,15 +6,17 @@ import androidx.compose.ui.unit.dp
 
 sealed class ColorPickerType {
     /**
+     * @param colorPickerSize Sets the size of the color preview.
      * @param showAlphaBar Sets the visibility of the alpha bar.
      */
     class Classic(
+        val colorPickerSize: Dp = 200.dp,
         val showAlphaBar: Boolean = true,
-        val initialColor: Color = Color.Red,
-        val colorPickerSize: Dp = 200.dp
+        val initialColor: Color = Color.Red
     ) : ColorPickerType()
 
     /**
+     * @param colorPickerSize Sets the size of the color preview.
      * @param showBrightnessBar Sets the visibility of the brightness bar.
      * @param showAlphaBar Sets the visibility of the alpha bar.
      * @param lightCenter Changes the center of the circle to black or white.

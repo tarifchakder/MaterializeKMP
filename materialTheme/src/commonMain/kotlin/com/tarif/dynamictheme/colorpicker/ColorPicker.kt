@@ -56,9 +56,9 @@ fun ColorPicker(
     Box(modifier = modifier) {
         when (type) {
             is ColorPickerType.Classic -> ClassicColorPicker(
+                colorPickerSize = type.colorPickerSize,
                 showAlphaBar = type.showAlphaBar,
                 initialColor = type.initialColor,
-                size = type.colorPickerSize,
                 onPickedColor = onPickedColor,
             )
 
@@ -73,7 +73,7 @@ fun ColorPicker(
                 )
 
             is ColorPickerType.Ring -> RingColorPicker(
-                size = type.colorPickerSize,
+                colorPickerSize = type.colorPickerSize,
                 ringWidth = type.ringWidth,
                 previewRadius = type.previewRadius,
                 showLightColorBar = type.showLightnessBar,
