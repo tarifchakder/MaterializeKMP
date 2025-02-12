@@ -50,7 +50,7 @@ import kotlin.math.sin
 @Composable
 internal fun RingColorPicker(
     modifier: Modifier = Modifier,
-    size: Dp,
+    colorPickerSize: Dp,
     ringWidth: Dp,
     previewRadius: Dp,
     showLightColorBar: Boolean,
@@ -67,11 +67,11 @@ internal fun RingColorPicker(
     var pickerLocation by remember(radius) {
         mutableStateOf(
             getBoundedPointWithInRadius(
-                radius * 2,
-                radius,
-                getLength(radius * 2, radius, radius),
-                radius - ringWidthPx / 2,
-                BoundedPointStrategy.Edge
+                x = radius * 2,
+                y = radius,
+                length = getLength(radius * 2, radius, radius),
+                radius = radius - ringWidthPx / 2,
+                strategy = BoundedPointStrategy.Edge
             )
         )
     }
@@ -115,56 +115,26 @@ internal fun RingColorPicker(
         val (rangeProgress, range) = calculateRangeProgress(progress)
 
         val (red, green, blue) = when (range) {
-            ColorRange.RedToYellow -> Triple(
-                255,
-                (255 * rangeProgress).roundToInt(),
-                0
-            )
+            ColorRange.RedToYellow -> Triple(255, (255 * rangeProgress).roundToInt(), 0)
 
-            ColorRange.YellowToGreen -> Triple(
-                (255 * (1 - rangeProgress)).roundToInt(),
-                255,
-                0
-            )
+            ColorRange.YellowToGreen -> Triple((255 * (1 - rangeProgress)).roundToInt(), 255, 0)
 
-            ColorRange.GreenToCyan -> Triple(
-                0,
-                255,
-                (255 * rangeProgress).roundToInt()
-            )
+            ColorRange.GreenToCyan -> Triple(0, 255, (255 * rangeProgress).roundToInt())
 
-            ColorRange.CyanToBlue -> Triple(
-                0,
-                (255 * (1 - rangeProgress)).roundToInt(),
-                255
-            )
+            ColorRange.CyanToBlue -> Triple(0, (255 * (1 - rangeProgress)).roundToInt(), 255)
 
-            ColorRange.BlueToPurple -> Triple(
-                (255 * rangeProgress).roundToInt(),
-                0,
-                255
-            )
+            ColorRange.BlueToPurple -> Triple((255 * rangeProgress).roundToInt(), 0, 255)
 
-            ColorRange.PurpleToRed -> Triple(
-                255,
-                0,
-                (255 * (1 - rangeProgress)).roundToInt()
-            )
+            ColorRange.PurpleToRed -> Triple(255, 0, (255 * (1 - rangeProgress)).roundToInt())
         }
 
-        pickerLocation = getBoundedPointWithInRadius(
-            x,
-            y,
-            length,
-            radius - ringWidthPx / 2,
-            BoundedPointStrategy.Edge
-        )
+        pickerLocation = getBoundedPointWithInRadius(x, y, length, radius - ringWidthPx / 2, BoundedPointStrategy.Edge)
         selectedColor = Color(red, green, blue)
     }
 
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
         Canvas(modifier = modifier
-            .size(size)
+            .size(colorPickerSize)
             .onSizeChanged {
                 radius = it.width.toFloat() / 2
             }
