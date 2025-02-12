@@ -37,28 +37,31 @@ internal fun ColorSlider(
         onProgress(progress)
     }
 
+    fun onGestureEvent(xPosition: Float) {
+        val x = xPosition.coerceIn(0f, slideBarSize.width.toFloat())
+        progress = (x / slideBarSize.width).coerceIn(0f, 1.5f)
+    }
+
     Canvas(
         modifier = Modifier
             .fillMaxWidth()
             .height(22.dp)
-            .onSizeChanged {
-                slideBarSize = it
-            }
+            .onSizeChanged { slideBarSize = it }
             .pointerInput(Unit){
                 detectTapGestures {
-                    val xPosition = it.x.coerceIn(0f, slideBarSize.width.toFloat())
-                    progress = (xPosition / slideBarSize.width).coerceIn(0f, 1.5f)
+                    onGestureEvent(it.x)
                 }
             }
             .pointerInput(Unit) {
                 detectDragGestures { change, _ ->
-                    val xPosition = change.position.x.coerceIn(0f, slideBarSize.width.toFloat())
-                    progress = (xPosition / slideBarSize.width).coerceIn(0f, 1.5f)
+                    onGestureEvent(change.position.x)
                 }
             }
             .clip(RoundedCornerShape(100))
     ) {
+
         drawTransparentBackground(3)
+
         drawRect(
             brush = Brush.horizontalGradient(
                 colors = colors,
