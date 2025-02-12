@@ -28,6 +28,7 @@ sealed class ColorPickerType {
     ) : ColorPickerType()
 
     /**
+     * @param colorPickerSize Sets the size of the color preview circle.
      * @param ringWidth Sets the color ring width.
      * @param previewRadius Sets the radius of the center color preview circle.
      * @param showLightnessBar Sets the visibility of the lightness bar.
@@ -36,6 +37,7 @@ sealed class ColorPickerType {
      * @param showColorPreview Sets the visibility of the center color preview circle.
      */
     class Ring(
+        val colorPickerSize: Dp = 200.dp,
         val ringWidth: Dp = 10.dp,
         val previewRadius: Dp = 80.dp,
         val showLightnessBar: Boolean = true,
@@ -43,6 +45,5 @@ sealed class ColorPickerType {
         val showAlphaBar: Boolean = true,
         val showColorPreview: Boolean = true,
         val initialColor: Color = Color.Red,
-        val colorPickerSize: Dp = 200.dp
     ) : ColorPickerType()
 }
