@@ -1,5 +1,4 @@
-<img width="500px" src="screenshot/kmp_theme_banner.png" alt="logo"/>
-<br />
+## kmp material theme
 
 This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop.
 
