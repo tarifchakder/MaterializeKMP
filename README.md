@@ -1,4 +1,4 @@
-## kmp material theme
+# kmp material theme
 
 This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop.
 
