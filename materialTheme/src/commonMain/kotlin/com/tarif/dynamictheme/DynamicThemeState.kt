@@ -6,25 +6,42 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 
 /**
- * State object that holds the current seed color of  material theme.
+ * Represents the state of a dynamic theme, holding the current color seed or a set of color seeds used to generate the theme's color scheme.
  *
- * @param[initialColorTuple] The data class containing some basic color required for generating material color
+ * This class provides a way to manage and update the base colors for a dynamic Material theme. It stores a [ColorTuple]
+ * which represents the primary, secondary, and tertiary seed colors. Changes to the `colorTuple` will trigger recomposition,
+ * allowing the UI to dynamically adapt to the updated color scheme.
+ *
+ * @param initialColorTuple The initial [ColorTuple] containing the seed colors for generating the theme's color scheme.
+ *                          This is used to set the initial state of the dynamic theme.
  */
 @Stable
 class DynamicThemeState internal constructor(initialColorTuple: ColorTuple) {
 
-    val colorTuple: MutableState<ColorTuple> = mutableStateOf(initialColorTuple)
+    /**
+     * The current color seed tuple used for generating the dynamic theme.
+     *
+     * Changes to this state will trigger recomposition.
+     */
+    var colorTuple: MutableState<ColorTuple> = mutableStateOf(initialColorTuple)
+        private set
 
-    fun updateColor(color: Color) {
-        colorTuple.value = ColorTuple(
-            primary = color,
-            secondary = null,
-            tertiary = null
-        )
+    /**
+     * Updates the primary color seed.
+     *
+     * @param newPrimaryColor The new primary color seed.
+     */
+    fun updatePrimaryColor(newPrimaryColor: Color) {
+        colorTuple.value = colorTuple.value.copy(primary = newPrimaryColor)
     }
 
-    fun updateColorTuple(newColorTuple: ColorTuple) {
-        colorTuple.value = newColorTuple
+    /**
+     * Updates the color seed tuple with a new set of colors.
+     *
+     * @param newColorSeedTuple The new [colorTuple] to use.
+     */
+    fun updateColorSeedTuple(newColorSeedTuple: ColorTuple) {
+        colorTuple.value = newColorSeedTuple
     }
 
 }
