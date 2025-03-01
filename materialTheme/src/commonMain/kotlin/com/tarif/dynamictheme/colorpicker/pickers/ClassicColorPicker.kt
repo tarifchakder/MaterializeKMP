@@ -33,10 +33,13 @@ import com.tarif.dynamictheme.colorpicker.component.AlphaColorBar
 import com.tarif.dynamictheme.colorpicker.component.ColorSlider
 import com.tarif.dynamictheme.colorpicker.model.ColorRange
 import com.tarif.dynamictheme.colorpicker.model.Colors.gradientColors
+import com.tarif.dynamictheme.extension.blue
 import com.tarif.dynamictheme.extension.calculateRangeProgress
 import com.tarif.dynamictheme.extension.darken
 import com.tarif.dynamictheme.extension.drawColorSelector
+import com.tarif.dynamictheme.extension.green
 import com.tarif.dynamictheme.extension.lighten
+import com.tarif.dynamictheme.extension.red
 import kotlin.math.roundToInt
 
 @ExperimentalComposeUiApi
@@ -66,10 +69,10 @@ internal fun ClassicColorPicker(
         val verticalProgress = (pickerPosition.y / pickerSizeInPixels.height).coerceIn(0f, 1f)
 
         return Color(
-            red= baseColor.red.lighten(horizontalProgress).darken(verticalProgress),
-            green = baseColor.green.lighten(horizontalProgress).darken(verticalProgress),
-            blue = baseColor.blue.lighten(horizontalProgress).darken(verticalProgress),
-            alpha = alphaValue
+            red= baseColor.red().lighten(horizontalProgress).darken(verticalProgress),
+            green = baseColor.green().lighten(horizontalProgress).darken(verticalProgress),
+            blue = baseColor.blue().lighten(horizontalProgress).darken(verticalProgress),
+            alpha = alphaValue.roundToInt()
         )
     }
 
