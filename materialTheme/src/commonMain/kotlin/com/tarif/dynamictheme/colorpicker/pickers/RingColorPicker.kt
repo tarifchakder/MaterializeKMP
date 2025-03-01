@@ -47,70 +47,78 @@ import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
+/**
+ * A composable function that displays a ring-based color picker.
+ *
+ * This color picker allows the user to select a color by interacting with a circular ring.
+ * It also provides optional controls for lightness, darkness, and opacity, as well as a preview indicator.
+ *
+ * @param modifier Modifier to be applied to the layout.
+ * @param colorPickerSize The size of the color picker */
 @Composable
 internal fun RingColorPicker(
     modifier: Modifier = Modifier,
     colorPickerSize: Dp,
-    ringWidth: Dp,
-    previewRadius: Dp,
-    showLightColorBar: Boolean,
+    ringThickness: Dp,
+    previewIndicatorRadius: Dp,
+    showLightnessControl: Boolean,
     showDarkColorBar: Boolean,
-    showAlphaBar: Boolean,
-    showColorPreview: Boolean,
-    initialColor: Color = Color.Red,
-    onPickedColor: (Color) -> Unit,
+    showOpacityControl: Boolean,
+    showPreviewIndicator: Boolean,
+    seedColor: Color = Color.Red,
+    onColorChanged: (Color) -> Unit,
 ) {
     val density = LocalDensity.current
-    val ringWidthPx = remember { with(density) { ringWidth.toPx() } }
-    val previewRadiusPx = remember { with(density) { previewRadius.toPx() } }
+    val ringThicknessPx = remember { with(density) { ringThickness.toPx() } }
+    val previewIndicatorRadiusPx = remember { with(density) { previewIndicatorRadius.toPx() } }
     var radius by remember { mutableStateOf(0f) }
-    var pickerLocation by remember(radius) {
+    var colorPickerPosition by remember(radius) {
         mutableStateOf(
             getBoundedPointWithInRadius(
                 x = radius * 2,
                 y = radius,
                 length = getLength(radius * 2, radius, radius),
-                radius = radius - ringWidthPx / 2,
+                radius = radius - ringThicknessPx / 2,
                 strategy = BoundedPointStrategy.Edge
             )
         )
     }
-    var selectedColor by remember { mutableStateOf(initialColor) }
-    var color by remember { mutableStateOf(initialColor) }
-    var lightColor by remember { mutableStateOf(initialColor) }
-    var darkColor by remember { mutableStateOf(initialColor) }
-    val lightness = remember { mutableStateOf(initialColor.lightness()) }
-    val darkness = remember { mutableStateOf(initialColor.darkness()) }
-    val alpha = remember { mutableStateOf(initialColor.alpha) }
+    var selectedColor by remember { mutableStateOf(seedColor) }
+    var color by remember { mutableStateOf(seedColor) }
+    var selectedLightColor by remember { mutableStateOf(seedColor) }
+    var darkColor by remember { mutableStateOf(seedColor) }
+    val lightnessFactor = remember { mutableStateOf(seedColor.lightness()) }
+    val darkness = remember { mutableStateOf(seedColor.darkness()) }
+    val alpha = remember { mutableStateOf(seedColor.alpha) }
 
-    LaunchedEffect(initialColor, radius) {
+    LaunchedEffect(seedColor, radius) {
         if (radius > 0) {
-            val hsv=colorToHSV(initialColor)
+            val hsv=colorToHSV(seedColor)
             val angle = MathHelper.toRadians(hsv[0].toDouble())
             val saturation = hsv[1]
 
-            val x = radius + cos(angle) * saturation * radius
-            val y = radius + sin(angle) * saturation * radius
-            pickerLocation = Offset(x.toFloat(), y.toFloat())
+            val touchX = radius + cos(angle) * saturation * radius
+            val touchY = radius + sin(angle) * saturation * radius
+            colorPickerPosition = Offset(touchX.toFloat(), touchY.toFloat())
         }
     }
 
-    LaunchedEffect(selectedColor, lightness, darkness, alpha) {
-        var red = selectedColor.red().lighten(lightness.value)
-        var green = selectedColor.green().lighten(lightness.value)
-        var blue = selectedColor.blue().lighten(lightness.value)
-        lightColor = Color(red, green, blue, 255)
+    LaunchedEffect(selectedColor, lightnessFactor, darkness, alpha) {
+        var red = selectedColor.red().lighten(lightnessFactor.value)
+        var green = selectedColor.green().lighten(lightnessFactor.value)
+        var blue = selectedColor.blue().lighten(lightnessFactor.value)
+        selectedLightColor = Color(red, green, blue, 255)
         red = red.darken(darkness.value)
         green = green.darken(darkness.value)
         blue = blue.darken(darkness.value)
         darkColor = Color(red, green, blue, 255)
         color = Color(red, green, blue, (255 * alpha.value).roundToInt())
-        onPickedColor(color)
+        onColorChanged(color)
     }
 
-    fun onGestureEvent(x: Float, y: Float) {
-        val angle = ((atan2(y - radius, x - radius) * 180.0 / PI) + 360) % 360
-        val length = getLength(x, y, radius)
+    fun onGestureEvent(touchX: Float, touchY: Float) {
+        val angle = ((atan2(touchY - radius, touchX - radius) * 180.0 / PI) + 360) % 360
+        val length = getLength(touchX, touchY, radius)
         val progress = angle / 360f
         val (rangeProgress, range) = calculateRangeProgress(progress)
 
@@ -123,12 +131,12 @@ internal fun RingColorPicker(
 
             ColorRange.CyanToBlue -> Triple(0, (255 * (1 - rangeProgress)).roundToInt(), 255)
 
-            ColorRange.BlueToPurple -> Triple((255 * rangeProgress).roundToInt(), 0, 255)
+            ColorRange.BlueToMagenta -> Triple((255 * rangeProgress).roundToInt(), 0, 255)
 
-            ColorRange.PurpleToRed -> Triple(255, 0, (255 * (1 - rangeProgress)).roundToInt())
+            ColorRange.MagentaToRed -> Triple(255, 0, (255 * (1 - rangeProgress)).roundToInt())
         }
 
-        pickerLocation = getBoundedPointWithInRadius(x, y, length, radius - ringWidthPx / 2, BoundedPointStrategy.Edge)
+        colorPickerPosition = getBoundedPointWithInRadius(touchX, touchY, length, radius - ringThicknessPx / 2, BoundedPointStrategy.Edge)
         selectedColor = Color(red, green, blue)
     }
 
@@ -151,20 +159,20 @@ internal fun RingColorPicker(
         ) {
             drawCircle(
                 Brush.sweepGradient(gradientColors),
-                radius = radius - ringWidthPx / 2f,
-                style = Stroke(ringWidthPx)
+                radius = radius - ringThicknessPx / 2f,
+                style = Stroke(ringThicknessPx)
             )
-            if (showColorPreview) {
-                drawCircle(color, radius = previewRadiusPx)
+            if (showPreviewIndicator) {
+                drawCircle(color, radius = previewIndicatorRadiusPx)
             }
-            drawColorSelector(selectedColor, pickerLocation)
+            drawColorSelector(selectedColor, colorPickerPosition)
         }
 
-        LightColorBar(showLightColorBar, selectedColor, initialColor, lightness)
+        LightColorBar(showLightnessControl, selectedColor, seedColor, lightnessFactor)
 
-        DarkColorBar(showDarkColorBar, lightColor, initialColor, darkness)
+        DarkColorBar(showDarkColorBar, selectedLightColor, seedColor, darkness)
 
-        AlphaColorBar(showAlphaBar, darkColor, initialColor, alpha)
+        AlphaColorBar(showOpacityControl, darkColor, seedColor, alpha)
 
     }
 }

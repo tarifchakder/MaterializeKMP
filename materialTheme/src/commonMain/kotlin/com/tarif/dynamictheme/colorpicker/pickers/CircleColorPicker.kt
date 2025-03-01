@@ -27,8 +27,8 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tarif.dynamictheme.colorpicker.component.AlphaColorBar
+import com.tarif.dynamictheme.colorpicker.component.ColorSlider
 import com.tarif.dynamictheme.colorpicker.helper.BoundedPointStrategy
-import com.tarif.dynamictheme.colorpicker.helper.MathHelper
 import com.tarif.dynamictheme.colorpicker.helper.MathHelper.getBoundedPointWithInRadius
 import com.tarif.dynamictheme.colorpicker.helper.MathHelper.getLength
 import com.tarif.dynamictheme.colorpicker.model.ColorRange
@@ -36,122 +36,115 @@ import com.tarif.dynamictheme.colorpicker.model.Colors.gradientColors
 import com.tarif.dynamictheme.extension.blue
 import com.tarif.dynamictheme.extension.calculateRangeProgress
 import com.tarif.dynamictheme.extension.colorPickerCenterColor
-import com.tarif.dynamictheme.extension.colorToHSV
 import com.tarif.dynamictheme.extension.drawColorSelector
 import com.tarif.dynamictheme.extension.green
 import com.tarif.dynamictheme.extension.moveColorTo
 import com.tarif.dynamictheme.extension.red
 import com.tarif.dynamictheme.extension.toDegrees
 import kotlin.math.atan2
-import kotlin.math.cos
 import kotlin.math.roundToInt
-import kotlin.math.sin
 
+/**
+ * A composable function that displays a circular color picker.
+ *
+ * This picker allows the user to select a color from a circular gradient. It supports
+ * customization of size, alpha channel visibility, brightness adjustment, and inverting the center color.
+ *
+ * @param modifier Modifier for styling the color picker.
+ * @param pickerSize The size (width and height) of the circular color picker.
+ * @param showAlpha Whether to show the alpha (transparency) control.
+ * @param showBrightness Whether to show the brightness slider.
+ * @param invertCenter Whether to invert the center color of the picker. When true, the center is black when brightness is 1 and white when brightness is 0, otherwise it will be white when brightness is 1 and black when brightness is 0.
+ * @param initialColor The initial color of the picker. Defaults to red. */
 @Composable
 internal fun CircleColorPicker(
     modifier: Modifier = Modifier,
-    colorPickerSize: Dp,
-    showAlphaBar: Boolean,
-    showBrightnessBar: Boolean,
-    lightCenter: Boolean,
+    pickerSize: Dp,
+    showAlpha: Boolean,
+    showBrightness: Boolean,
+    invertCenter: Boolean,
     initialColor: Color = Color.Red,
-    onPickedColor: (Color) -> Unit
+    onColorChange: (Color) -> Unit
 ) {
+    val initialPickerOffset = pickerSize.value / 2f
     var radius by remember { mutableStateOf(0f) }
-    var pickerLocation by remember { mutableStateOf(Offset.Unspecified) }
-    var pickerColor by remember { mutableStateOf(initialColor) }
+    var pointerOffset by remember { mutableStateOf(Offset(initialPickerOffset,initialPickerOffset)) }
+    var currentColor by remember { mutableStateOf(initialColor) }
     var brightness by remember { mutableStateOf(1f) }
-    val alpha = remember { mutableStateOf(initialColor.alpha) }
+    val currentAlpha = remember { mutableStateOf(initialColor.alpha) }
 
-    LaunchedEffect(initialColor) {
-            val hsv = colorToHSV(initialColor)
-            val angle = MathHelper.toRadians(hsv[0].toDouble())
-            val saturation = hsv[1]
-            brightness = hsv[2]
-
-            val x = radius + cos(angle) * saturation
-            val y = radius + sin(angle) * saturation
-            pickerLocation = Offset(x.toFloat(), y.toFloat())
-            pickerColor = initialColor
-    }
-
-    LaunchedEffect(brightness, pickerColor, alpha) {
-            onPickedColor(
+    LaunchedEffect(brightness, currentColor, currentAlpha) {
+            onColorChange(
                 Color(
-                    pickerColor.red().moveColorTo(!lightCenter, brightness),
-                    pickerColor.green().moveColorTo(!lightCenter, brightness),
-                    pickerColor.blue().moveColorTo(!lightCenter, brightness),
-                    (255 * alpha.value).roundToInt()
+                    currentColor.red().moveColorTo(!invertCenter, brightness),
+                    currentColor.green().moveColorTo(!invertCenter, brightness),
+                    currentColor.blue().moveColorTo(!invertCenter, brightness),
+                    (255 * currentAlpha.value).roundToInt()
                 )
             )
     }
 
-    fun onGestureEvent(x: Float, y: Float) {
-        val angle = (toDegrees(atan2(y - radius, x - radius).toDouble()) + 360) % 360
-        val length = getLength(x, y, radius)
-        val radiusProgress = 1 - (length / radius).coerceIn(0f, 1f)
-        val angleProgress = angle / 360f
-        val (rangeProgress, range) = calculateRangeProgress(angleProgress)
+    fun onGestureEvent(horizontal: Float, vertical: Float) {
+        val colorWheelAngle = (toDegrees(atan2(vertical - radius, horizontal - radius).toDouble()) + 360) % 360
+        val distanceToCenter = getLength(horizontal, vertical, radius)
+        val radialProgress = 1 - (distanceToCenter / radius).coerceIn(0f, 1f)
+        val angularProgress = colorWheelAngle / 360f
+        val (rangeProgress, range) = calculateRangeProgress(angularProgress)
 
-        pickerColor = when (range) {
+        currentColor = when (range) {
             ColorRange.RedToYellow -> {
                 Color(
-                    red = 255.moveColorTo(lightCenter, radiusProgress),
-                    green = (255f * rangeProgress).moveColorTo(lightCenter, radiusProgress)
-                        .roundToInt(),
-                    blue = 0.moveColorTo(lightCenter, radiusProgress),
+                    red = 255.moveColorTo(invertCenter, radialProgress),
+                    green = (255f * rangeProgress).moveColorTo(invertCenter, radialProgress).roundToInt(),
+                    blue = 0.moveColorTo(invertCenter, radialProgress),
                 )
             }
 
             ColorRange.YellowToGreen -> {
                 Color(
-                    red = (255 * (1 - rangeProgress)).moveColorTo(lightCenter, radiusProgress)
-                        .roundToInt(),
-                    green = 255.moveColorTo(lightCenter, radiusProgress),
-                    blue = 0.moveColorTo(lightCenter, radiusProgress),
+                    red = (255 * (1 - rangeProgress)).moveColorTo(invertCenter, radialProgress).roundToInt(),
+                    green = 255.moveColorTo(invertCenter, radialProgress),
+                    blue = 0.moveColorTo(invertCenter, radialProgress),
                 )
             }
 
             ColorRange.GreenToCyan -> {
                 Color(
-                    red = 0.moveColorTo(lightCenter, radiusProgress),
-                    green = 255.moveColorTo(lightCenter, radiusProgress),
-                    blue = (255 * rangeProgress).moveColorTo(lightCenter, radiusProgress)
-                        .roundToInt(),
+                    red = 0.moveColorTo(invertCenter, radialProgress),
+                    green = 255.moveColorTo(invertCenter, radialProgress),
+                    blue = (255 * rangeProgress).moveColorTo(invertCenter, radialProgress).roundToInt(),
                 )
             }
 
             ColorRange.CyanToBlue -> {
                 Color(
-                    red = 0.moveColorTo(lightCenter, radiusProgress),
-                    green = (255 * (1 - rangeProgress)).moveColorTo(lightCenter, radiusProgress)
+                    red = 0.moveColorTo(invertCenter, radialProgress),
+                    green = (255 * (1 - rangeProgress)).moveColorTo(invertCenter, radialProgress)
                         .roundToInt(),
-                    blue = 255.moveColorTo(lightCenter, radiusProgress),
+                    blue = 255.moveColorTo(invertCenter, radialProgress),
                 )
             }
 
-            ColorRange.BlueToPurple -> {
+            ColorRange.BlueToMagenta -> {
                 Color(
-                    red = (255 * rangeProgress).moveColorTo(lightCenter, radiusProgress)
-                        .roundToInt(),
-                    green = 0.moveColorTo(lightCenter, radiusProgress),
-                    blue = 255.moveColorTo(lightCenter, radiusProgress),
+                    red = (255 * rangeProgress).moveColorTo(invertCenter, radialProgress).roundToInt(),
+                    green = 0.moveColorTo(invertCenter, radialProgress),
+                    blue = 255.moveColorTo(invertCenter, radialProgress),
                 )
             }
 
-            ColorRange.PurpleToRed -> {
+            ColorRange.MagentaToRed -> {
                 Color(
-                    red = 255.moveColorTo(lightCenter, radiusProgress),
-                    green = 0.moveColorTo(lightCenter, radiusProgress),
-                    blue = (255 * (1 - rangeProgress)).moveColorTo(lightCenter, radiusProgress)
-                        .roundToInt(),
+                    red = 255.moveColorTo(invertCenter, radialProgress),
+                    green = 0.moveColorTo(invertCenter, radialProgress),
+                    blue = (255 * (1 - rangeProgress)).moveColorTo(invertCenter, radialProgress).roundToInt(),
                 )
             }
         }
-        pickerLocation = getBoundedPointWithInRadius(
-            x,
-            y,
-            length,
+        pointerOffset = getBoundedPointWithInRadius(
+            horizontal,
+            vertical,
+            distanceToCenter,
             radius,
             BoundedPointStrategy.Inside
         )
@@ -159,7 +152,7 @@ internal fun CircleColorPicker(
 
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
         Canvas(modifier = modifier
-            .size(colorPickerSize)
+            .size(pickerSize)
             .onSizeChanged {
                 radius = it.width / 2f
             }
@@ -180,25 +173,25 @@ internal fun CircleColorPicker(
                 ShaderBrush(
                     RadialGradientShader(
                         Offset(size.width / 2f, size.height / 2f),
-                        colors = listOf(colorPickerCenterColor(lightCenter), Color.Transparent),
+                        colors = listOf(colorPickerCenterColor(invertCenter), Color.Transparent),
                         radius = size.width / 2f
                     )
                 )
             )
-            drawColorSelector(pickerColor, pickerLocation)
+            drawColorSelector(currentColor, pointerOffset)
         }
 
-        if (showBrightnessBar) {
+        if (showBrightness) {
             Spacer(modifier = Modifier.height(16.dp))
             ColorSlider(
-                colors = listOf(colorPickerCenterColor(lightCenter), pickerColor),
-                initialColor = pickerColor
+                colors = listOf(colorPickerCenterColor(invertCenter), currentColor),
+                selectedColor = currentColor
             ) {
                 brightness = 1 - it
             }
         }
 
-        AlphaColorBar(showAlphaBar, pickerColor, initialColor, alpha)
+        AlphaColorBar(showAlpha, currentColor, initialColor, currentAlpha)
     }
 
 }

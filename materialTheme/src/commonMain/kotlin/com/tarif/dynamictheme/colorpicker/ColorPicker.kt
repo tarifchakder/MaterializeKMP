@@ -56,32 +56,32 @@ fun ColorPicker(
     Box(modifier = modifier) {
         when (type) {
             is ColorPickerType.Classic -> ClassicColorPicker(
-                colorPickerSize = type.colorPickerSize,
-                showAlphaBar = type.showAlphaBar,
-                initialColor = type.initialColor,
-                onPickedColor = onPickedColor,
+                pickerSize = type.colorPickerSize,
+                isAlphaSliderVisible = type.isAlphaBarVisible,
+                defaultColor = type.startColor,
+                onNewColor = onPickedColor,
             )
 
             is ColorPickerType.Circle -> CircleColorPicker(
-                showAlphaBar = type.showAlphaBar,
-                showBrightnessBar = type.showBrightnessBar,
-                lightCenter = type.lightCenter,
-                initialColor = type.initialColor,
-                colorPickerSize = type.colorPickerSize,
-                onPickedColor = onPickedColor,
+                showAlpha = type.isAlphaBarVisible,
+                showBrightness = type.isBrightnessBarVisible,
+                invertCenter = type.isLightCenter,
+                initialColor = type.startColor,
+                pickerSize = type.colorPickerSize,
+                onColorChange = onPickedColor,
 
                 )
 
             is ColorPickerType.Ring -> RingColorPicker(
                 colorPickerSize = type.colorPickerSize,
-                ringWidth = type.ringWidth,
-                previewRadius = type.previewRadius,
-                showLightColorBar = type.showLightnessBar,
-                showDarkColorBar = type.showDarknessBar,
-                showAlphaBar = type.showAlphaBar,
-                showColorPreview = type.showColorPreview,
-                initialColor = type.initialColor,
-                onPickedColor = onPickedColor
+                ringThickness = type.colorRingWidth,
+                previewIndicatorRadius = type.previewCircleRadius,
+                showLightnessControl = type.isLightnessBarVisible,
+                showDarkColorBar = type.isDarknessBarVisible,
+                showOpacityControl = type.isAlphaBarVisible,
+                showPreviewIndicator = type.isColorPreviewVisible,
+                seedColor = type.startColor,
+                onColorChanged = onPickedColor
             )
         }
     }
