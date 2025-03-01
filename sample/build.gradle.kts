@@ -67,6 +67,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.alert.kmp)
+            implementation(libs.multiplatform.markdown)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
