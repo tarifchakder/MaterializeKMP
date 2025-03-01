@@ -5,7 +5,8 @@ It is a Compose Multiplatform library targeting Android, iOS, Web, Desktop and d
 ## Support Platforms
 
 This library is written for Compose Multiplatform, and can be used on the following platforms:
-  1.Android
-  2.iOS
-  3.JVM (Desktop)
-  4.JavaScript/wasm (Browser)
+
+- Android
+- iOS
+- JVM (Desktop)
+- JavaScript/wasm (Browser)
