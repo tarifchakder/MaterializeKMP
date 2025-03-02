@@ -97,7 +97,6 @@ mavenPublishing {
         version = "0.0.1"
     )
 
-    // Configure POM metadata for the published artifact
     pom {
         name.set("MaterializeKMP")
         description.set("Dynamic Theme Manager: Essential Kotlin Multiplatform Library for Seamless Theming Across All Platforms")
@@ -111,7 +110,6 @@ mavenPublishing {
             }
         }
 
-        // Specify developer information
         developers {
             developer {
                 id.set("tarif")
@@ -120,15 +118,12 @@ mavenPublishing {
             }
         }
 
-        // Specify SCM information
         scm {
             url.set("https://github.com/tarifchakder/MaterializeKMP")
         }
     }
 
-    // Configure publishing to Maven Central
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
 
-    // Enable GPG signing for all publications
     signAllPublications()
 }
