@@ -37,10 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.tarif.materialtheme.colorpicker.ColorPicker
-import com.tarif.materialtheme.colorpicker.model.ColorPickerType
-import com.tarif.materialtheme.extension.toHex
-import com.tarif.materialtheme.extension.transparentBackground
+import com.tarif.dynamictheme.colorpicker.ColorPicker
+import com.tarif.dynamictheme.colorpicker.model.ColorPickerType
+import com.tarif.dynamictheme.extension.toHex
+import com.tarif.dynamictheme.extension.transparentBackground
 
 @ExperimentalComposeUiApi
 @Composable
