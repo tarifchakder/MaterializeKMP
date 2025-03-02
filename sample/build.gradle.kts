@@ -108,7 +108,7 @@ dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.androidx.ui.text.android)
     debugImplementation(compose.uiTooling)
-    commonMainImplementation(project(":materialTheme"))
+    commonMainImplementation(project(":material-theme-kit"))
 }
 
 compose.desktop {
