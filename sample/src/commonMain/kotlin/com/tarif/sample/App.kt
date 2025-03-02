@@ -48,8 +48,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mikepenz.markdown.m3.Markdown
-import com.tarif.dynamictheme.DynamicTheme
-import com.tarif.dynamictheme.colorpicker.model.ColorPickerType
+import com.tarif.materializekmp.DynamicTheme
+import com.tarif.materializekmp.colorpicker.model.ColorPickerType
 import com.tarif.sample.component.ColorPickerDialog
 import com.tarif.sample.component.SegmentedButtonColors
 import com.tarif.sample.component.SegmentedButtonItem
