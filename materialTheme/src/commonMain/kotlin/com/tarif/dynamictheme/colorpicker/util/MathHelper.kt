@@ -1,4 +1,4 @@
-package com.tarif.dynamictheme.util
+package com.tarif.dynamictheme.colorpicker.util
 
 import androidx.compose.ui.geometry.Offset
 import kotlin.math.atan2
