@@ -73,7 +73,7 @@ fun DynamicTheme(
         isAmoled = isAmoled,
         isInvertColors = isInvertColors,
         colorTuple = dynamicThemeState.colorTuple.value,
-        style = colorPaletteStyle,
+        paletteStyle = colorPaletteStyle,
         contrastLevel = colorContrastLevel
     ).animateAllColors(
         isAnimateColorScheme = isAnimateColorScheme,
@@ -152,7 +152,7 @@ fun DynamicTheme(
         isAmoled = isAmoled,
         isInvertColors = isInvertColors,
         colorTuple = themeState.colorTuple.value,
-        style = colorPaletteStyle,
+        paletteStyle = colorPaletteStyle,
         contrastLevel = colorContrastLevel
     ).animateAllColors(
         isAnimateColorScheme = isAnimateColorScheme,
