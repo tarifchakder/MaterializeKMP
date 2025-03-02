@@ -7,7 +7,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.tarif.dynamictheme.colorpicker.pickers.ColorSlider
 
 @Composable
 internal fun LightColorBar(
@@ -20,7 +19,7 @@ internal fun LightColorBar(
         Spacer(modifier = Modifier.height(16.dp))
         ColorSlider(
             colors = listOf(Color.White, selectedColor),
-            initialColor=initialColor
+            selectedColor=initialColor
         ) {
             lightness.value = 1 - it
         }

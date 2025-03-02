@@ -73,4 +73,5 @@ sealed class ColorPickerType {
         val isColorPreviewVisible: Boolean = true,
         override val startColor: Color = Color.Red
     ) : ColorPickerType()
+
 }

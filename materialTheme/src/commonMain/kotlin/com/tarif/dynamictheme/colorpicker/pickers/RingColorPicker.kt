@@ -25,12 +25,14 @@ import androidx.compose.ui.unit.Dp
 import com.tarif.dynamictheme.colorpicker.component.AlphaColorBar
 import com.tarif.dynamictheme.colorpicker.component.DarkColorBar
 import com.tarif.dynamictheme.colorpicker.component.LightColorBar
-import com.tarif.dynamictheme.colorpicker.helper.BoundedPointStrategy
-import com.tarif.dynamictheme.colorpicker.helper.MathHelper
-import com.tarif.dynamictheme.colorpicker.helper.MathHelper.getBoundedPointWithInRadius
-import com.tarif.dynamictheme.colorpicker.helper.MathHelper.getLength
 import com.tarif.dynamictheme.colorpicker.model.ColorRange
 import com.tarif.dynamictheme.colorpicker.model.Colors.gradientColors
+import com.tarif.dynamictheme.colorpicker.util.BoundedPointStrategy
+import com.tarif.dynamictheme.colorpicker.util.ColorPickerHelper.darkness
+import com.tarif.dynamictheme.colorpicker.util.ColorPickerHelper.lightness
+import com.tarif.dynamictheme.colorpicker.util.MathHelper
+import com.tarif.dynamictheme.colorpicker.util.MathHelper.getBoundedPointWithInRadius
+import com.tarif.dynamictheme.colorpicker.util.MathHelper.getLength
 import com.tarif.dynamictheme.extension.blue
 import com.tarif.dynamictheme.extension.calculateRangeProgress
 import com.tarif.dynamictheme.extension.colorToHSV
@@ -39,8 +41,6 @@ import com.tarif.dynamictheme.extension.drawColorSelector
 import com.tarif.dynamictheme.extension.green
 import com.tarif.dynamictheme.extension.lighten
 import com.tarif.dynamictheme.extension.red
-import io.github.mohammedalaamorsi.colorpicker.helper.ColorPickerHelper.darkness
-import io.github.mohammedalaamorsi.colorpicker.helper.ColorPickerHelper.lightness
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -94,7 +94,7 @@ internal fun RingColorPicker(
     LaunchedEffect(seedColor, radius) {
         if (radius > 0) {
             val hsv=colorToHSV(seedColor)
-            val angle = MathHelper.toRadians(hsv[0].toDouble())
+            val angle = MathHelper.toDegrees(hsv[0].toDouble())
             val saturation = hsv[1]
 
             val touchX = radius + cos(angle) * saturation * radius

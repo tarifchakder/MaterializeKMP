@@ -13,8 +13,8 @@ internal fun calculateRangeProgress(progress: Double): Pair<Double, ColorRange> 
         1 -> ColorRange.YellowToGreen
         2 -> ColorRange.GreenToCyan
         3 -> ColorRange.CyanToBlue
-        4 -> ColorRange.BlueToPurple
-        else -> ColorRange.PurpleToRed
+        4 -> ColorRange.BlueToMagenta
+        else -> ColorRange.MagentaToRed
     }
     return progress * 6 - rangeIndex to range
 }

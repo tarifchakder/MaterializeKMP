@@ -28,11 +28,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tarif.dynamictheme.colorpicker.component.AlphaColorBar
 import com.tarif.dynamictheme.colorpicker.component.ColorSlider
-import com.tarif.dynamictheme.colorpicker.helper.BoundedPointStrategy
-import com.tarif.dynamictheme.colorpicker.helper.MathHelper.getBoundedPointWithInRadius
-import com.tarif.dynamictheme.colorpicker.helper.MathHelper.getLength
 import com.tarif.dynamictheme.colorpicker.model.ColorRange
 import com.tarif.dynamictheme.colorpicker.model.Colors.gradientColors
+import com.tarif.dynamictheme.colorpicker.util.BoundedPointStrategy
+import com.tarif.dynamictheme.colorpicker.util.MathHelper.getBoundedPointWithInRadius
+import com.tarif.dynamictheme.colorpicker.util.MathHelper.getLength
 import com.tarif.dynamictheme.extension.blue
 import com.tarif.dynamictheme.extension.calculateRangeProgress
 import com.tarif.dynamictheme.extension.colorPickerCenterColor
