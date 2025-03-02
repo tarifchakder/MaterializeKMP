@@ -29,7 +29,7 @@ import com.tarif.kmp.materialcolor.scheme.Variant
  * @param[isAmoled] Whether the scheme should be dark or light.
  * @return The generated [ColorScheme].
  */
-fun ColorScheme.toAmoled(
+internal fun ColorScheme.toAmoled(
     isAmoled: Boolean
 ): ColorScheme {
 
@@ -71,7 +71,7 @@ fun ColorScheme.toAmoled(
 /**
  * Create [ColorScheme] based on the given [DynamicScheme].
  */
-fun DynamicScheme.toColorScheme(): ColorScheme {
+internal fun DynamicScheme.toColorScheme(): ColorScheme {
     val colors = MaterialDynamicColors()
     val scheme = this
     return ColorScheme(
@@ -119,7 +119,7 @@ fun DynamicScheme.toColorScheme(): ColorScheme {
  * @param [enabled] whether invert color enabled
  * @return The generated [ColorScheme]
  */
-fun ColorScheme.invertColors(
+internal fun ColorScheme.invertColors(
     enabled: Boolean
 ): ColorScheme {
 
@@ -168,7 +168,7 @@ fun ColorScheme.invertColors(
  * @param[isDynamicColor] Whether the dynamic color should be enabled.
  * @return The generated [DynamicScheme].
  */
-fun ColorTuple.toDynamicScheme(
+internal fun ColorTuple.toDynamicScheme(
     isDynamicColor: Boolean,
     isDarkTheme: Boolean,
     style: PaletteStyle,
@@ -235,7 +235,7 @@ fun ColorTuple.toDynamicScheme(
  * @param[contrastLevel] The contrast level of the scheme.
  * @return The generated [DynamicScheme].
  */
-fun Color.toDynamicScheme(
+internal fun Color.toDynamicScheme(
     isDarkTheme: Boolean,
     style: PaletteStyle,
     contrastLevel: Double = 0.00,
@@ -262,7 +262,7 @@ fun Color.toDynamicScheme(
  * @return [ColorScheme] with animated colors.
  */
 @Composable
-fun ColorScheme.animateAllColors(
+internal fun ColorScheme.animateAllColors(
     isAnimateColorScheme: Boolean,
     animationSpec: AnimationSpec<Color>
 ): ColorScheme {

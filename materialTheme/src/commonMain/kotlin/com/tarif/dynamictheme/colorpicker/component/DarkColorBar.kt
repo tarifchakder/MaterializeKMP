@@ -7,7 +7,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.tarif.dynamictheme.colorpicker.pickers.ColorSlider
 
 @Composable
 internal fun DarkColorBar(
@@ -18,7 +17,7 @@ internal fun DarkColorBar(
 ) {
     if (showDarkColorBar) {
         Spacer(modifier = Modifier.height(16.dp))
-        ColorSlider(colors = listOf(Color.Black, lightColor), initialColor = initialColor) {
+        ColorSlider(colors = listOf(Color.Black, lightColor), selectedColor = initialColor) {
             darkness.value = 1 - it
         }
     }
