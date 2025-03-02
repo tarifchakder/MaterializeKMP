@@ -18,35 +18,42 @@ import com.tarif.dynamictheme.remember.rememberThemeState
 
 
 /**
-- * **DynamicTheme:** A highly customizable Material Design 3 theme that dynamically adapts its
-- * color scheme based on a provided base color, the user's system preferences, and optional
-- * device features.
-- *
-- * This composable provides a flexible way to create a visually appealing and adaptable user
-- * interface. It leverages Material You's dynamic color capabilities when available, falling
-- * back to a static, generated color scheme when not supported.
-- *
-- * **Key Features:**
-- *
-- * *   **Base Color Adaptation:** Generates a full color scheme (light and dark) derived from
-- *     a single `seedColor` (which serves as the primary color seed).
-- * *   **Dynamic Color (Material You):** Extracts colors from the user's wallpaper to create a
-- *     dynamic color scheme when `isDynamicColor` is true and the device supports it. This
-- *     feature provides a personalized and cohesive experience that integrates with the user's
-- *     device.
-- * *   **Dark/Light Modes:** Automatically switches between dark and light color schemes based
-- *     on the `isDarkTheme` parameter or the system's current dark mode setting.
-- * *   **AMOLED Mode:**  Optimizes the dark color scheme for AMOLED displays by using a true
-- *     black background when `isAmoled` is true. This can save battery life on compatible devices.
-- * *   **Color Inversion:** Inverts the colors of the generated color scheme with `isInvertColors`
-- *     (Note: This feature is automatically disabled when dynamic color is active). Useful for
-- *     accessibility and unique design styles.
-- * *   **Palette Styles:** Offers various palette styles (e.g., `PaletteStyle.TonalSpot`) to
-- *     customize the algorithm used to generate the color scheme. Each colorPaletteStyle produces a
-- *     different color harmony and visual feel */
+ * **DynamicTheme:** A highly customizable Material Design 3 theme that dynamically adapts its
+ * color scheme based on a provided seed color, the user's system preferences, and optional
+ * device features.
+ *
+ * This composable provides a flexible and powerful way to create a visually appealing and
+ * adaptable user interface. It leverages Material You's dynamic color capabilities when
+ * available, falling back to a static, generated color scheme when not supported.
+ *
+ * **Key Features:**
+ *
+ * *   **Seed Color Adaptation:** Generates a complete color scheme (light and dark) derived
+ *     from a single `seedColor`. This color acts as the primary color from which all
+ *     other colors in the scheme are derived.
+ * *   **Dynamic Color (Material You):** Extracts colors from the user's wallpaper to create
+ *     a dynamic color scheme when `isDynamicColor` is true and the device supports it.
+ *     This feature provides a personalized and cohesive experience that seamlessly
+ *     integrates with the user's device and wallpaper.
+ * *   **Dark/Light Modes:** Automatically switches between dark and light color schemes based
+ *     on the `isDarkTheme` parameter. If not explicitly set, it defaults to the system's
+ *     current dark mode setting.
+ * *   **AMOLED Mode:** Optimizes the dark color scheme for AMOLED displays by using a true
+ *     black background when `isAmoled` is true. This can significantly save battery life on
+ *     compatible devices.
+ * *   **Color Inversion:** Inverts the colors of the generated color scheme when `isInvertColors`
+ *     is true. This feature is automatically disabled when dynamic color is active. Useful for
+ *     accessibility and creating unique visual styles.
+ * *   **Palette Styles:** Offers various palette styles (e.g., `PaletteStyle.TonalSpot`) to
+ *     customize the algorithm used to generate the color scheme. Each `PaletteStyle` produces
+ *     a unique color harmony and overall visual feel.
+ * *   **Color Contrast:** Adjusts the contrast level of the color scheme using the
+ *     `colorContrastLevel` parameter, allowing for fine-tuning of readability and visual
+ *     hierarchy. Values typically range from -1.0 to 1.0, with 0.0 being the default.
+ * *   ** */
 @Composable
 fun DynamicTheme(
-    seedColor : Color,
+    seedColor: Color,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     isDynamicColor: Boolean = true,
     isAmoled: Boolean = false,
@@ -69,7 +76,7 @@ fun DynamicTheme(
 
     val colorScheme = rememberColorScheme(
         isDarkTheme = isDarkTheme,
-        isDynamicColor = isDynamicColor ,
+        isDynamicColor = isDynamicColor,
         isAmoled = isAmoled,
         isInvertColors = isInvertColors,
         colorTuple = dynamicThemeState.colorTuple.value,
@@ -80,7 +87,7 @@ fun DynamicTheme(
         animationSpec = colorTransitionSpec
     )
 
-    LaunchedEffect(initialColorTuple){
+    LaunchedEffect(initialColorTuple) {
         dynamicThemeState.updateColorSeedTuple(initialColorTuple)
     }
 
@@ -138,17 +145,17 @@ fun DynamicTheme(
     colorTransitionSpec: AnimationSpec<Color> = tween(300),
     content: @Composable () -> Unit,
 ) {
-   val defaultColorTuple = rememberColorTuple(
+    val defaultColorTuple = rememberColorTuple(
         colorTuple = colorTuple,
         isDynamicColor = isDynamicColor,
         isDarkTheme = isDarkTheme
     )
 
-    val themeState = rememberThemeState(initialColorTuple = defaultColorTuple )
+    val themeState = rememberThemeState(initialColorTuple = defaultColorTuple)
 
     val scheme = rememberColorScheme(
         isDarkTheme = isDarkTheme,
-        isDynamicColor = isDynamicColor ,
+        isDynamicColor = isDynamicColor,
         isAmoled = isAmoled,
         isInvertColors = isInvertColors,
         colorTuple = themeState.colorTuple.value,
@@ -159,7 +166,7 @@ fun DynamicTheme(
         animationSpec = colorTransitionSpec
     )
 
-    LaunchedEffect(defaultColorTuple){
+    LaunchedEffect(defaultColorTuple) {
         themeState.updateColorSeedTuple(defaultColorTuple)
     }
 
