@@ -17,20 +17,26 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -41,38 +47,50 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tarif.dynamictheme.DynamicTheme
-import com.tarif.dynamictheme.colorpicker.ColorPicker
-import com.tarif.dynamictheme.colorpicker.model.ColorPickerType
+import com.mikepenz.markdown.m3.Markdown
+import com.tarif.materialtheme.DynamicTheme
+import com.tarif.materialtheme.colorpicker.model.ColorPickerType
+import com.tarif.sample.component.ColorPickerDialog
 import com.tarif.sample.component.SegmentedButtonColors
 import com.tarif.sample.component.SegmentedButtonItem
 import com.tarif.sample.component.SegmentedButtons
 import com.tarif.sample.component.SegmentedButtonsDefaults
-import kmp_material_theme.sample.generated.resources.Res
-import kmp_material_theme.sample.generated.resources.ic_dark
-import kmp_material_theme.sample.generated.resources.ic_light
-import kmp_material_theme.sample.generated.resources.ic_system
+import com.tarif.sample.util.markDownText
+import materializekmp.sample.generated.resources.Res
+import materializekmp.sample.generated.resources.ic_dark
+import materializekmp.sample.generated.resources.ic_light
+import materializekmp.sample.generated.resources.ic_system
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun App() {
     var themeMode = remember { mutableStateOf(ThemeMode.SYSTEM) }
+    var baseColor by remember { mutableStateOf(Color.Cyan) }
     var isDynamicColor = remember { mutableStateOf(false) }
     var isAmoled = remember { mutableStateOf(false) }
     var isInvertColor = remember { mutableStateOf(false) }
     var uriHandler = LocalUriHandler.current
+    var isShowColorPicker = remember { mutableStateOf(false) }
 
     DynamicTheme(
-        baseColor = Color.Magenta,
+        seedColor = baseColor,
         isDarkTheme = themeMode.value.isDarkTheme(),
         isDynamicColor = isDynamicColor.value,
         isAmoled = isAmoled.value,
         isInvertColors = isInvertColor.value
     ) {
-        Surface(
-            modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.surface),
+            floatingActionButton = {
+                FloatingActionButton(onClick = { isShowColorPicker.value = true }) {
+                    Icon(Icons.Filled.Edit, "")
+                }
+            }
         ) {
             Column {
                 TopbarCardView(
@@ -86,13 +104,22 @@ fun App() {
                     isAmoled = isAmoled,
                     isInvertColor = isInvertColor
                 )
+                LazyColumn {
+                    item { Markdown(markDownText) }
+                }
             }
         }
     }
 
+    ColorPickerDialog(
+        isShown = isShowColorPicker,
+        pickerType = ColorPickerType.Classic(),
+        onColorPicked = {
+            baseColor = it
+        }
+    )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun TopbarCardView(
     modifier: Modifier = Modifier,
@@ -143,7 +170,7 @@ private fun TopbarCardView(
                     checked = isDynamicColor.value,
                     label = "Dynamic color",
                     onCheckedChange = {
-                       // isDynamicColor.value = !isDynamicColor.value
+                        isDynamicColor.value = !isDynamicColor.value
                     }
                 )
                 LabelledCheckBox(
@@ -169,14 +196,6 @@ private fun TopbarCardView(
             }
         }
     }
-
-    ColorPicker(
-        modifier = Modifier,
-        type = ColorPickerType.Ring(),
-        onPickedColor = {
-            //color = it
-        }
-    )
 }
 
 @Composable

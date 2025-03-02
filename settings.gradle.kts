@@ -29,7 +29,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kmp_material_theme"
+rootProject.name = "MaterializeKMP"
 include(":sample")
-include(":materialColor")
-include(":materialTheme")
+include(":material-color-kit")
+include(":material-theme-kit")
