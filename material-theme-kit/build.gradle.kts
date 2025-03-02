@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -7,6 +8,8 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.gradle.publish)
+    alias(libs.plugins.dokka)
 }
 
 kotlin {
@@ -85,4 +88,47 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
     commonMainImplementation(project(":material-color-kit"))
+}
+
+mavenPublishing {
+    coordinates(
+        groupId = "com.tarif.materializekmp",
+        artifactId = "material-theme",
+        version = "0.0.1"
+    )
+
+    // Configure POM metadata for the published artifact
+    pom {
+        name.set("MaterializeKMP")
+        description.set("Dynamic Theme Manager: Essential Kotlin Multiplatform Library for Seamless Theming Across All Platforms")
+        inceptionYear.set("2025")
+        url.set("https://github.com/tarifchakder/MaterializeKMP")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+
+        // Specify developer information
+        developers {
+            developer {
+                id.set("tarif")
+                name.set("tarif")
+                email.set("tarifchakder@outlook.com")
+            }
+        }
+
+        // Specify SCM information
+        scm {
+            url.set("https://github.com/tarifchakder/MaterializeKMP")
+        }
+    }
+
+    // Configure publishing to Maven Central
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    // Enable GPG signing for all publications
+    signAllPublications()
 }
