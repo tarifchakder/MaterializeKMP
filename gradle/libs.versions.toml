@@ -10,6 +10,9 @@ kotlin = "2.1.0"
 kotlinx-coroutines = "1.10.1"
 alertKmp = "2.0.0"
 multiplatform-markdown = "0.26.0"
+uiAndroid = "1.7.8"
+foundationLayoutAndroid = "1.7.8"
+uiTextAndroid = "1.7.8"
 
 
 [libraries]
@@ -19,6 +22,9 @@ androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 alert-kmp = { module = "io.github.khubaibkhan4:alert-kmp", version.ref = "alertKmp" }
 multiplatform-markdown = { module = "com.mikepenz:multiplatform-markdown-renderer-m3", version.ref = "multiplatform-markdown" }
+androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
+androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
+androidx-ui-text-android = { group = "androidx.compose.ui", name = "ui-text-android", version.ref = "uiTextAndroid" }
 
 
 [plugins]
