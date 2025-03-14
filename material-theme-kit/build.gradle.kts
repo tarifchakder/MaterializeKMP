@@ -64,7 +64,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.tarif.materialtheme"
+    namespace = "io.github.tarifchakder.materializekmp"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -92,7 +92,7 @@ dependencies {
 
 mavenPublishing {
     coordinates(
-        groupId = "com.tarif.materializekmp",
+        groupId = "io.github.tarifchakder.materializekmp",
         artifactId = "material-theme",
         version = "0.0.1"
     )
@@ -114,7 +114,7 @@ mavenPublishing {
             developer {
                 id.set("tarif")
                 name.set("tarif")
-                email.set("tarifchakder@outlook.com")
+                email.set("mretchcoder@gmail.com")
             }
         }
 

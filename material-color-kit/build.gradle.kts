@@ -54,7 +54,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.tarif.materialcolor"
+    namespace = "io.github.tarifchakder.materialcolor"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
