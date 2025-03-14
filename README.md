@@ -24,10 +24,10 @@ This library is written for Compose Multiplatform, and can be used on the follow
 
 ## DEMO
 
-[![WEB](screenshot/web_demo.gif)]
+[![WEB](screenshot/web_demo.gif)
 
 
-## Setup
+## Configuration
 
 You can add this library to your project using Gradle.
 
@@ -36,15 +36,11 @@ You can add this library to your project using Gradle.
 To add to a multiplatform project, add the dependency to the common source-set:
 
 ```kotlin
-kotlin {
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation("io.github.tarifchakder.materializekmp:material-theme:0.0.1")
-            }
-        }
+  commonMain {
+    dependencies {
+        implementation("io.github.tarifchakder.materializekmp:material-theme:0.0.1")
     }
-}
+  }
 ```
 
 ### Version Catalog
