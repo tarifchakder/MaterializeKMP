@@ -22,6 +22,11 @@ This library is written for Compose Multiplatform, and can be used on the follow
 - JVM (Desktop)
 - JavaScript/wasm (Browser)
 
+## DEMO
+
+[![WEB](screenshot/web_demo.gif)]
+
+
 ## Setup
 
 You can add this library to your project using Gradle.
