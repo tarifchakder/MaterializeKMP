@@ -24,7 +24,7 @@ This library is written for Compose Multiplatform, and can be used on the follow
 
 ## DEMO
 
-[![WEB](screenshot/web_demo.gif)
+![WEB](screenshot/web_demo.gif)
 
 
 ## Configuration
