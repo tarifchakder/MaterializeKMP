@@ -11,3 +11,35 @@ This library is written for Compose Multiplatform, and can be used on the follow
 - JVM (Desktop)
 - JavaScript/wasm (Browser)
 
+## Setup
+
+You can add this library to your project using Gradle.
+
+### Multiplatform
+
+To add to a multiplatform project, add the dependency to the common source-set:
+
+```kotlin
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation("io.github.tarifchakder.materializekmp:material-theme:0.0.1")
+            }
+        }
+    }
+}
+```
+
+### Version Catalog
+
+```toml
+[versions]
+materialtheme = "0.0.1"
+
+[libraries]
+materialKolor = { module = "io.github.tarifchakder.materializekmp", version.ref = "materialtheme" }
+```
+
+
+
