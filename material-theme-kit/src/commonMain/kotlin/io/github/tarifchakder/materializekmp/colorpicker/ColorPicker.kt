@@ -1,4 +1,4 @@
-package com.tarif.sample.component
+package io.github.tarifchakder.materializekmp.colorpicker
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,11 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,41 +35,100 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import io.github.tarifchakder.materializekmp.colorpicker.ColorPicker
 import io.github.tarifchakder.materializekmp.colorpicker.model.ColorPickerType
+import io.github.tarifchakder.materializekmp.colorpicker.pickers.CircleColorPicker
+import io.github.tarifchakder.materializekmp.colorpicker.pickers.ClassicColorPicker
+import io.github.tarifchakder.materializekmp.colorpicker.pickers.RingColorPicker
 import io.github.tarifchakder.materializekmp.extension.toHex
 import io.github.tarifchakder.materializekmp.extension.transparentBackground
 
+/**
+ * @param type Color picker type example [ColorPickerType.Circle].
+ * @param onPickedColor Executes when the user selects a color.
+ */
+@ExperimentalComposeUiApi
+@Composable
+fun ColorPicker(
+    modifier: Modifier = Modifier,
+    type: ColorPickerType = ColorPickerType.Classic(),
+    onPickedColor: (Color) -> Unit
+) {
+    Box(modifier = modifier) {
+        when (type) {
+            is ColorPickerType.Classic -> ClassicColorPicker(
+                pickerSize = type.colorPickerSize,
+                isAlphaSliderVisible = type.isAlphaBarVisible,
+                defaultColor = type.startColor,
+                onNewColor = onPickedColor,
+            )
+
+            is ColorPickerType.Circle -> CircleColorPicker(
+                showAlpha = type.isAlphaBarVisible,
+                showBrightness = type.isBrightnessBarVisible,
+                invertCenter = type.isLightCenter,
+                initialColor = type.startColor,
+                pickerSize = type.colorPickerSize,
+                onColorChange = onPickedColor,
+
+                )
+
+            is ColorPickerType.Ring -> RingColorPicker(
+                colorPickerSize = type.colorPickerSize,
+                ringThickness = type.colorRingWidth,
+                previewIndicatorRadius = type.previewCircleRadius,
+                showLightnessControl = type.isLightnessBarVisible,
+                showDarkColorBar = type.isDarknessBarVisible,
+                showOpacityControl = type.isAlphaBarVisible,
+                showPreviewIndicator = type.isColorPreviewVisible,
+                seedColor = type.startColor,
+                onColorChanged = onPickedColor
+            )
+        }
+    }
+}
+
+/**
+ * @param show Dialog Visibility.
+ * @param onDismissRequest Executes when the user tries to dismiss the dialog.
+ * @param properties [DialogProperties] for further customization of this dialog's behavior.
+ * @param type Color picker type example [ColorPickerType.Classic].
+ * @param onPickedColor Executes when the user selects a color from the color picker dialog.
+ */
 @ExperimentalComposeUiApi
 @Composable
 fun ColorPickerDialog(
-    isShown: MutableState<Boolean>,
-    dialogProperties: DialogProperties = DialogProperties(),
-    pickerType: ColorPickerType = ColorPickerType.Classic(),
-    onColorPicked: (Color) -> Unit
+    show: Boolean,
+    onDismissRequest: () -> Unit,
+    properties: DialogProperties = DialogProperties(),
+    type: ColorPickerType = ColorPickerType.Classic(),
+    onPickedColor: (Color) -> Unit
 ) {
-    var isDialogShown by remember(isShown) { mutableStateOf(isShown) }
-    var pickedColor by remember { mutableStateOf(Color.White) }
-
-    if (isDialogShown.value) {
+    var showDialog by remember(show) {
+        mutableStateOf(show)
+    }
+    var color by remember {
+        mutableStateOf(Color.White)
+    }
+    if (showDialog) {
         Dialog(onDismissRequest = {
-            isDialogShown.value = false
-        }, properties = dialogProperties) {
+            onDismissRequest()
+            showDialog = false
+        }, properties = properties) {
             Box(
                 modifier = Modifier
                     .width(IntrinsicSize.Max)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(MaterialTheme.colorScheme.surface)
+                    .clip(RoundedCornerShape(32.dp))
+                    .background(Color.White)
             ) {
-                Box(modifier = Modifier.padding(20.dp)) {
+                Box(modifier = Modifier.padding(32.dp)) {
                     Column {
-                        ColorPicker(type = pickerType, onPickedColor = {
-                            pickedColor = it
+                        ColorPicker(type = type, onPickedColor = {
+                            color = it
                         })
-                        Spacer(modifier = Modifier.height(15.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(10.dp)
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             Box(
                                 modifier = Modifier
@@ -79,7 +136,7 @@ fun ColorPickerDialog(
                                     .clip(RoundedCornerShape(50))
                                     .border(0.3.dp, Color.LightGray, RoundedCornerShape(50))
                                     .transparentBackground(verticalBoxesAmount = 4)
-                                    .background(pickedColor)
+                                    .background(color)
                             )
                             Text(
                                 text = buildAnnotatedString {
@@ -87,19 +144,19 @@ fun ColorPickerDialog(
                                         append("#")
                                     }
                                     withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                                        append(pickedColor.toHex())
+                                        append(color.toHex())
                                     }
                                 },
                                 fontSize = 14.sp,
                                 fontFamily = FontFamily.Monospace,
                             )
                         }
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
                         OutlinedButton(
                             modifier = Modifier.fillMaxWidth(),
                             onClick = {
-                                onColorPicked(pickedColor)
-                                isDialogShown.value = false
+                                onPickedColor(color)
+                                showDialog = false
                             },
                             shape = RoundedCornerShape(50)
                         ) {
