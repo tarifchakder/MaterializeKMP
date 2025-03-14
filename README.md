@@ -1,7 +1,7 @@
 # KMP Material Theme
 
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.tarifchakder.materializekmp/material-theme)
-[![License](https://img.shields.io/github/license/jordond/MaterialKolor)](https://opensource.org/license/mit/)
+[![License](https://img.shields.io/github/license/tarifchakder/MaterializeKMP)](https://opensource.org/license/mit/)
 
 [![Kotlin](https://img.shields.io/badge/kotlin-v2.1.10-blue.svg?logo=kotlin)](http://kotlinlang.org)
 
