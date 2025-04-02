@@ -50,7 +50,7 @@ To add to a multiplatform project, add the dependency to the common source-set:
 materialtheme = "0.0.1"
 
 [libraries]
-materialKolor = { module = "io.github.tarifchakder.materializekmp", version.ref = "materialtheme" }
+material-theme = { module = "io.github.tarifchakder.materializekmp:material-theme", version.ref = "materialtheme" }
 ```
 
 ## License
