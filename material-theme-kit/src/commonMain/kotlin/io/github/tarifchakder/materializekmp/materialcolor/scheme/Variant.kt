@@ -1,4 +1,4 @@
-package io.github.tarifchakder.materialcolor.scheme
+package io.github.tarifchakder.materializekmp.materialcolor.scheme
 
 /**
  * Themes for Dynamic Color.

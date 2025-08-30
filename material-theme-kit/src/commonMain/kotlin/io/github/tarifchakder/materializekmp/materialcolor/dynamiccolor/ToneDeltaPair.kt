@@ -1,4 +1,4 @@
-package io.github.tarifchakder.materialcolor.dynamiccolor
+package io.github.tarifchakder.materializekmp.materialcolor.dynamiccolor
 
 /**
  * Documents a constraint between two DynamicColors, in which their tones must have a certain

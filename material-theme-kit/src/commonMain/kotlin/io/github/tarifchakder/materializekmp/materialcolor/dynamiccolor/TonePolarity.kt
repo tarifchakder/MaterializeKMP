@@ -1,4 +1,4 @@
-package io.github.tarifchakder.materialcolor.dynamiccolor
+package io.github.tarifchakder.materializekmp.materialcolor.dynamiccolor
 
 /**
  * Describes the relationship in lightness between two colors.

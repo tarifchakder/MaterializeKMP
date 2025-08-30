@@ -1,6 +1,6 @@
-package io.github.tarifchakder.materialcolor.palettes
+package io.github.tarifchakder.materializekmp.materialcolor.palettes
 
-import io.github.tarifchakder.materialcolor.hct.Hct
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
 import kotlin.math.abs
 
 /**
