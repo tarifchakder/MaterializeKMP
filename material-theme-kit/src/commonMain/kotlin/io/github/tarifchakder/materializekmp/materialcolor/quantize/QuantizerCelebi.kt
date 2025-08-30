@@ -1,4 +1,4 @@
-package io.github.tarifchakder.materialcolor.quantize
+package io.github.tarifchakder.materializekmp.materialcolor.quantize
 
 /**
  * An image quantizer that improves on the quality of a standard K-Means algorithm by setting the

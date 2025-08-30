@@ -1,4 +1,4 @@
-package io.github.tarifchakder.materialcolor.quantize
+package io.github.tarifchakder.materializekmp.materialcolor.quantize
 
 /**
  * Creates a dictionary with keys of colors, and values of count of the color

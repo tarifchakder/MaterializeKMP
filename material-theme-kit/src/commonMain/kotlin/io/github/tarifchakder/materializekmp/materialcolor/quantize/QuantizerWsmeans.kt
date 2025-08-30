@@ -1,4 +1,4 @@
-package io.github.tarifchakder.materialcolor.quantize
+package io.github.tarifchakder.materializekmp.materialcolor.quantize
 
 import kotlin.math.abs
 import kotlin.math.min

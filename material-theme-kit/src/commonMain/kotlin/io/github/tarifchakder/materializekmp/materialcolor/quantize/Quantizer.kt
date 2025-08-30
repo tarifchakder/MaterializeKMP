@@ -1,4 +1,4 @@
-package io.github.tarifchakder.materialcolor.quantize
+package io.github.tarifchakder.materializekmp.materialcolor.quantize
 
 internal interface Quantizer {
 

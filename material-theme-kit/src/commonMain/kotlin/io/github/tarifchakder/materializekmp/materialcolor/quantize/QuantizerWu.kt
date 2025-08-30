@@ -1,8 +1,8 @@
-package io.github.tarifchakder.materialcolor.quantize
+package io.github.tarifchakder.materializekmp.materialcolor.quantize
 
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.blueFromArgb
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.greenFromArgb
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.redFromArgb
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.blueFromArgb
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.greenFromArgb
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.redFromArgb
 
 /**
  * An image quantizer that divides the image's pixels into clusters by recursively cutting an RGB
