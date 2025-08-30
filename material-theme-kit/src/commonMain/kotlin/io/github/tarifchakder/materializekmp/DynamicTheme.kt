@@ -87,10 +87,6 @@ fun DynamicTheme(
         animationSpec = colorTransitionSpec
     )
 
-    LaunchedEffect(initialColorTuple) {
-        dynamicThemeState.updateColorSeedTuple(initialColorTuple)
-    }
-
     CompositionLocalProvider(LocalDynamicThemeState provides dynamicThemeState) {
         MaterialTheme(
             colorScheme = colorScheme,

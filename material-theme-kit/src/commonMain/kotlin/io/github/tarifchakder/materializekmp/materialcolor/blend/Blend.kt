@@ -1,6 +1,5 @@
 package io.github.tarifchakder.materializekmp.materialcolor.blend
 
-
 import io.github.tarifchakder.materializekmp.materialcolor.hct.Cam16
 import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
 import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.lstarFromArgb
