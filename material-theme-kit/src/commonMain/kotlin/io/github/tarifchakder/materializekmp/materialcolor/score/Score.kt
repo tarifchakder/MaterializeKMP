@@ -1,8 +1,8 @@
-package io.github.tarifchakder.materialcolor.score
+package io.github.tarifchakder.materializekmp.materialcolor.score
 
-import io.github.tarifchakder.materialcolor.hct.Hct
-import io.github.tarifchakder.materialcolor.utils.MathUtils.differenceDegrees
-import io.github.tarifchakder.materialcolor.utils.MathUtils.sanitizeDegrees
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils.differenceDegrees
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils.sanitizeDegrees
 import kotlin.math.floor
 import kotlin.math.round
 

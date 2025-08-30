@@ -31,5 +31,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MaterializeKMP"
 include(":sample")
-include(":material-color-kit")
 include(":material-theme-kit")

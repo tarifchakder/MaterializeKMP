@@ -1,7 +1,8 @@
-package io.github.tarifchakder.materialcolor.temperature
+package io.github.tarifchakder.materializekmp.materialcolor.temperature
 
-import io.github.tarifchakder.materialcolor.hct.Hct
-import io.github.tarifchakder.materialcolor.utils.MathUtils
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -276,7 +277,7 @@ class TemperatureCache(private val input: Hct) {
          *     - Upper bound: 8.61. Chroma is infinite. Assuming max of Lab chroma 130.
          */
         fun rawTemperature(color: Hct): Double {
-            val lab: DoubleArray = io.github.tarifchakder.materialcolor.utils.ColorUtils.labFromArgb(color.toInt())
+            val lab: DoubleArray = ColorUtils.labFromArgb(color.toInt())
             val hue = MathUtils.sanitizeDegrees(MathUtils.toDegrees(atan2(lab[2], lab[1])))
             val chroma: Double = hypot(lab[1], lab[2])
             return (-0.5
