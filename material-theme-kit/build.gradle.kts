@@ -59,7 +59,7 @@ kotlin {
             implementation(compose.ui)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(kotlin("test"))
-            api(projects.materialColorKit)
+            compileOnly(projects.materialColorKit)
         }
     }
 }
@@ -94,7 +94,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.tarifchakder.materializekmp",
         artifactId = "material-theme",
-        version = "0.0.2"
+        version = "0.0.3"
     )
 
     pom {
