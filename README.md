@@ -55,9 +55,9 @@ material-theme = { module = "io.github.tarifchakder.materializekmp:material-them
 
 ## License
 For KMP support we use 
-The module `material-color-kit` is licensed under the Apache License, Version 2.0. See
-their [LICENSE](material-color-kit\src\commonMain\kotlin\io\github\tarifchakder\materialcolor\LICENSE) and their
-their [LICENSE](material-color-kit\src\LICENSE) and their
+Inspired By Material Color Palette
+their [LICENSE](material-theme-kit/src/commonMain/kotlin/io/github/tarifchakder/materializekmp/materialcolor/LICENSE) and their
+their [LICENSE](material-theme-kit/src/commonMain/kotlin/io/github/tarifchakder/materializekmp/materialcolor/LICENSE) and their
 repository [here](https://github.com/material-foundation/material-color-utilities) for more information.
 
 For other LICENSE for this original REPOSITORY see [LICENSE](LICENSE) for more information.
