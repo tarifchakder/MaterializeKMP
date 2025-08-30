@@ -57,7 +57,6 @@ material-theme = { module = "io.github.tarifchakder.materializekmp:material-them
 For KMP support we use 
 Inspired By Material Color Palette
 their [LICENSE](material-theme-kit/src/commonMain/kotlin/io/github/tarifchakder/materializekmp/materialcolor/LICENSE) and their
-their [LICENSE](material-theme-kit/src/commonMain/kotlin/io/github/tarifchakder/materializekmp/materialcolor/LICENSE) and their
 repository [here](https://github.com/material-foundation/material-color-utilities) for more information.
 
 For other LICENSE for this original REPOSITORY see [LICENSE](LICENSE) for more information.
