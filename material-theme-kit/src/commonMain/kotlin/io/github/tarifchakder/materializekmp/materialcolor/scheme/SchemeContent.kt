@@ -1,9 +1,9 @@
-package io.github.tarifchakder.materialcolor.scheme
+package io.github.tarifchakder.materializekmp.materialcolor.scheme
 
-import io.github.tarifchakder.materialcolor.dislike.DislikeAnalyzer
-import io.github.tarifchakder.materialcolor.hct.Hct
-import io.github.tarifchakder.materialcolor.palettes.TonalPalette
-import io.github.tarifchakder.materialcolor.temperature.TemperatureCache
+import io.github.tarifchakder.materializekmp.materialcolor.dislike.DislikeAnalyzer
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
+import io.github.tarifchakder.materializekmp.materialcolor.palettes.TonalPalette
+import io.github.tarifchakder.materializekmp.materialcolor.temperature.TemperatureCache
 import kotlin.math.max
 
 /**
@@ -13,16 +13,18 @@ import kotlin.math.max
  * appearance in light mode and dark mode. This adds ~5 tone in light mode, and subtracts ~5 tone in
  * dark mode.
  *
- * Tertiary Container is the complement to the source color, using TemperatureCache. It also
- * maintains constant appearance.
+ * Tertiary Container is an analogous color, specifically, the analog of a color wheel divided
+ * into 6, and the precise analog is the one found by increasing hue. This is a scientifically
+ * grounded equivalent to rotating hue clockwise by 60 degrees. It also maintains constant
+ * appearance.
  */
-class SchemeFidelity(
+class SchemeContent(
     sourceColorHct: Hct,
     isDark: Boolean,
     contrastLevel: Double,
 ) : DynamicScheme(
     sourceColorHct = sourceColorHct,
-    variant = Variant.FIDELITY,
+    variant = Variant.CONTENT,
     isDark = isDark,
     contrastLevel = contrastLevel,
     primaryPalette = TonalPalette.fromHueAndChroma(
@@ -34,7 +36,9 @@ class SchemeFidelity(
         chroma = max(sourceColorHct.chroma - 32.0, sourceColorHct.chroma * 0.5),
     ),
     tertiaryPalette = TonalPalette.fromHct(
-        hct = DislikeAnalyzer.fixIfDisliked(TemperatureCache(sourceColorHct).complement),
+        hct = DislikeAnalyzer.fixIfDisliked(
+            hct = TemperatureCache(sourceColorHct).getAnalogousColors(count = 3, divisions = 6)[2],
+        ),
     ),
     neutralPalette = TonalPalette.fromHueAndChroma(
         hue = sourceColorHct.hue,
