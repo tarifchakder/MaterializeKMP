@@ -1,8 +1,8 @@
-package io.github.tarifchakder.materialcolor.scheme
+package io.github.tarifchakder.materializekmp.materialcolor.scheme
 
-import io.github.tarifchakder.materialcolor.hct.Hct
-import io.github.tarifchakder.materialcolor.palettes.TonalPalette
-import io.github.tarifchakder.materialcolor.utils.MathUtils
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
+import io.github.tarifchakder.materializekmp.materialcolor.palettes.TonalPalette
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils
 
 /**
  * Provides important settings for creating colors dynamically, and 6 color palettes. Requires: 1. A

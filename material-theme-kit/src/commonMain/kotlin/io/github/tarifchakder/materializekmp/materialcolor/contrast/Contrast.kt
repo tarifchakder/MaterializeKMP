@@ -1,7 +1,7 @@
-package io.github.tarifchakder.materialcolor.contrast
+package io.github.tarifchakder.materializekmp.materialcolor.contrast
 
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.lstarFromY
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.yFromLstar
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.lstarFromY
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.yFromLstar
 import kotlin.math.abs
 import kotlin.math.max
 

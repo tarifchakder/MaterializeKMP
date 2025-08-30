@@ -6,8 +6,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import io.github.tarifchakder.materialcolor.hct.Hct
-import io.github.tarifchakder.materialcolor.palettes.TonalPalette
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
+import io.github.tarifchakder.materializekmp.materialcolor.palettes.TonalPalette
 import kotlin.math.roundToInt
 
 fun Int.toColor() = Color(this)

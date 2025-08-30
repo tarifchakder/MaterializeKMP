@@ -1,4 +1,4 @@
-package io.github.tarifchakder.materialcolor.utils
+package io.github.tarifchakder.materializekmp.materialcolor.utils
 
 import kotlin.math.pow
 import kotlin.math.round
@@ -44,10 +44,10 @@ object ColorUtils {
      * @return the ARGB representation of the color
      */
     fun argbFromLinrgb(linrgb: DoubleArray): Int {
-        val r = io.github.tarifchakder.materialcolor.utils.ColorUtils.delinearized(linrgb[0])
-        val g = io.github.tarifchakder.materialcolor.utils.ColorUtils.delinearized(linrgb[1])
-        val b = io.github.tarifchakder.materialcolor.utils.ColorUtils.delinearized(linrgb[2])
-        return io.github.tarifchakder.materialcolor.utils.ColorUtils.argbFromRgb(r, g, b)
+        val r = delinearized(linrgb[0])
+        val g = delinearized(linrgb[1])
+        val b = delinearized(linrgb[2])
+        return argbFromRgb(r, g, b)
     }
 
     /**
@@ -89,14 +89,14 @@ object ColorUtils {
      * @return the ARGB representation of the color
      */
     fun argbFromXyz(x: Double, y: Double, z: Double): Int {
-        val matrix = io.github.tarifchakder.materialcolor.utils.ColorUtils.XYZ_TO_SRGB
+        val matrix = ColorUtils.XYZ_TO_SRGB
         val linearR = matrix[0][0] * x + matrix[0][1] * y + matrix[0][2] * z
         val linearG = matrix[1][0] * x + matrix[1][1] * y + matrix[1][2] * z
         val linearB = matrix[2][0] * x + matrix[2][1] * y + matrix[2][2] * z
-        val r = io.github.tarifchakder.materialcolor.utils.ColorUtils.delinearized(linearR)
-        val g = io.github.tarifchakder.materialcolor.utils.ColorUtils.delinearized(linearG)
-        val b = io.github.tarifchakder.materialcolor.utils.ColorUtils.delinearized(linearB)
-        return io.github.tarifchakder.materialcolor.utils.ColorUtils.argbFromRgb(r, g, b)
+        val r = ColorUtils.delinearized(linearR)
+        val g = ColorUtils.delinearized(linearG)
+        val b = ColorUtils.delinearized(linearB)
+        return  ColorUtils.argbFromRgb(r, g, b)
     }
 
     /**
@@ -106,21 +106,21 @@ object ColorUtils {
      * @return the XYZ representation of the color
      */
     fun xyzFromArgb(argb: Int): DoubleArray {
-        val r = io.github.tarifchakder.materialcolor.utils.ColorUtils.linearized(
-            io.github.tarifchakder.materialcolor.utils.ColorUtils.redFromArgb(argb)
+        val r = ColorUtils.linearized(
+            ColorUtils.redFromArgb(argb)
         )
-        val g = io.github.tarifchakder.materialcolor.utils.ColorUtils.linearized(
-            io.github.tarifchakder.materialcolor.utils.ColorUtils.greenFromArgb(argb)
+        val g = ColorUtils.linearized(
+            ColorUtils.greenFromArgb(argb)
         )
-        val b = io.github.tarifchakder.materialcolor.utils.ColorUtils.linearized(
-            io.github.tarifchakder.materialcolor.utils.ColorUtils.blueFromArgb(argb)
+        val b = ColorUtils.linearized(
+            ColorUtils.blueFromArgb(argb)
         )
-        return io.github.tarifchakder.materialcolor.utils.MathUtils.matrixMultiply(
+        return MathUtils.matrixMultiply(
             doubleArrayOf(
                 r,
                 g,
                 b
-            ), io.github.tarifchakder.materialcolor.utils.ColorUtils.SRGB_TO_XYZ
+            ), ColorUtils.SRGB_TO_XYZ
         )
     }
 
@@ -133,17 +133,17 @@ object ColorUtils {
      * @return the ARGB representation of the color
      */
     fun argbFromLab(l: Double, a: Double, b: Double): Int {
-        val whitePoint = io.github.tarifchakder.materialcolor.utils.ColorUtils.WHITE_POINT_D65
+        val whitePoint = ColorUtils.WHITE_POINT_D65
         val fy = (l + 16.0) / 116.0
         val fx = a / 500.0 + fy
         val fz = fy - b / 200.0
-        val xNormalized = io.github.tarifchakder.materialcolor.utils.ColorUtils.labInvf(fx)
-        val yNormalized = io.github.tarifchakder.materialcolor.utils.ColorUtils.labInvf(fy)
-        val zNormalized = io.github.tarifchakder.materialcolor.utils.ColorUtils.labInvf(fz)
+        val xNormalized = ColorUtils.labInvf(fx)
+        val yNormalized = ColorUtils.labInvf(fy)
+        val zNormalized = ColorUtils.labInvf(fz)
         val x = xNormalized * whitePoint[0]
         val y = yNormalized * whitePoint[1]
         val z = zNormalized * whitePoint[2]
-        return io.github.tarifchakder.materialcolor.utils.ColorUtils.argbFromXyz(x, y, z)
+        return ColorUtils.argbFromXyz(x, y, z)
     }
 
     /**
@@ -153,26 +153,26 @@ object ColorUtils {
      * @return a Lab object representing the color
      */
     fun labFromArgb(argb: Int): DoubleArray {
-        val linearR = io.github.tarifchakder.materialcolor.utils.ColorUtils.linearized(
-            io.github.tarifchakder.materialcolor.utils.ColorUtils.redFromArgb(argb)
+        val linearR = ColorUtils.linearized(
+            ColorUtils.redFromArgb(argb)
         )
-        val linearG = io.github.tarifchakder.materialcolor.utils.ColorUtils.linearized(
-            io.github.tarifchakder.materialcolor.utils.ColorUtils.greenFromArgb(argb)
+        val linearG = ColorUtils.linearized(
+            ColorUtils.greenFromArgb(argb)
         )
-        val linearB = io.github.tarifchakder.materialcolor.utils.ColorUtils.linearized(
-            io.github.tarifchakder.materialcolor.utils.ColorUtils.blueFromArgb(argb)
+        val linearB = ColorUtils.linearized(
+            ColorUtils.blueFromArgb(argb)
         )
-        val matrix = io.github.tarifchakder.materialcolor.utils.ColorUtils.SRGB_TO_XYZ
+        val matrix = ColorUtils.SRGB_TO_XYZ
         val x = matrix[0][0] * linearR + matrix[0][1] * linearG + matrix[0][2] * linearB
         val y = matrix[1][0] * linearR + matrix[1][1] * linearG + matrix[1][2] * linearB
         val z = matrix[2][0] * linearR + matrix[2][1] * linearG + matrix[2][2] * linearB
-        val whitePoint = io.github.tarifchakder.materialcolor.utils.ColorUtils.WHITE_POINT_D65
+        val whitePoint = ColorUtils.WHITE_POINT_D65
         val xNormalized = x / whitePoint[0]
         val yNormalized = y / whitePoint[1]
         val zNormalized = z / whitePoint[2]
-        val fx = io.github.tarifchakder.materialcolor.utils.ColorUtils.labF(xNormalized)
-        val fy = io.github.tarifchakder.materialcolor.utils.ColorUtils.labF(yNormalized)
-        val fz = io.github.tarifchakder.materialcolor.utils.ColorUtils.labF(zNormalized)
+        val fx = ColorUtils.labF(xNormalized)
+        val fy = ColorUtils.labF(yNormalized)
+        val fz = ColorUtils.labF(zNormalized)
         val l = 116.0 * fy - 16
         val a = 500.0 * (fx - fy)
         val b = 200.0 * (fy - fz)
@@ -186,9 +186,9 @@ object ColorUtils {
      * @return ARGB representation of grayscale color with lightness matching L*
      */
     fun argbFromLstar(lstar: Double): Int {
-        val y = io.github.tarifchakder.materialcolor.utils.ColorUtils.yFromLstar(lstar)
-        val component = io.github.tarifchakder.materialcolor.utils.ColorUtils.delinearized(y)
-        return io.github.tarifchakder.materialcolor.utils.ColorUtils.argbFromRgb(
+        val y = ColorUtils.yFromLstar(lstar)
+        val component = ColorUtils.delinearized(y)
+        return ColorUtils.argbFromRgb(
             component,
             component,
             component
@@ -202,8 +202,8 @@ object ColorUtils {
      * @return L*, from L*a*b*, coordinate of the color
      */
     fun lstarFromArgb(argb: Int): Double {
-        val y = io.github.tarifchakder.materialcolor.utils.ColorUtils.xyzFromArgb(argb)[1]
-        return 116.0 * io.github.tarifchakder.materialcolor.utils.ColorUtils.labF(y / 100.0) - 16.0
+        val y = ColorUtils.xyzFromArgb(argb)[1]
+        return 116.0 * ColorUtils.labF(y / 100.0) - 16.0
     }
 
     /**
@@ -219,7 +219,7 @@ object ColorUtils {
      * @return Y in XYZ
      */
     fun yFromLstar(lstar: Double): Double {
-        return 100.0 * io.github.tarifchakder.materialcolor.utils.ColorUtils.labInvf((lstar + 16.0) / 116.0)
+        return 100.0 * ColorUtils.labInvf((lstar + 16.0) / 116.0)
     }
 
     /**
@@ -234,7 +234,7 @@ object ColorUtils {
      * @return L* in L*a*b*
      */
     fun lstarFromY(y: Double): Double {
-        return io.github.tarifchakder.materialcolor.utils.ColorUtils.labF(y / 100.0) * 116.0 - 16.0
+        return ColorUtils.labF(y / 100.0) * 116.0 - 16.0
     }
 
     /**
@@ -270,7 +270,7 @@ object ColorUtils {
      * @return The white point
      */
     fun whitePointD65(): DoubleArray =
-        io.github.tarifchakder.materialcolor.utils.ColorUtils.WHITE_POINT_D65
+        ColorUtils.WHITE_POINT_D65
 
     /**
      * The labF function.
@@ -303,7 +303,7 @@ object ColorUtils {
      * @return the luminance of the color
      */
     fun calculateLuminance(argb: Int): Double {
-        val xyz = io.github.tarifchakder.materialcolor.utils.ColorUtils.xyzFromArgb(argb)
+        val xyz = ColorUtils.xyzFromArgb(argb)
         // Luminance is the Y component
         return xyz[1] / 100
     }

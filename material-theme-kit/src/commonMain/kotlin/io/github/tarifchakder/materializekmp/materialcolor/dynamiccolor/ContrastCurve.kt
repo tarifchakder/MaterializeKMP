@@ -1,6 +1,6 @@
-package io.github.tarifchakder.materialcolor.dynamiccolor
+package io.github.tarifchakder.materializekmp.materialcolor.dynamiccolor
 
-import io.github.tarifchakder.materialcolor.utils.MathUtils.lerp
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils.lerp
 
 /**
  * A class containing a value that changes with the contrast level.

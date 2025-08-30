@@ -1,7 +1,7 @@
-package io.github.tarifchakder.materialcolor.hct
+package io.github.tarifchakder.materializekmp.materialcolor.hct
 
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.lstarFromArgb
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.lstarFromY
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.lstarFromArgb
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.lstarFromY
 
 /**
  * A color system built using CAM16 hue and chroma, and L* from L*a*b*.

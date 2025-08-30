@@ -6,22 +6,22 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import io.github.tarifchakder.materialcolor.dynamiccolor.MaterialDynamicColors
-import io.github.tarifchakder.materialcolor.hct.Hct
-import io.github.tarifchakder.materialcolor.palettes.TonalPalette
-import io.github.tarifchakder.materialcolor.scheme.DynamicScheme
-import io.github.tarifchakder.materialcolor.scheme.SchemeContent
-import io.github.tarifchakder.materialcolor.scheme.SchemeExpressive
-import io.github.tarifchakder.materialcolor.scheme.SchemeFidelity
-import io.github.tarifchakder.materialcolor.scheme.SchemeFruitSalad
-import io.github.tarifchakder.materialcolor.scheme.SchemeMonochrome
-import io.github.tarifchakder.materialcolor.scheme.SchemeNeutral
-import io.github.tarifchakder.materialcolor.scheme.SchemeRainbow
-import io.github.tarifchakder.materialcolor.scheme.SchemeTonalSpot
-import io.github.tarifchakder.materialcolor.scheme.SchemeVibrant
-import io.github.tarifchakder.materialcolor.scheme.Variant
 import io.github.tarifchakder.materializekmp.ColorTuple
 import io.github.tarifchakder.materializekmp.PaletteStyle
+import io.github.tarifchakder.materializekmp.materialcolor.dynamiccolor.MaterialDynamicColors
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
+import io.github.tarifchakder.materializekmp.materialcolor.palettes.TonalPalette
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.DynamicScheme
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.SchemeContent
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.SchemeExpressive
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.SchemeFidelity
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.SchemeFruitSalad
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.SchemeMonochrome
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.SchemeNeutral
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.SchemeRainbow
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.SchemeTonalSpot
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.SchemeVibrant
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.Variant
 
 /**
  * Generate a [ColorScheme] based on the given [isAmoled].
