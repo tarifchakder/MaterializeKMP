@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package io.github.tarifchakder.materialcolor.utils
+package io.github.tarifchakder.materializekmp.materialcolor.utils
 
 import kotlin.math.pow
 

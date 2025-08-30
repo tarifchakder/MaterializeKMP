@@ -1,9 +1,9 @@
-package io.github.tarifchakder.materialcolor.dynamiccolor
+package io.github.tarifchakder.materializekmp.materialcolor.dynamiccolor
 
-import io.github.tarifchakder.materialcolor.dislike.DislikeAnalyzer
-import io.github.tarifchakder.materialcolor.hct.Hct
-import io.github.tarifchakder.materialcolor.scheme.DynamicScheme
-import io.github.tarifchakder.materialcolor.scheme.Variant
+import io.github.tarifchakder.materializekmp.materialcolor.dislike.DislikeAnalyzer
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.DynamicScheme
+import io.github.tarifchakder.materializekmp.materialcolor.scheme.Variant
 import kotlin.math.abs
 import kotlin.math.max
 

@@ -1,7 +1,7 @@
-package io.github.tarifchakder.materialcolor.quantize
+package io.github.tarifchakder.materializekmp.materialcolor.quantize
 
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.argbFromLab
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.labFromArgb
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.argbFromLab
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.labFromArgb
 
 /**
  * Provides conversions needed for K-Means quantization. Converting input to points, and converting
