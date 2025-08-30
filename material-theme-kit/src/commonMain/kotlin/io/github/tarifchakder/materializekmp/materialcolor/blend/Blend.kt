@@ -1,11 +1,12 @@
-package io.github.tarifchakder.materialcolor.blend
+package io.github.tarifchakder.materializekmp.materialcolor.blend
 
-import io.github.tarifchakder.materialcolor.hct.Cam16
-import io.github.tarifchakder.materialcolor.hct.Hct
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.lstarFromArgb
-import io.github.tarifchakder.materialcolor.utils.MathUtils.differenceDegrees
-import io.github.tarifchakder.materialcolor.utils.MathUtils.rotationDirection
-import io.github.tarifchakder.materialcolor.utils.MathUtils.sanitizeDegrees
+
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Cam16
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.lstarFromArgb
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils.differenceDegrees
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils.rotationDirection
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils.sanitizeDegrees
 import kotlin.math.min
 
 /**

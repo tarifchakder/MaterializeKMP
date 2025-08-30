@@ -2,7 +2,7 @@ package io.github.tarifchakder.materializekmp.extension
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import io.github.tarifchakder.materialcolor.blend.Blend
+import io.github.tarifchakder.materializekmp.materialcolor.blend.Blend
 
 /**
  * Blend two colors together. The hue, chroma, and tone of the original color will change.

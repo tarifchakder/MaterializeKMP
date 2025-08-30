@@ -1,11 +1,11 @@
-package io.github.tarifchakder.materialcolor.hct
+package io.github.tarifchakder.materializekmp.materialcolor.hct
 
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.argbFromXyz
-import io.github.tarifchakder.materialcolor.utils.ColorUtils.linearized
-import io.github.tarifchakder.materialcolor.utils.MathUtils.signum
-import io.github.tarifchakder.materialcolor.utils.MathUtils.toDegrees
-import io.github.tarifchakder.materialcolor.utils.MathUtils.toRadians
-import io.github.tarifchakder.materialcolor.utils.pow
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.argbFromXyz
+import io.github.tarifchakder.materializekmp.materialcolor.utils.ColorUtils.linearized
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils.signum
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils.toDegrees
+import io.github.tarifchakder.materializekmp.materialcolor.utils.MathUtils.toRadians
+import io.github.tarifchakder.materializekmp.materialcolor.utils.pow
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
