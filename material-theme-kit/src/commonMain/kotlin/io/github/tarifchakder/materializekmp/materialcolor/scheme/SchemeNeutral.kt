@@ -1,7 +1,7 @@
-package io.github.tarifchakder.materialcolor.scheme
+package io.github.tarifchakder.materializekmp.materialcolor.scheme
 
-import io.github.tarifchakder.materialcolor.hct.Hct
-import io.github.tarifchakder.materialcolor.palettes.TonalPalette
+import io.github.tarifchakder.materializekmp.materialcolor.hct.Hct
+import io.github.tarifchakder.materializekmp.materialcolor.palettes.TonalPalette
 
 /**
  * A theme that's slightly more chromatic than monochrome, which is purely black / white / gray.
