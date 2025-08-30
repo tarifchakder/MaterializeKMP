@@ -68,6 +68,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.alert.kmp)
             implementation(libs.multiplatform.markdown)
+            implementation(projects.materialThemeKit)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -108,7 +109,6 @@ dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.androidx.ui.text.android)
     debugImplementation(compose.uiTooling)
-    commonMainImplementation(project(":material-theme-kit"))
 }
 
 compose.desktop {
