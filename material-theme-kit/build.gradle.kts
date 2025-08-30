@@ -14,16 +14,10 @@ plugins {
 
 kotlin {
     androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
+        compilerOptions { jvmTarget.set(JvmTarget.JVM_17) }
     }
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
+    listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "material-theme"
             isStatic = true
@@ -52,14 +46,21 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(kotlin("test"))
+        val commonMain by getting {
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(libs.androidx.lifecycle.runtime.compose)
+            }
         }
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+        // androidMain/desktopMain/ios*Main are created by targets; add deps there only if needed
     }
 }
 
@@ -74,9 +75,7 @@ android {
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
-        }
+        release { isMinifyEnabled = false }
     }
 
     compileOptions {
@@ -101,14 +100,12 @@ mavenPublishing {
         description.set("Dynamic Theme Manager: Essential Kotlin Multiplatform Library for Seamless Theming Across All Platforms")
         inceptionYear.set("2025")
         url.set("https://github.com/tarifchakder/MaterializeKMP")
-
         licenses {
             license {
                 name.set("MIT")
                 url.set("https://opensource.org/licenses/MIT")
             }
         }
-
         developers {
             developer {
                 id.set("tarif")
@@ -116,13 +113,11 @@ mavenPublishing {
                 email.set("mretchcoder@gmail.com")
             }
         }
-
         scm {
             url.set("https://github.com/tarifchakder/MaterializeKMP")
         }
     }
 
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-
     signAllPublications()
 }
