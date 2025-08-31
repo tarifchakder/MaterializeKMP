@@ -1,11 +1,10 @@
 package io.github.tarifchakder.materializekmp.remember
 
-import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import io.github.tarifchakder.materializekmp.ColorTuple
 import io.github.tarifchakder.materializekmp.getColorScheme
 import io.github.tarifchakder.materializekmp.getObserveAsState
@@ -29,35 +28,41 @@ import io.github.tarifchakder.materializekmp.getObserveAsState
  * */
 @Composable
 fun rememberColorTuple(
-    colorTuple: ColorTuple,
+    defaultColorTuple: ColorTuple,
     isDynamicColor: Boolean,
     isDarkTheme: Boolean
 ): ColorTuple {
-    var onTrigger by remember { mutableStateOf(false) }
 
-    var colorScheme : ColorScheme? = getColorScheme(isDarkTheme)
+    val trigger = remember { mutableStateOf(false) }
+    var colorScheme = getColorScheme(isDarkTheme)
 
-    if (onTrigger) colorScheme =  getColorScheme(isDarkTheme)
+    LaunchedEffect(getObserveAsState()) {
+        trigger.value = true
+    }
+
+    if (trigger.value) {
+        colorScheme = getColorScheme(isDarkTheme)
+        trigger.value = false
+    }
 
     return remember(
-        getObserveAsState(),
-        colorTuple,
+        colorScheme,
+        defaultColorTuple,
         isDynamicColor,
         isDarkTheme
     ) {
-        onTrigger = true
-
-        when {
-            isDynamicColor && colorScheme != null -> {
+        derivedStateOf {
+            val colorTuple : ColorTuple = if (isDynamicColor && colorScheme != null) {
                 ColorTuple(
                     colorScheme.primary,
                     colorScheme.secondary,
                     colorScheme.tertiary,
                     colorScheme.surface
                 )
+            } else {
+                defaultColorTuple
             }
-
-            else -> colorTuple
-        }
+            colorTuple
+        }.value
     }
 }
