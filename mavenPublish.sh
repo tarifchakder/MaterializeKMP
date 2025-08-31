@@ -2,4 +2,4 @@
 ./gradlew publishToMavenLocal -x test
 
 # Maven Central
-./gradlew publishAllPublicationsToMavenCentralRepository
+./gradlew publishAllPublicationsToMavenCentralRepository -x test
