@@ -87,7 +87,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.tarifchakder.materializekmp",
         artifactId = "material-theme",
-        version = "0.0.4"
+        version = "1.0.0"
     )
 
     pom {
