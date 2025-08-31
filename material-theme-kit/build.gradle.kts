@@ -87,7 +87,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.tarifchakder.materializekmp",
         artifactId = "material-theme",
-        version = "1.0.0"
+        version = "1.0.2"
     )
 
     pom {
@@ -104,8 +104,8 @@ mavenPublishing {
         developers {
             developer {
                 id.set("tarif")
-                name.set("tarif")
-                email.set("mretchcoder@gmail.com")
+                name.set("Tarif Chakder")
+                email.set("tarifchakder@outlook.com")
             }
         }
         scm {
@@ -113,6 +113,6 @@ mavenPublishing {
         }
     }
 
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
     signAllPublications()
 }
