@@ -67,7 +67,7 @@ fun DynamicTheme(
     content: @Composable () -> Unit,
 ) {
     val initialColorTuple = rememberColorTuple(
-        colorTuple = ColorTuple(primary = seedColor),
+        defaultColorTuple = ColorTuple(primary = seedColor),
         isDynamicColor = isDynamicColor,
         isDarkTheme = isDarkTheme
     )
@@ -86,6 +86,10 @@ fun DynamicTheme(
         isAnimateColorScheme = isAnimateColorScheme,
         animationSpec = colorTransitionSpec
     )
+
+    LaunchedEffect(initialColorTuple) {
+        dynamicThemeState.updateColorSeedTuple(initialColorTuple)
+    }
 
     CompositionLocalProvider(LocalDynamicThemeState provides dynamicThemeState) {
         MaterialTheme(
@@ -142,7 +146,7 @@ fun DynamicTheme(
     content: @Composable () -> Unit,
 ) {
     val defaultColorTuple = rememberColorTuple(
-        colorTuple = colorTuple,
+        defaultColorTuple = colorTuple,
         isDynamicColor = isDynamicColor,
         isDarkTheme = isDarkTheme
     )
