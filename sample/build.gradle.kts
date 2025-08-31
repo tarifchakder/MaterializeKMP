@@ -11,19 +11,15 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
-val enableIos = HostManager.hostIsMac && (providers.gradleProperty("enableIos").orNull != "false")
-
 kotlin {
     androidTarget {
         compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
     }
 
-    if (enableIos) {
-        listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
-            iosTarget.binaries.framework {
-                baseName = "sample"
-                isStatic = true
-            }
+    listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "sample"
+            isStatic = true
         }
     }
 
@@ -49,8 +45,13 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
+        sourceSets {
+            val desktopMain by getting
+            androidMain.dependencies {
+                implementation(compose.preview)
+                implementation(libs.androidx.activity.compose)
+            }
+            commonMain.dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
@@ -61,30 +62,13 @@ kotlin {
                 implementation(libs.androidx.lifecycle.runtime.compose)
                 implementation(libs.alert.kmp)
                 implementation(libs.multiplatform.markdown)
-                // implementation(libs.material.theme)
-                 implementation(projects.materialThemeKit)
+                //implementation(libs.material.theme)
+                implementation(projects.materialThemeKit)
             }
-        }
-
-        val androidMain by getting {
-            dependencies {
-                implementation(compose.preview)
-                implementation(libs.androidx.activity.compose)
-            }
-        }
-
-        val desktopMain by getting {
-            dependencies {
+            desktopMain.dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(libs.kotlinx.coroutines.swing)
             }
-        }
-
-        if (enableIos) {
-            val iosMain by creating
-            val iosX64Main by getting { dependsOn(iosMain) }
-            val iosArm64Main by getting { dependsOn(iosMain) }
-            val iosSimulatorArm64Main by getting { dependsOn(iosMain) }
         }
     }
 }
