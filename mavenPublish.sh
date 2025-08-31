@@ -1,5 +1,5 @@
 # Local check
-./gradlew publishToMavenLocal -x test
+./gradlew publishToMavenLocal
 
 # Maven Central
-./gradlew publishAllPublicationsToMavenCentralRepository -x test
+./gradlew publishAllPublicationsToMavenCentralRepository
