@@ -29,7 +29,14 @@ It enables consistent UI styling across multiple platforms:
 
 | Web Preview                          |
 |--------------------------------------|
-| ![IOS](screenshot/ios.gif)           |
+| ![Web Demo](screenshot/web_demo.gif) |
+
+| IOS Preview                     |
+|---------------------------------|
+| ![IOS_Demo](screenshot/ios.gif) |
+
+| Web Preview                          |
+|--------------------------------------|
 | ![Web Demo](screenshot/web_demo.gif) |
 
 ---
