@@ -27,9 +27,9 @@ It enables consistent UI styling across multiple platforms:
 
 ## 🖥️ Demo
 
-|  Android  | Web | IOS |
-|:----------------------------------:|:-----------------------------:|:--------------------------:|
-| ![Android](screenshot/android.gif) ![Web](screenshot/web_demo.gif) | ![IOS](screenshot/ios.gif) |
+|              Android               |               Web               |            IOS             |
+|:----------------------------------:|:-------------------------------:|:--------------------------:|
+| ![Android](screenshot/android.gif) | ![Web](screenshot/web_demo.gif) | ![IOS](screenshot/ios.gif) |
 
 ---
 
