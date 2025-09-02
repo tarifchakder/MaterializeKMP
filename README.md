@@ -26,15 +26,17 @@ It enables consistent UI styling across multiple platforms:
 ---
 ## 🎬 Demo
 
-<p align="center">
-  <strong>iOS Preview</strong><br>
-  <img src="screenshot/ios.gif" alt="iOS Demo" width="300" height="400">
-</p>
+<div align="center" style="display:flex; gap:20px;">
 
-<p align="center">
-  <strong>Web Preview</strong><br>
-  <img src="screenshot/web_demo.gif" alt="Web Demo" width="300" height="500">
-</p>
+  <div style="width:300px; height:250px; display:flex; justify-content:center; align-items:center; border:1px solid #ddd; padding:5px;">
+    <img src="screenshot/ios.gif" alt="iOS Demo" style="max-width:100%; max-height:100%;" />
+  </div>
+
+  <div style="width:300px; height:250px; display:flex; justify-content:center; align-items:center; border:1px solid #ddd; padding:5px;">
+    <img src="screenshot/web_demo.gif" alt="Web Demo" style="max-width:100%; max-height:100%;" />
+  </div>
+
+</div>
 
 ---
 
