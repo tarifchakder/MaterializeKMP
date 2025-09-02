@@ -1,46 +1,51 @@
-# KMP Material Theme
+# 🌗 KMP Material Theme
 
-![Maven Central](https://img.shields.io/maven-central/v/io.github.tarifchakder.materializekmp/material-theme)
-[![License](https://img.shields.io/github/license/tarifchakder/MaterializeKMP)](https://opensource.org/license/mit/)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.tarifchakder.materializekmp/material-theme)](https://central.sonatype.com/artifact/io.github.tarifchakder.materializekmp/material-theme)  
+[![License](https://img.shields.io/github/license/tarifchakder/MaterializeKMP)](LICENSE)  
+[![Kotlin](https://img.shields.io/badge/kotlin-2.1.10-blue.svg?logo=kotlin)](https://kotlinlang.org)  
+[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-1.7.3-blue)](https://github.com/JetBrains/compose-multiplatform)
 
-[![Kotlin](https://img.shields.io/badge/kotlin-2.1.0-blue.svg?logo=kotlin)](http://kotlinlang.org)
+![badge-android](https://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
+![badge-ios](https://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat)
+![badge-desktop](https://img.shields.io/badge/platform-desktop-DB413D.svg?style=flat)
+![badge-js](https://img.shields.io/badge/platform-js%2Fwasm-FDD835.svg?style=flat)
 
-[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-1.7.0-blue)](https://github.com/JetBrains/compose-multiplatform)
-![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
-![badge-ios](http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat)
-![badge-desktop](http://img.shields.io/badge/platform-desktop-DB413D.svg?style=flat)
-![badge-js](http://img.shields.io/badge/platform-js%2Fwasm-FDD835.svg?style=flat)
+---
 
-It is a Compose Multiplatform library targeting Android, iOS, Web, Desktop and designed to provide a Material Design 3 based theme, along with essential components for easy configuration
+## ✨ Overview
 
-## Support Platforms
+**KMP Material Theme** is a [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) library that provides a **Material Design 3–based theme system** and essential components.
 
-This library is written for Compose Multiplatform, and can be used on the following platforms:
+It enables consistent UI styling across multiple platforms:
 
-- Android
-- iOS
-- JVM (Desktop)
-- JavaScript/wasm (Browser)
+- 📱 **Android**
+- 🍏 **iOS**
+- 💻 **JVM (Desktop)**
+- 🌐 **JavaScript / Wasm (Browser)**
 
-## DEMO
+---
 
-![WEB](screenshot/web_demo.gif)
+## 🎬 Demo
 
+| Web Preview                          |
+|--------------------------------------|
+| ![IOS](screenshot/ios.gif)           |
+| ![Web Demo](screenshot/web_demo.gif) |
 
-## Configuration
+---
 
-You can add this library to your project using Gradle.
+## ⚙️ Installation
 
-### Multiplatform
+### Gradle (Multiplatform)
 
-To add to a multiplatform project, add the dependency to the common source-set:
+Add the dependency to your `commonMain` source set:
 
 ```kotlin
-  commonMain {
+commonMain {
     dependencies {
         implementation("io.github.tarifchakder.materializekmp:material-theme:1.0.3")
     }
-  }
+}
 ```
 
 ### Version Catalog
@@ -53,13 +58,23 @@ materialtheme = "1.0.3"
 material-theme = { module = "io.github.tarifchakder.materializekmp:material-theme", version.ref = "materialtheme" }
 ```
 
-## License
-For KMP support we use 
-Inspired By Material Color Palette
-their [LICENSE](material-theme-kit/src/commonMain/kotlin/io/github/tarifchakder/materializekmp/materialcolor/LICENSE) and their
-repository [here](https://github.com/material-foundation/material-color-utilities) for more information.
+# Usage
+Please check sample App.kt and DynamicTheme.kt class
 
-For other LICENSE for this original REPOSITORY see [LICENSE](LICENSE) for more information.
+## 📦 Features
+•	🎨 Material Design 3 theming
+•	🌙 Dark & light themes
+•	🖌️ Dynamic color palette support
+•	⚡ Optimized for Compose Multiplatform (Android, iOS, Desktop, Web/Wasm)
+•	🔧 Easy integration with Gradle Version Catalogs
+
+## License
+MaterializeKMP is licensed under the MIT License.
+This library draws inspiration from the Material Color Palette by the Material Foundation. For details on their licensing, see their LICENSE.
+[LICENSE](material-theme-kit/src/commonMain/kotlin/io/github/tarifchakder/materializekmp/materialcolor/LICENSE)
+
+## Contributing
+Contributions are welcome! Please check out the contributing guidelines for more information on how to get involved.
 
 
 
