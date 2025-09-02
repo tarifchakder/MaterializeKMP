@@ -57,7 +57,6 @@ Thumbs.db
 
 # Android specific
 .cxx/
-.cxx/
 .captures/
 *.apk
 *.ap_
@@ -65,7 +64,6 @@ Thumbs.db
 *.class
 *.log
 *.lock
-*.iml
 *.hprof
 .externalNativeBuild
 captures
