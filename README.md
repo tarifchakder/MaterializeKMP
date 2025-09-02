@@ -24,19 +24,12 @@ It enables consistent UI styling across multiple platforms:
 - 🌐 **JavaScript / Wasm (Browser)**
 
 ---
-## 🎬 Demo
 
-| Web Preview |
-|-------------|
-| ![Web Demo](screenshot/web_demo.gif) |
+## 🖥️ Demo
 
-| IOS Preview                     |
-|---------------------------------|
-| ![IOS Demo](screenshot/ios.gif) |
-
-| Android Preview                         |
-|-----------------------------------------|
-| ![Android Demo](screenshot/android.gif) |
+|  Android  | Web | IOS |
+|:----------------------------------:|:-----------------------------:|:--------------------------:|
+| ![Android](screenshot/android.gif) ![Web](screenshot/web_demo.gif) | ![IOS](screenshot/ios.gif) |
 
 ---
 
