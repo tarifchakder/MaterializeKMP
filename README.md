@@ -26,17 +26,15 @@ It enables consistent UI styling across multiple platforms:
 ---
 ## 🎬 Demo
 
-<table>
-  <tr>
-    <td align="center"><strong>iOS Preview</strong></td>
-    <td align="center"><strong>Web Preview</strong></td>
-  </tr>
-  <tr>
-    <!-- Set width/height to ensure a minimum display size (keeps aspect if you set only width) -->
-    <td align="center"><img src="screenshot/ios.gif" alt="iOS Demo"  width="260"></td>
-    <td align="center"><img src="screenshot/web_demo.gif" alt="Web Demo" width="420"></td>
-  </tr>
-</table>
+<p align="center">
+  <strong>iOS Preview</strong><br>
+  <img src="screenshot/ios.gif" alt="iOS Demo" width="300" height="400">
+</p>
+
+<p align="center">
+  <strong>Web Preview</strong><br>
+  <img src="screenshot/web_demo.gif" alt="Web Demo" width="300" height="500">
+</p>
 
 ---
 
