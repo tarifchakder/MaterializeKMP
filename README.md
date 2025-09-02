@@ -38,7 +38,7 @@ To add to a multiplatform project, add the dependency to the common source-set:
 ```kotlin
   commonMain {
     dependencies {
-        implementation("io.github.tarifchakder.materializekmp:material-theme:0.0.4")
+        implementation("io.github.tarifchakder.materializekmp:material-theme:1.0.3")
     }
   }
 ```
@@ -47,7 +47,7 @@ To add to a multiplatform project, add the dependency to the common source-set:
 
 ```toml
 [versions]
-materialtheme = "0.0.4"
+materialtheme = "1.0.3"
 
 [libraries]
 material-theme = { module = "io.github.tarifchakder.materializekmp:material-theme", version.ref = "materialtheme" }
