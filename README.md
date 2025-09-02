@@ -24,20 +24,19 @@ It enables consistent UI styling across multiple platforms:
 - 🌐 **JavaScript / Wasm (Browser)**
 
 ---
-
 ## 🎬 Demo
 
-| Web Preview                          |
-|--------------------------------------|
-| ![Web Demo](screenshot/web_demo.gif) |
-
-| IOS Preview                     |
-|---------------------------------|
-| ![IOS_Demo](screenshot/ios.gif) |
-
-| Web Preview                          |
-|--------------------------------------|
-| ![Web Demo](screenshot/web_demo.gif) |
+<table>
+  <tr>
+    <td align="center"><strong>iOS Preview</strong></td>
+    <td align="center"><strong>Web Preview</strong></td>
+  </tr>
+  <tr>
+    <!-- Set width/height to ensure a minimum display size (keeps aspect if you set only width) -->
+    <td align="center"><img src="screenshot/ios.gif" alt="iOS Demo"  width="260"></td>
+    <td align="center"><img src="screenshot/web_demo.gif" alt="Web Demo" width="420"></td>
+  </tr>
+</table>
 
 ---
 
