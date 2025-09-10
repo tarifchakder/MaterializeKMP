@@ -3,7 +3,7 @@ name: MaterializeKMP
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
     inputs:
       version:
