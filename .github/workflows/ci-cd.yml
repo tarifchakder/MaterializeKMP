@@ -5,15 +5,10 @@ on:
     branches:
       - master
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Release version'
-        required: true
-        default: '1.0.4'
 
 jobs:
   build-and-test:
-    name: Build & Test KMP
+    name: Build & Test
     runs-on: macos-latest
     env:
       GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError -XX:MaxMetaspaceSize=1g"
@@ -50,11 +45,17 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Read version from file
+        id: version
+        run: |
+          VERSION=$(grep 'version=' version.properties | cut -d'=' -f2)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Build All Targets
-        run: ./gradlew clean build -i -s
+        run: ./gradlew clean build -Pversion=$VERSION -i -s
 
       - name: Run Unit Tests
-        run: ./gradlew test -i -s
+        run: ./gradlew test -Pversion=$VERSION -i -s
 
   release:
     name: Publish to Maven Central
@@ -82,5 +83,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Read version from file
+        id: version
+        run: |
+          VERSION=$(grep 'version=' version.properties | cut -d'=' -f2)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Publish MaterializeKMP
-        run: ./gradlew clean publish -Pversion=${{ github.event.inputs.version }} -i -s
+        run: ./gradlew clean publish -Pversion=$VERSION -i -s
