@@ -1,4 +1,7 @@
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -87,7 +90,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.tarifchakder.materializekmp",
         artifactId = "material-theme",
-        version = "1.0.3"
+        version = "1.0.4"
     )
 
     pom {
