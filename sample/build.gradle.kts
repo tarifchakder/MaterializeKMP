@@ -16,7 +16,7 @@ plugins {
 
 kotlin {
     androidTarget {
-        compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
+        compilerOptions { jvmTarget.set(JvmTarget.JVM_17) }
     }
 
     listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
@@ -65,8 +65,8 @@ kotlin {
                 implementation(libs.androidx.lifecycle.runtime.compose)
                 implementation(libs.alert.kmp)
                 implementation(libs.multiplatform.markdown)
-                //implementation(libs.material.theme)
-                implementation(projects.materialThemeKit)
+                implementation(libs.material.theme)
+                //implementation(projects.materialThemeKit)
             }
             desktopMain.dependencies {
                 implementation(compose.desktop.currentOs)
@@ -97,8 +97,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
