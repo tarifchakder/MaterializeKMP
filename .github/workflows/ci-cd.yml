@@ -1,0 +1,86 @@
+name: MaterializeKMP
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
+        default: '1.0.4'
+
+jobs:
+  build-and-test:
+    name: Build & Test KMP
+    runs-on: macos-latest
+    env:
+      GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError -XX:MaxMetaspaceSize=1g"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install CocoaPods (for iOS)
+        run: sudo gem install cocoapods
+
+      - name: Cache Gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+      - name: Cache Kotlin/Native
+        uses: actions/cache@v3
+        with:
+          key: kotlin-native-${{ hashFiles('gradle.properties') }}
+          path: ~/.konan
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build All Targets
+        run: ./gradlew clean build -i -s
+
+      - name: Run Unit Tests
+        run: ./gradlew test -i -s
+
+  release:
+    name: Publish to Maven Central
+    runs-on: macos-latest
+    needs: build-and-test
+    env:
+      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError -XX:MaxMetaspaceSize=1g"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Publish MaterializeKMP
+        run: ./gradlew clean publish -Pversion=${{ github.event.inputs.version }} -i -s
