@@ -45,4 +45,4 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        run: ./gradlew publishAllPublicationsToMavenCentralRepository closeAndReleaseSonatypeStagingRepository -Pversion=${VERSION}
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository
