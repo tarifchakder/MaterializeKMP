@@ -10,7 +10,6 @@ jobs:
   release:
     name: Publish to Maven Central
     runs-on: macos-latest
-    needs: build-and-test
     env:
       MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
       MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
@@ -36,8 +35,8 @@ jobs:
       - name: Read version from file
         id: version
         run: |
-          VERSION=$(grep 'version=' version.properties | cut -d'=' -f2)
+          VERSION=$(grep '^version=' version.properties | cut -d'=' -f2 | xargs)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Publish MaterializeKMP
-        run: ./gradlew clean publish -Pversion=$VERSION -i -s
+        run: ./gradlew clean publish -Pversion=$VERSION --stacktrace --info
