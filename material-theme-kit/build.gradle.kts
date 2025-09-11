@@ -90,7 +90,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.tarifchakder.materializekmp",
         artifactId = "material-theme",
-        version = "1.0.4"
+        version = project.findProperty("version") as String? ?: "1.0.4"
     )
 
     pom {
@@ -117,5 +117,4 @@ mavenPublishing {
     }
 
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
-    signAllPublications()
 }

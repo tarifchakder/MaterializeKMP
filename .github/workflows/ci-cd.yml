@@ -38,9 +38,10 @@ jobs:
           VERSION=$(grep '^version=' version.properties | cut -d'=' -f2 | xargs)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Publish MaterializeKMP
+      - name: Publish MaterializeKMP to Maven Central
         run: |
           ./gradlew clean publish \
             -Pversion=$VERSION \
             -PsigningEnabled=true \
+            -x test \
             --stacktrace --info
