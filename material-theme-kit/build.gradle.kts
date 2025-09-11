@@ -1,6 +1,5 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
-import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -11,8 +10,8 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.gradle.publish)
-    alias(libs.plugins.dokka)
+    id("maven-publish")
+    id("signing")
 }
 
 kotlin {
@@ -86,36 +85,37 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
-mavenPublishing {
-    coordinates(
-        groupId = "io.github.tarifchakder.materializekmp",
-        artifactId = "material-theme",
-        version = project.findProperty("version") as String? ?: "1.0.4"
-    )
-
-    pom {
-        name.set("MaterializeKMP")
-        description.set("Dynamic Theme Manager: Essential Kotlin Multiplatform Library for Seamless Theming Across All Platforms")
-        inceptionYear.set("2025")
-        url.set("https://github.com/tarifchakder/MaterializeKMP")
-        licenses {
-            license {
-                name.set("MIT")
-                url.set("https://opensource.org/licenses/MIT")
-            }
-        }
-        developers {
-            developer {
-                id.set("tarif")
-                name.set("Tarif Chakder")
-                email.set("tarifchakder@outlook.com")
-            }
-        }
-        scm {
+publishing {
+    publications.withType<MavenPublication> {
+        pom {
+            name.set("MaterializeKMP")
+            description.set("Dynamic Theme Manager: Essential Kotlin Multiplatform Library for Seamless Theming Across All Platforms")
+            inceptionYear.set("2025")
             url.set("https://github.com/tarifchakder/MaterializeKMP")
+            licenses {
+                license {
+                    name.set("MIT")
+                    url.set("https://opensource.org/licenses/MIT")
+                }
+            }
+            developers {
+                developer {
+                    id.set("tarif")
+                    name.set("Tarif Chakder")
+                    email.set("tarifchakder@outlook.com")
+                }
+            }
+            scm {
+                url.set("https://github.com/tarifchakder/MaterializeKMP")
+            }
         }
     }
+}
 
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
-    signAllPublications()
+signing {
+    useInMemoryPgpKeys(
+        System.getenv("GPG_PRIVATE_KEY"),
+        System.getenv("GPG_PASSPHRASE")
+    )
+    sign(publishing.publications)
 }
