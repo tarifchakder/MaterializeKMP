@@ -1,13 +1,12 @@
-name: Publish to Maven Central
+name: Release
 
-on:
-  push:
-    tags:
-      - "v*"  # Only publish on version tags like v1.0.0
+on: workflow_dispatch
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    name: Release library
+    runs-on: macos-latest
+    continue-on-error: false
     steps:
       - uses: actions/checkout@v3
 
@@ -24,6 +23,12 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+      - name: Kotlin Native Cache
+        uses: actions/cache@v3
+        with:
+          key: kotlin-native-${{ hashFiles('gradle.properties') }}
+          path: ~/.konan
 
       - name: Read version from version.properties
         id: version
