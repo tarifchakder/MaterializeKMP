@@ -1,4 +1,4 @@
-name: MaterializeKMP
+name: MaterializeKMP Release
 
 on:
   push:
@@ -39,4 +39,8 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Publish MaterializeKMP
-        run: ./gradlew clean publish -Pversion=$VERSION --stacktrace --info
+        run: |
+          ./gradlew clean publish \
+            -Pversion=$VERSION \
+            -PsigningEnabled=true \
+            --stacktrace --info
