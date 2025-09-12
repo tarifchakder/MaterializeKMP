@@ -1,6 +1,5 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
-import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -11,8 +10,8 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.gradle.publish)
-    alias(libs.plugins.dokka)
+    id("maven-publish")
+    id("signing") // <-- You'll need this plugin
 }
 
 kotlin {
@@ -91,7 +90,7 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
-mavenPublishing {
+/*mavenPublishing {
     coordinates(
         groupId = "io.github.tarifchakder.materializekmp",
         artifactId = "material-theme",
@@ -122,4 +121,54 @@ mavenPublishing {
 
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
     signAllPublications()
+}*/
+
+publishing {
+    publications {
+        create<MavenPublication>("materialTheme") {
+            groupId = "io.github.tarifchakder.materializekmp"
+            artifactId = "material-theme"
+            version = "1.0.6"
+
+            pom {
+                name.set("MaterializeKMP")
+                description.set("Dynamic Theme Manager: Essential Kotlin Multiplatform Library for Seamless Theming Across All Platforms")
+                inceptionYear.set("2025")
+                url.set("https://github.com/tarifchakder/MaterializeKMP")
+                licenses {
+                    license {
+                        name.set("MIT")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("tarif")
+                        name.set("Tarif Chakder")
+                        email.set("tarifchakder@outlook.com")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/tarifchakder/MaterializeKMP")
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "sonatype"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+    }
+}
+
+signing {
+    val signingKeyId = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyId")
+    val signingPassword = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyPassword")
+    val signingKey = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKey")
+    useInMemoryPgpKeys(signingKey, signingKeyId, signingPassword)
 }
