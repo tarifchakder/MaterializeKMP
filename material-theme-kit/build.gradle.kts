@@ -18,7 +18,7 @@ plugins {
 kotlin {
     androidTarget {
         compilerOptions { jvmTarget.set(JvmTarget.JVM_17) }
-        publishLibraryVariants("release", "debug")
+        publishLibraryVariants("release")
     }
 
     listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
