@@ -48,4 +48,10 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
 
-        run: ./gradlew publish --stacktrace
+        run: ./gradlew publishAllPublicationsToSonatypeRepository --stacktrace
+
+      - name: Close and Release to Maven Central
+        env:
+          SONATYPE_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+        run: ./gradlew closeAndReleaseStagingRepository
