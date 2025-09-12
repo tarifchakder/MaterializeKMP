@@ -97,7 +97,6 @@ mavenPublishing {
         artifactId = "material-theme",
         version = "1.0.6"
     )
-
     pom {
         name.set("MaterializeKMP")
         description.set("Dynamic Theme Manager: Essential Kotlin Multiplatform Library for Seamless Theming Across All Platforms")
