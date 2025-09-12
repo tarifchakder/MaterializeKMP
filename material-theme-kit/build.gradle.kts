@@ -129,6 +129,7 @@ publishing {
             groupId = "io.github.tarifchakder.materializekmp"
             artifactId = "material-theme"
             version = "1.0.6"
+            from(components["kotlin"])
 
             pom {
                 name.set("MaterializeKMP")
@@ -149,6 +150,8 @@ publishing {
                     }
                 }
                 scm {
+                    connection.set("scm:git:git://github.com/tarifchakder/MaterializeKMP.git")
+                    developerConnection.set("scm:git:ssh://github.com/tarifchakder/MaterializeKMP.git")
                     url.set("https://github.com/tarifchakder/MaterializeKMP")
                 }
             }
@@ -171,4 +174,5 @@ signing {
     val signingPassword = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyPassword")
     val signingKey = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKey")
     useInMemoryPgpKeys(signingKey, signingKeyId, signingPassword)
+    sign(publishing.publications["materialTheme"])
 }
