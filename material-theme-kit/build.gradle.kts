@@ -158,17 +158,6 @@ publishing {
             }
         }
     }
-    repositories {
-        maven {
-            name = "centralManualTesting"
-            url = uri("https://central.sonatype.com/api/v1/publisher/deployments/download/")
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-            mavenCentral()
-        }
-    }
 }
 
 
