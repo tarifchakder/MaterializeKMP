@@ -40,6 +40,10 @@ jobs:
           VERSION=$(grep '^version=' version.properties | cut -d'=' -f2)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
+      - name: Debug GPG key
+        run: |
+          echo "$ORG_GRADLE_PROJECT_signingInMemoryKey" | gpg --list-packets
+
       - name: Publish to Maven Central
         env:
           SONATYPE_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
