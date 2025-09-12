@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
+import org.gradle.kotlin.dsl.internal.sharedruntime.codegen.fileHeader
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -159,15 +160,17 @@ publishing {
     }
     repositories {
         maven {
-            name = "sonatype"
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            name = "centralManualTesting"
+            url = uri("https://central.sonatype.com/api/v1/publisher/deployments/download/")
             credentials {
                 username = System.getenv("SONATYPE_USERNAME")
                 password = System.getenv("SONATYPE_PASSWORD")
             }
+            mavenCentral()
         }
     }
 }
+
 
 signing {
     val signingKeyId = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyId")
