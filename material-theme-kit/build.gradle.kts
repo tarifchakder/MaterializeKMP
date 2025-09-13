@@ -123,7 +123,9 @@ signing {
 
     if (!signingKeyId.isNullOrBlank() && !signingPassword.isNullOrBlank() && !signingKey.isNullOrBlank()) {
         useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-        sign(publishing.publications)
+        publishing.publications
+            .matching { it.name.contains("material-theme", ignoreCase = true) }
+            .forEach { sign(it) }
     } else {
         logger.warn("⚠️ No signing configuration found, skipping signing.")
     }
