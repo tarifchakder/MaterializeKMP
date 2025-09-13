@@ -12,7 +12,6 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.gradle.publish)
     alias(libs.plugins.dokka)
-    signing
 }
 
 kotlin {
@@ -95,6 +94,7 @@ mavenPublishing {
     pom {
         name.set("MaterializeKMP")
         description.set("Dynamic Theme Manager: Essential Kotlin Multiplatform Library for Seamless Theming Across All Platforms")
+        inceptionYear.set("2025")
         url.set("https://github.com/tarifchakder/MaterializeKMP")
         licenses {
             license {
@@ -109,25 +109,11 @@ mavenPublishing {
                 email.set("tarifchakder@outlook.com")
             }
         }
-        scm { url.set("https://github.com/tarifchakder/MaterializeKMP") }
-    }
-
-    signing {
-        val signingKey = findProperty("signingKey") as String? ?: System.getenv("ORG_GRADLE_PROJECT_signingKey")
-        val signingPassword = findProperty("signingPassword") as String? ?: System.getenv("ORG_GRADLE_PROJECT_signingPassword")
-
-        if (!signingKey.isNullOrBlank() && !signingPassword.isNullOrBlank()) {
-            useInMemoryPgpKeys(signingKey, signingPassword)
-
-            publishing.publications
-                .matching { it.name.equals("material-theme", ignoreCase = true) }
-                .forEach { sign(it) }
-
-        } else {
-            logger.lifecycle("⚠️ No signing key found — skipping signing.")
+        scm {
+            url.set("https://github.com/tarifchakder/MaterializeKMP")
         }
-
     }
 
-    publishToMavenCentral()
+    publishToMavenCentral(true)
+    signAllPublications()
 }
