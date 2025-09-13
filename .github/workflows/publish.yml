@@ -45,12 +45,6 @@ jobs:
           VERSION=$(grep '^version=' version.properties | cut -d'=' -f2)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      # 6. Decode base64 GPG private key and export to Gradle property
-      - name: Decode GPG key
-        run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 --decode > private.asc
-          echo "ORG_GRADLE_PROJECT_signingInMemoryKey=$(cat private.asc)" >> $GITHUB_ENV
-
       # 7. Publish to Maven Central
       - name: Publish to Maven Central
         env:
@@ -58,4 +52,5 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.GPG_SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
         run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
