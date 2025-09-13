@@ -75,5 +75,12 @@ This library draws inspiration from the Material Color Palette by the Material F
 ## Contributing
 Contributions are welcome! Please check out the contributing guidelines for more information on how to get involved.
 
+If you have an idea for a new feature or an enhancement, follow these steps to submit a pull request:
+1.	Fork the repository
+Click the Fork button at the top-right of the repo to create your own copy.
+2.	Create a new branch
+
+```git checkout -b feature/my-new-feature```
+
 
 
