@@ -1,8 +1,9 @@
 [versions]
+maven                        = "1.0.5"
 agp                          = "8.5.2"
 android-compileSdk           = "36"
 android-minSdk               = "24"
-android-targetSdk            = "36"
+android-targetSdk            = "35"
 androidx-activityCompose     = "1.10.0"
 androidx-lifecycle           = "2.8.4"
 compose-multiplatform        = "1.7.0"
@@ -14,7 +15,7 @@ multiplatform-markdown       = "0.26.0"
 uiAndroid                    = "1.7.8"
 foundationLayoutAndroid      = "1.7.8"
 uiTextAndroid                = "1.7.8"
-gradlePublish                = "0.29.0"
+gradlePublish                = "0.34.0"
 dokka                        = "1.9.20"
 
 [libraries]
