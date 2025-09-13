@@ -1,6 +1,5 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
-import org.gradle.kotlin.dsl.internal.sharedruntime.codegen.fileHeader
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -11,8 +10,8 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    id("maven-publish")
-    id("signing") // <-- You'll need this plugin
+    alias(libs.plugins.gradle.publish)
+    alias(libs.plugins.dokka)
 }
 
 kotlin {
@@ -91,7 +90,7 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
-/*mavenPublishing {
+mavenPublishing {
     coordinates(
         groupId = "io.github.tarifchakder.materializekmp",
         artifactId = "material-theme",
@@ -120,57 +119,6 @@ dependencies {
         }
     }
 
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
+    publishToMavenCentral()
     signAllPublications()
-}*/
-
-publishing {
-    publications {
-        create<MavenPublication>("materialTheme") {
-            groupId = "io.github.tarifchakder.materializekmp"
-            artifactId = "material-theme"
-            version = "1.0.6"
-            from(components["kotlin"])
-
-            pom {
-                name.set("MaterializeKMP")
-                description.set("Dynamic Theme Manager: Essential Kotlin Multiplatform Library for Seamless Theming Across All Platforms")
-                inceptionYear.set("2025")
-                url.set("https://github.com/tarifchakder/MaterializeKMP")
-                licenses {
-                    license {
-                        name.set("MIT")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("tarif")
-                        name.set("Tarif Chakder")
-                        email.set("tarifchakder@outlook.com")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git://github.com/tarifchakder/MaterializeKMP.git")
-                    developerConnection.set("scm:git:ssh://github.com/tarifchakder/MaterializeKMP.git")
-                    url.set("https://github.com/tarifchakder/MaterializeKMP")
-                }
-            }
-        }
-        repositories {
-            maven {
-                name = "sonatype"
-                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            }
-        }
-    }
-}
-
-
-signing {
-    val signingKeyId = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyId")
-    val signingPassword = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyPassword")
-    val signingKey = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKey")
-    useInMemoryPgpKeys(signingKey, signingKeyId, signingPassword)
-    sign(publishing.publications["materialTheme"])
 }
