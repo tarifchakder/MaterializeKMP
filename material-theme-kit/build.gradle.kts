@@ -112,21 +112,20 @@ mavenPublishing {
         scm { url.set("https://github.com/tarifchakder/MaterializeKMP") }
     }
 
-    publishToMavenCentral()
-    signAllPublications()
-}
+    signing {
+        val signingKeyId: String? = findProperty("signingKeyId") as String?
+        val signingPassword: String? = findProperty("signingPassword") as String?
+        val signingKey: String? = findProperty("signingKey") as String?
 
-signing {
-    val signingKeyId: String? = findProperty("signingKeyId") as String?
-    val signingPassword: String? = findProperty("signingPassword") as String?
-    val signingKey: String? = findProperty("signingKey") as String?
+        if (!signingKeyId.isNullOrBlank() && !signingPassword.isNullOrBlank() && !signingKey.isNullOrBlank()) {
+            useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+            publishing.publications
+                .matching { it.name.contains("material-theme", ignoreCase = true) }
+                .forEach { sign(it) }
+        } else {
+            logger.warn("⚠️ No signing configuration found, skipping signing.")
+        }
 
-    if (!signingKeyId.isNullOrBlank() && !signingPassword.isNullOrBlank() && !signingKey.isNullOrBlank()) {
-        useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-        publishing.publications
-            .matching { it.name.contains("material-theme", ignoreCase = true) }
-            .forEach { sign(it) }
-    } else {
-        logger.warn("⚠️ No signing configuration found, skipping signing.")
     }
+    publishToMavenCentral()
 }
