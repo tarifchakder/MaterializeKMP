@@ -17,7 +17,6 @@ plugins {
 kotlin {
     androidTarget {
         compilerOptions { jvmTarget.set(JvmTarget.JVM_17) }
-        publishLibraryVariants("release", "debug")
     }
 
     listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
@@ -83,6 +82,13 @@ android {
 
     lint {
         abortOnError = false
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
     }
 }
 

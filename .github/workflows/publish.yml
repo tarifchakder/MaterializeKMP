@@ -48,7 +48,7 @@ jobs:
       # 6. Decode base64 GPG private key and export to Gradle property
       - name: Decode GPG key
         run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 --decode > private.asc
+          echo "${{ secrets.GPG_KEY_CONTENTS }}" | base64 --decode > private.asc
           echo "ORG_GRADLE_PROJECT_signingKey=$(cat private.asc)" >> $GITHUB_ENV
 
       # 7. Publish to Maven Central
