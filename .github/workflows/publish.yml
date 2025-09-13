@@ -49,7 +49,7 @@ jobs:
       - name: Decode GPG key
         run: |
           echo "${{ secrets.GPG_KEY_CONTENTS }}" | base64 --decode > private.asc
-          echo "ORG_GRADLE_PROJECT_signingKey=$(cat private.asc)" >> $GITHUB_ENV
+          echo "ORG_GRADLE_PROJECT_signingInMemoryKey=$(cat private.asc)" >> $GITHUB_ENV
 
       # 7. Publish to Maven Central
       - name: Publish to Maven Central
