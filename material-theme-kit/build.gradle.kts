@@ -11,8 +11,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.gradle.publish)
-    signing
     alias(libs.plugins.dokka)
+    signing
 }
 
 kotlin {
@@ -113,19 +113,21 @@ mavenPublishing {
     }
 
     signing {
-        val signingKeyId: String? = findProperty("signingKeyId") as String?
-        val signingPassword: String? = findProperty("signingPassword") as String?
-        val signingKey: String? = findProperty("signingKey") as String?
+        val signingKey = findProperty("signingKey") as String? ?: System.getenv("ORG_GRADLE_PROJECT_signingKey")
+        val signingPassword = findProperty("signingPassword") as String? ?: System.getenv("ORG_GRADLE_PROJECT_signingPassword")
 
-        if (!signingKeyId.isNullOrBlank() && !signingPassword.isNullOrBlank() && !signingKey.isNullOrBlank()) {
-            useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+        if (!signingKey.isNullOrBlank() && !signingPassword.isNullOrBlank()) {
+            useInMemoryPgpKeys(signingKey, signingPassword)
+
             publishing.publications
-                .matching { it.name.contains("material-theme", ignoreCase = true) }
+                .matching { it.name.equals("material-theme", ignoreCase = true) }
                 .forEach { sign(it) }
+
         } else {
-            logger.warn("⚠️ No signing configuration found, skipping signing.")
+            logger.lifecycle("⚠️ No signing key found — skipping signing.")
         }
 
     }
+
     publishToMavenCentral()
 }
