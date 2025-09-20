@@ -1,9 +1,9 @@
-name: Test
+name: Publish to Maven Central
 
 on:
   push:
-    branches:
-      - release
+    tags:
+      - 'v*'
 
 permissions:
   contents: write
