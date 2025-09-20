@@ -15,9 +15,11 @@ jobs:
     environment: MAVEN
 
     steps:
-      # 1️⃣ Checkout code
+      # 1️⃣ Checkout code (fetch tags too!)
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       # 2️⃣ Setup JDK
       - name: Setup JDK
@@ -37,18 +39,18 @@ jobs:
           # Get latest tag
           LATEST_TAG=$(git describe --tags --abbrev=0 || echo "v0.0.0")
           echo "Latest tag: $LATEST_TAG"
-
+          
           # Remove 'v' prefix and increment patch
           VERSION_NUM=${LATEST_TAG#v}
           IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION_NUM"
           PATCH=$((PATCH+1))
           NEXT_VERSION="$MAJOR.$MINOR.$PATCH"
           echo "Next version: $NEXT_VERSION"
-
+          
           # Save to GitHub Actions output
           echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
-      # 5️⃣ Update gradle.properties
+      # 5️⃣ Update version.properties
       - name: Update version.properties
         run: |
           sed -i "s/^maven=.*/maven=${{ steps.version.outputs.next_version }}/" version.properties
