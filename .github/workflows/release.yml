@@ -32,48 +32,16 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      # 4️⃣ Determine next version
-      - name: Calculate next version
-        id: version
-        run: |
-          # Get latest tag
-          LATEST_TAG=$(git describe --tags --abbrev=0 || echo "v0.0.0")
-          echo "Latest tag: $LATEST_TAG"
-          
-          # Remove 'v' prefix and increment patch
-          VERSION_NUM=${LATEST_TAG#v}
-          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION_NUM"
-          PATCH=$((PATCH+1))
-          NEXT_VERSION="$MAJOR.$MINOR.$PATCH"
-          echo "Next version: $NEXT_VERSION"
-          
-          # Save to GitHub Actions output
-          echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
-
-      # 5️⃣ Update version.properties
-      - name: Update version.properties
-        run: |
-          sed -i "s/^maven=.*/maven=${{ steps.version.outputs.next_version }}/" version.properties
-          git config user.name "Tarif"
-          git config user.email "tarifchakdar@gmail.com"
-
-          # Only commit if there are changes
-          if ! git diff --quiet; then
-            git add version.properties
-            git commit -m "chore: bump version to ${{ steps.version.outputs.next_version }}"
-            git push origin master
-          else
-            echo "No changes to commit"
-          fi
-
-      # 6️⃣ Create new Git tag
+      # 4️⃣ Create Git Tag (optional: manually set in version.properties)
       - name: Create Git Tag
         run: |
-          NEW_TAG="v${{ steps.version.outputs.next_version }}"
-          git tag $NEW_TAG
-          git push origin $NEW_TAG
+          VERSION=$(grep '^VERSION=' version.properties | cut -d'=' -f2)
+          TAG="v$VERSION"
+          echo "Creating tag $TAG"
+          git tag $TAG
+          git push origin $TAG
 
-      # 7️⃣ Publish to Maven Central
+      # 5️⃣ Publish to Maven Central
       - name: Publish to Sonatype
         run: ./gradlew publishAllPublicationsToMavenCentralRepository
         env:
@@ -83,11 +51,11 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
 
-      # 8️⃣ Create GitHub Release
+      # 6️⃣ Create GitHub Release
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          name: Release ${{ steps.version.outputs.next_version }}
-          tag_name: v${{ steps.version.outputs.next_version }}
+          name: Release ${{ env.VERSION }}
+          tag_name: v${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
