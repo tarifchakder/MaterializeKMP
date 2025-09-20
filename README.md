@@ -42,7 +42,7 @@ Add the dependency to your `commonMain` source set:
 ```kotlin
 commonMain {
     dependencies {
-        implementation("io.github.tarifchakder.materializekmp:material-theme:1.0.5")
+        implementation("io.github.tarifchakder.materializekmp:material-theme:1.0.16")
     }
 }
 ```
@@ -51,7 +51,7 @@ commonMain {
 
 ```toml
 [versions]
-materialtheme = "1.0.5"
+materialtheme = "1.0.16"
 
 [libraries]
 material-theme = { module = "io.github.tarifchakder.materializekmp:material-theme", version.ref = "materialtheme" }

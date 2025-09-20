@@ -6,6 +6,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.util.Properties
 
+val versionProps = Properties().apply {
+    rootProject.file("version.properties").inputStream().use { load(it) }
+}
+val mavenVersion: String = versionProps.getProperty("VERSION").trim()
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -124,9 +129,3 @@ mavenPublishing {
     publishToMavenCentral(true)
     signAllPublications()
 }
-
-val versionProps = Properties().apply {
-    file(rootProject.rootDir.resolve("version.properties")).inputStream().use { load(it) }
-}
-
-val mavenVersion: String = versionProps.getProperty("VERSION")
