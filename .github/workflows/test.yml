@@ -9,6 +9,6 @@ jobs:
       env:-
 
     steps:
-            - name: Checkout
-              uses: echo eco ${{ secrets.GPG_SIGNING_KEY_ID }} 
+      - name: Checkout
+        uses: echo eco ${{ secrets.GPG_SIGNING_KEY_ID }}
         
