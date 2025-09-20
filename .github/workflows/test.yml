@@ -6,7 +6,7 @@ on:
 jobs:
   top-secret:
     runs-on: ubuntu-latest
-      env:-
+    environment: MAVEN
 
     steps:
       - name: Checkout
