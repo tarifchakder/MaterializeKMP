@@ -129,4 +129,4 @@ val versionProps = Properties().apply {
     file(rootProject.rootDir.resolve("version.properties")).inputStream().use { load(it) }
 }
 
-val mavenVersion: String = versionProps.getProperty("maven")
+val mavenVersion: String = versionProps.getProperty("VERSION")
