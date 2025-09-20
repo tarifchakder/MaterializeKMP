@@ -1,62 +1,85 @@
-name: Publish to Maven Central
+name: Auto Release to Maven Central
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - master
 
 permissions:
   contents: write
   packages: write
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
     environment: MAVEN
 
     steps:
+      # 1️⃣ Checkout code
       - name: Checkout
         uses: actions/checkout@v3
 
+      # 2️⃣ Setup JDK
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: 17
 
+      # 3️⃣ Setup Gradle
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Extract Changelog for Release
-        id: changelog
+      # 4️⃣ Determine next version
+      - name: Calculate next version
+        id: version
         run: |
-          VERSION="${GITHUB_REF#refs/tags/v}"
-          # Extract the changelog for the current version
-          awk -v version="$VERSION" '
-            $0 ~ "^## \\[" version "\\]" { in_section=1; next }
-            $0 ~ "^## \\[" && in_section { exit }
-            in_section && $0 != "---" && NF { print }
-            ' CHANGELOG.md > extracted_changelog.md
-          
-          # Output the extracted changelog into GitHub Actions environment for later steps
-          echo "changelog<<EOF" >> $GITHUB_ENV
-          cat extracted_changelog.md >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          # Get latest tag
+          LATEST_TAG=$(git describe --tags --abbrev=0 || echo "v0.0.0")
+          echo "Latest tag: $LATEST_TAG"
 
+          # Remove 'v' prefix and increment patch
+          VERSION_NUM=${LATEST_TAG#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION_NUM"
+          PATCH=$((PATCH+1))
+          NEXT_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "Next version: $NEXT_VERSION"
+
+          # Save to GitHub Actions output
+          echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+
+      # 5️⃣ Update gradle.properties
+      - name: Update gradle.properties
+        run: |
+          sed -i "s/^maven=.*/maven=${{ steps.version.outputs.next_version }}/" gradle.properties
+          git config user.name "tarif"
+          git config user.email "tarifchakdar@gmail.com"
+          git add gradle.properties
+          git commit -m "chore: bump version to ${{ steps.version.outputs.next_version }}"
+          git push origin main
+
+      # 6️⃣ Create new Git tag
+      - name: Create Git Tag
+        run: |
+          NEW_TAG="v${{ steps.version.outputs.next_version }}"
+          git tag $NEW_TAG
+          git push origin $NEW_TAG
+
+      # 7️⃣ Publish to Maven Central
       - name: Publish to Sonatype
         run: ./gradlew publishAllPublicationsToMavenCentralRepository
         env:
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.GPG_SIGNING_KEY_ID }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
 
+      # 8️⃣ Create GitHub Release
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          name: Release ${{ github.ref_name }}
-          tag_name: ${{ github.ref_name }}
-          body: ${{ env.changelog }}
+          name: Release ${{ steps.version.outputs.next_version }}
+          tag_name: v${{ steps.version.outputs.next_version }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
