@@ -49,15 +49,15 @@ jobs:
           echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
       # 5️⃣ Update gradle.properties
-      - name: Update gradle.properties
+      - name: Update version.properties
         run: |
-          sed -i "s/^maven=.*/maven=${{ steps.version.outputs.next_version }}/" gradle.properties
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          sed -i "s/^maven=.*/maven=${{ steps.version.outputs.next_version }}/" version.properties
+          git config user.name "Tarif"
+          git config user.email "tarifchakdar@gmail.com"
 
           # Only commit if there are changes
           if ! git diff --quiet; then
-            git add gradle.properties
+            git add version.properties
             git commit -m "chore: bump version to ${{ steps.version.outputs.next_version }}"
             git push origin master
           else
