@@ -1,9 +1,9 @@
 [versions]
-maven                        = "1.0.5"
+maven                        = "1.0.8"
 agp                          = "8.5.2"
 android-compileSdk           = "36"
 android-minSdk               = "24"
-android-targetSdk            = "35"
+android-targetSdk            = "36"
 androidx-activityCompose     = "1.10.0"
 androidx-lifecycle           = "2.8.4"
 compose-multiplatform        = "1.7.0"

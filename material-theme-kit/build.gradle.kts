@@ -83,6 +83,13 @@ android {
     lint {
         abortOnError = false
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 mavenPublishing {
@@ -113,7 +120,6 @@ mavenPublishing {
             url.set("https://github.com/tarifchakder/MaterializeKMP")
         }
     }
-
     publishToMavenCentral(true)
     signAllPublications()
 }
