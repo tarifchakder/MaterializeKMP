@@ -52,11 +52,17 @@ jobs:
       - name: Update gradle.properties
         run: |
           sed -i "s/^maven=.*/maven=${{ steps.version.outputs.next_version }}/" gradle.properties
-          git config user.name "tarif"
-          git config user.email "tarifchakdar@gmail.com"
-          git add gradle.properties
-          git commit -m "chore: bump version to ${{ steps.version.outputs.next_version }}"
-          git push origin main
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          # Only commit if there are changes
+          if ! git diff --quiet; then
+            git add gradle.properties
+            git commit -m "chore: bump version to ${{ steps.version.outputs.next_version }}"
+            git push origin master
+          else
+            echo "No changes to commit"
+          fi
 
       # 6️⃣ Create new Git tag
       - name: Create Git Tag
