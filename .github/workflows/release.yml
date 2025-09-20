@@ -15,7 +15,7 @@ jobs:
     environment: MAVEN
 
     steps:
-      # 1️⃣ Checkout code (fetch tags too!)
+      # 1️⃣ Checkout code (fetch tags too)
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -32,10 +32,12 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      # 4️⃣ Create Git Tag (optional: manually set in version.properties)
+      # 4️⃣ Read version from version.properties and create Git tag
       - name: Create Git Tag
+        id: create_tag
         run: |
           VERSION=$(grep '^VERSION=' version.properties | cut -d'=' -f2)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           TAG="v$VERSION"
           echo "Creating tag $TAG"
           git tag $TAG
