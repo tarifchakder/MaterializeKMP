@@ -1,5 +1,5 @@
 [versions]
-maven                        = "1.0.5"
+maven                        = "1.0.6"
 agp                          = "8.5.2"
 android-compileSdk           = "36"
 android-minSdk               = "24"
