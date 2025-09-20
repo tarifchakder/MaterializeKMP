@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -96,7 +97,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.tarifchakder.materializekmp",
         artifactId = "material-theme",
-        version = libs.versions.maven.get()
+        version = mavenVersion
     )
     pom {
         name.set("MaterializeKMP")
@@ -123,3 +124,9 @@ mavenPublishing {
     publishToMavenCentral(true)
     signAllPublications()
 }
+
+val versionProps = Properties().apply {
+    load(rootProject.file("version.properties").inputStream())
+}
+
+val mavenVersion: String = versionProps.getProperty("maven")
