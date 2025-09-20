@@ -1,0 +1,14 @@
+name: Publish to Maven Central
+
+on:
+  workflow_dispatch
+
+jobs:
+  top-secret:
+    runs-on: ubuntu-latest
+      env:-
+
+    steps:
+            - name: Checkout
+              uses: echo eco ${{ secrets.GPG_SIGNING_KEY_ID }} 
+        
