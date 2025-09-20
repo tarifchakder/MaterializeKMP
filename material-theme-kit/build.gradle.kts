@@ -120,7 +120,6 @@ mavenPublishing {
             url.set("https://github.com/tarifchakder/MaterializeKMP")
         }
     }
-
-    publishToMavenCentral()
+    publishToMavenCentral(true)
     signAllPublications()
 }
