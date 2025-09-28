@@ -1,6 +1,6 @@
 # 🌗 KMP Material Theme
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.tarifchakder.materializekmp/material-theme)](https://central.sonatype.com/artifact/io.github.tarifchakder.materializekmp/material-theme)  
+[![Maven Central](https://img.shields.io/maven-central/v/com.tarifchakder/material-theme)](https://central.sonatype.com/artifact/com.tarifchakder/material-theme)  
 [![License](https://img.shields.io/github/license/tarifchakder/MaterializeKMP)](LICENSE)  
 [![Kotlin](https://img.shields.io/badge/kotlin-2.0.20-blue.svg?logo=kotlin)](https://kotlinlang.org)  
 [![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-1.7.0-blue)](https://github.com/JetBrains/compose-multiplatform)
@@ -42,7 +42,7 @@ Add the dependency to your `commonMain` source set:
 ```kotlin
 commonMain {
     dependencies {
-        implementation("io.github.tarifchakder.materializekmp:material-theme:1.0.16")
+        implementation("com.tarifchakder.materializekmp:material-theme:1.0.16")
     }
 }
 ```
@@ -54,7 +54,7 @@ commonMain {
 materialtheme = "1.0.16"
 
 [libraries]
-material-theme = { module = "io.github.tarifchakder.materializekmp:material-theme", version.ref = "materialtheme" }
+material-theme = { module = "com.tarifchakder.materializekmp:material-theme", version.ref = "materialtheme" }
 ```
 
 # Usage
