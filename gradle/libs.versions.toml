@@ -9,7 +9,7 @@ compose-multiplatform        = "1.7.0"
 kotlin                       = "2.0.20"
 kotlinx-coroutines           = "1.10.2"
 alertKmp                     = "2.0.0"
-materialTheme                = "1.0.4"
+materialTheme                = "1.1.0"
 multiplatform-markdown       = "0.26.0"
 uiAndroid                    = "1.7.8"
 foundationLayoutAndroid      = "1.7.8"
@@ -23,7 +23,7 @@ androidx-lifecycle-viewmodel         = { group = "org.jetbrains.androidx.lifecyc
 androidx-lifecycle-runtime-compose   = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlinx-coroutines-swing             = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 alert-kmp                            = { module = "io.github.khubaibkhan4:alert-kmp", version.ref = "alertKmp" }
-material-theme                       = { module = "com.tarifchakder.materializekmp:material-theme", version.ref = "materialTheme" }
+material-theme                       = { module = "com.tarifchakder:material-theme", version.ref = "materialTheme" }
 multiplatform-markdown               = { module = "com.mikepenz:multiplatform-markdown-renderer-m3", version.ref = "multiplatform-markdown" }
 androidx-ui-android                  = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
 androidx-foundation-layout-android   = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
