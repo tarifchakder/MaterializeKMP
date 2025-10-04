@@ -115,18 +115,6 @@ Note: For iOS, Gradle can build KMP frameworks for targets (iosX64/iosArm64/iosS
 
 ---
 
-## 🔑 Environment variables
-Not required for building and running the sample locally. For publishing to Maven Central (usually via CI), these Gradle properties are used:
-- ORG_GRADLE_PROJECT_signingInMemoryKeyId
-- ORG_GRADLE_PROJECT_signingInMemoryKey
-- ORG_GRADLE_PROJECT_signingInMemoryKeyPassword
-- ORG_GRADLE_PROJECT_mavenCentralUsername
-- ORG_GRADLE_PROJECT_mavenCentralPassword
-
-TODO: Document local publishing/signing setup steps if needed for maintainers.
-
----
-
 ## 🧪 Tests
 - The library configures `commonTest` with Kotlin test dependencies, but no tests are currently present.
 - TODO: Add unit tests for color generation and theming behavior.
