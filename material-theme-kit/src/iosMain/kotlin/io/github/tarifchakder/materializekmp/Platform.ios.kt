@@ -13,3 +13,5 @@ actual fun getColorScheme(isDarkTheme: Boolean): ColorScheme? {
 actual fun getObserveAsState(): Lifecycle.Event? {
     return null
 }
+
+actual fun isAndroidPlatform(): Boolean = false
