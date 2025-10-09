@@ -66,9 +66,11 @@ fun DynamicTheme(
     colorTransitionSpec: AnimationSpec<Color> = tween(300),
     content: @Composable () -> Unit,
 ) {
+    val dynamicColor = if (isAndroidPlatform()) isDynamicColor else true
+
     val initialColorTuple = rememberColorTuple(
         defaultColorTuple = ColorTuple(primary = seedColor),
-        isDynamicColor = isDynamicColor,
+        isDynamicColor = dynamicColor,
         isDarkTheme = isDarkTheme
     )
 
@@ -76,7 +78,7 @@ fun DynamicTheme(
 
     val colorScheme = rememberColorScheme(
         isDarkTheme = isDarkTheme,
-        isDynamicColor = isDynamicColor,
+        isDynamicColor = dynamicColor,
         isAmoled = isAmoled,
         isInvertColors = isInvertColors,
         colorTuple = dynamicThemeState.colorTuple.value,
@@ -145,9 +147,11 @@ fun DynamicTheme(
     colorTransitionSpec: AnimationSpec<Color> = tween(300),
     content: @Composable () -> Unit,
 ) {
+    val dynamicColor = if (isAndroidPlatform()) isDynamicColor else true
+
     val defaultColorTuple = rememberColorTuple(
         defaultColorTuple = colorTuple,
-        isDynamicColor = isDynamicColor,
+        isDynamicColor = dynamicColor,
         isDarkTheme = isDarkTheme
     )
 
@@ -155,7 +159,7 @@ fun DynamicTheme(
 
     val scheme = rememberColorScheme(
         isDarkTheme = isDarkTheme,
-        isDynamicColor = isDynamicColor,
+        isDynamicColor = dynamicColor,
         isAmoled = isAmoled,
         isInvertColors = isInvertColors,
         colorTuple = themeState.colorTuple.value,

@@ -27,3 +27,5 @@ actual fun getColorScheme(isDarkTheme: Boolean): ColorScheme? {
 actual fun getObserveAsState(): Lifecycle.Event? {
     return LocalLifecycleOwner.current.lifecycle.observeAsState().value
 }
+
+actual fun isAndroidPlatform(): Boolean = true
