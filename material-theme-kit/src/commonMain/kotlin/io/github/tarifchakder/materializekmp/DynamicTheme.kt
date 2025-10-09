@@ -67,6 +67,7 @@ fun DynamicTheme(
     content: @Composable () -> Unit,
 ) {
     val dynamicColor = if (isAndroidPlatform()) isDynamicColor else true
+
     val initialColorTuple = rememberColorTuple(
         defaultColorTuple = ColorTuple(primary = seedColor),
         isDynamicColor = dynamicColor,
@@ -147,6 +148,7 @@ fun DynamicTheme(
     content: @Composable () -> Unit,
 ) {
     val dynamicColor = if (isAndroidPlatform()) isDynamicColor else true
+
     val defaultColorTuple = rememberColorTuple(
         defaultColorTuple = colorTuple,
         isDynamicColor = dynamicColor,
