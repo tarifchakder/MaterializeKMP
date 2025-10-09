@@ -6,6 +6,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.util.Properties
 
+val versionProps = Properties().apply {
+    rootProject.file("version.properties").inputStream().use { load(it) }
+}
+val mavenVersion: String = versionProps.getProperty("VERSION").trim()
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -63,7 +68,7 @@ kotlin {
 }
 
 android {
-    namespace = "io.github.tarifchakder.materializekmp"
+    namespace = "com.tarifchakder.materializekmp"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -95,7 +100,7 @@ android {
 
 mavenPublishing {
     coordinates(
-        groupId = "io.github.tarifchakder.materializekmp",
+        groupId = "com.tarifchakder",
         artifactId = "material-theme",
         version = mavenVersion
     )
@@ -114,7 +119,7 @@ mavenPublishing {
             developer {
                 id.set("tarif")
                 name.set("Tarif Chakder")
-                email.set("tarifchakder@outlook.com")
+                email.set("tarifchakdar@gmail.com")
             }
         }
         scm {
@@ -124,9 +129,3 @@ mavenPublishing {
     publishToMavenCentral(true)
     signAllPublications()
 }
-
-val versionProps = Properties().apply {
-    file(rootProject.rootDir.resolve("version.properties")).inputStream().use { load(it) }
-}
-
-val mavenVersion: String = versionProps.getProperty("maven")
