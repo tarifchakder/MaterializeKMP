@@ -1,5 +1,6 @@
 package com.tarifchakder.materializekmp.materialcolor.dynamiccolor
 
+import com.tarifchakder.materializekmp.isAndroidPlatform
 import com.tarifchakder.materializekmp.materialcolor.contrast.Contrast
 import com.tarifchakder.materializekmp.materialcolor.hct.Hct
 import com.tarifchakder.materializekmp.materialcolor.palettes.TonalPalette
@@ -70,19 +71,38 @@ class DynamicColor(
     private val hctCache: HashMap<DynamicScheme, Hct> = HashMap()
 
     /**
-     * Returns an ARGB integer (i.e. a hex code).
+     * Calculates the ARGB (alpha, red, green, blue) color value based on the provided dynamic scheme
+     * and optional opacity. Utilizes the platform-specific operations for Android or multiplatform
+     * environments to determine the final color value.
      *
-     * @param scheme Defines the conditions of the user interface, for example, whether or not it is
-     * dark mode or light mode, and what the desired contrast level is.
+     * @param scheme Defines the conditions of the user interface, such as theme settings, light/dark
+     * mode, and contrast level, used to resolve the color.
+     * @return The ARGB color as an integer, including the alpha channel if applicable.
      */
     fun getArgb(scheme: DynamicScheme): Int {
-        val argb: Int = getHct(scheme).toInt()
-        if (opacity == null) {
-            return argb
+        if (isAndroidPlatform()) {
+            val argb: Int = getHct(scheme).toInt()
+            if (opacity == null) {
+                return argb
+            }
+            val percentage: Double = opacity.invoke(scheme)
+            val alpha = round(percentage * 255).toInt().coerceIn(0, 255)
+            return argb and 0x00ffffff or (alpha shl 24)
+        } else {
+            val argb: Int = getHct(scheme).toInt()
+
+            val alpha = opacity?.invoke(scheme)?.let {
+                round(it * 255).toInt().coerceIn(0, 255)
+            } ?: 255
+
+            // Extract ARGB safely
+            val r = (argb shr 16) and 0xFF
+            val g = (argb shr 8) and 0xFF
+            val b = argb and 0xFF
+
+            // Compose Multiplatform Color helper
+            return (alpha shl 24) or (r shl 16) or (g shl 8) or b
         }
-        val percentage: Double = opacity.invoke(scheme)
-        val alpha = round(percentage * 255).toInt().coerceIn(0, 255)
-        return argb and 0x00ffffff or (alpha shl 24)
     }
 
     /**
@@ -129,7 +149,8 @@ class DynamicColor(
             val stayTogether: Boolean = toneDeltaPair.stayTogether
             val bg: DynamicColor = background!!(scheme)
             val bgTone = bg.getTone(scheme)
-            val aIsNearer = polarity === TonePolarity.NEARER || polarity === TonePolarity.LIGHTER && !scheme.isDark || polarity === TonePolarity.DARKER && scheme.isDark
+            val aIsNearer =
+                polarity === TonePolarity.NEARER || polarity === TonePolarity.LIGHTER && !scheme.isDark || polarity === TonePolarity.DARKER && scheme.isDark
             val nearer = if (aIsNearer) roleA else roleB
             val farther = if (aIsNearer) roleB else roleA
             val amNearer = name == nearer.name
@@ -142,10 +163,18 @@ class DynamicColor(
             // If a color is good enough, it is not adjusted.
             // Initial and adjusted tones for `nearer`
             val nInitialTone: Double = nearer.tone(scheme)
-            var nTone = if (Contrast.ratioOfTones(bgTone, nInitialTone) >= nContrast) nInitialTone else foregroundTone(bgTone, nContrast)
+            var nTone = if (Contrast.ratioOfTones(
+                    bgTone,
+                    nInitialTone
+                ) >= nContrast
+            ) nInitialTone else foregroundTone(bgTone, nContrast)
             // Initial and adjusted tones for `farther`
             val fInitialTone: Double = farther.tone(scheme)
-            var fTone = if (Contrast.ratioOfTones(bgTone, fInitialTone) >= fContrast) fInitialTone else foregroundTone(bgTone, fContrast)
+            var fTone = if (Contrast.ratioOfTones(
+                    bgTone,
+                    fInitialTone
+                ) >= fContrast
+            ) fInitialTone else foregroundTone(bgTone, fContrast)
             if (decreasingContrast) {
                 // If decreasing contrast, adjust color to the "bare minimum"
                 // that satisfies contrast.
@@ -249,7 +278,7 @@ class DynamicColor(
                     availables.add(darkOption)
                 }
                 val prefersLight = (tonePrefersLightForeground(bgTone1)
-                    || tonePrefersLightForeground(bgTone2))
+                        || tonePrefersLightForeground(bgTone2))
                 if (prefersLight) {
                     return if (lightOption == -1.0) 100.0 else lightOption
                 }
@@ -372,7 +401,8 @@ class DynamicColor(
                 // This was observed with Tonal Spot's On Primary Container turning black momentarily between
                 // high and max contrast in light mode. PC's standard tone was T90, OPC's was T10, it was
                 // light mode, and the contrast level was 0.6568521221032331.
-                val negligibleDifference = abs(lighterRatio - darkerRatio) < 0.1 && lighterRatio < ratio && darkerRatio < ratio
+                val negligibleDifference =
+                    abs(lighterRatio - darkerRatio) < 0.1 && lighterRatio < ratio && darkerRatio < ratio
                 if (lighterRatio >= ratio || lighterRatio >= darkerRatio || negligibleDifference) {
                     lighterTone
                 } else {
